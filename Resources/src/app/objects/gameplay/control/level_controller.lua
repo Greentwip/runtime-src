@@ -166,15 +166,47 @@ end
 
 function level_controller:step(dt)
 
+    local bounds_bbox = cc.bounds_:bbox_rect()
     for i, _ in pairs(self.scene_components_) do
 
-        self.scene_components_[i]:step(dt)
-        self.scene_components_[i]:post_step(dt)
+        if self.scene_components_[i].sprite_ ~= nil then
+            --print("sprite was not nil")
 
-        if self.scene_components_[i].disposed_ then
-            self.scene_components_[i]:removeSelf()
-            self.scene_components_[i] = nil
+            local bbox = self.scene_components_[i].sprite_:getBoundingBox()
+            local real_position = self.scene_components_[i]:convertToWorldSpace(cc.p(bbox.x, bbox.y))
+        
+            bbox.x = real_position.x
+            bbox.y = real_position.y
+        
+        
+            if cc.rectIntersectsRect(bounds_bbox, bbox)  then
+                if self.scene_components_[i].onscreen ~= nil then
+                    self.scene_components_[i]:onscreen()
+                end
+                self.scene_components_[i]:step(dt)
+            else
+                if self.scene_components_[i].offscreen ~= nil then
+                    self.scene_components_[i]:offscreen()
+                end
+            end
+
+            self.scene_components_[i]:post_step(dt)
+    
+            if self.scene_components_[i].disposed_ then
+                self.scene_components_[i]:removeSelf()
+                self.scene_components_[i] = nil
+            end
+        else
+            self.scene_components_[i]:step(dt)
+            self.scene_components_[i]:post_step(dt)
+    
+            if self.scene_components_[i].disposed_ then
+                self.scene_components_[i]:removeSelf()
+                self.scene_components_[i] = nil
+            end
         end
+
+
 
     end
 

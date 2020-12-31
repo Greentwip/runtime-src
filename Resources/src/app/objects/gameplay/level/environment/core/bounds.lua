@@ -28,8 +28,7 @@ end
 
 
 function bounds:bbox_rect()
-    local rect = cc.rect(self:left(), self:bottom(), self:right() - self:left(), self:top() - self:bottom())
-    return rect
+    return cc.rect(self:left(), self:bottom(), self:right() - self:left(), self:top() - self:bottom())
 end
 
 function bounds:width()

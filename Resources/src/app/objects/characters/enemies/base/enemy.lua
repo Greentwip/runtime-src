@@ -153,6 +153,36 @@ function enemy:fight()
     self:check_health()
 end
 
+function enemy:onscreen()
+    if self.status_ == cc.enemy_.status_.active_ then
+        self.status_ = cc.enemy_.status_.fighting_
+        self.health_ = self.default_health_
+
+        self:onRespawn()
+     elseif self.status_ == cc.enemy_.status_.defeated_ then
+         self.sprite_:stopAllActions()
+         self:stopAllActions()
+         self:onDefeated()
+         self.sprite_:setVisible(false)
+         self:setPosition(self.start_position_)
+         self.status_ = cc.enemy_.status_.inactive_
+     end
+end
+
+function enemy:offscreen()
+    if self.status_ == cc.enemy_.status_.fighting_ or self.status_ == cc.enemy_.status_.inactive_ then
+        self:stopAllActions()
+        self.sprite_:stopAllActions()
+
+        if not cc.bounds_:is_point_inside(self.start_position_) then
+            self.sprite_:setVisible(true)
+            self:setPosition(self.start_position_)
+            self.status_ = cc.enemy_.status_.active_
+        end
+
+    end
+end
+
 function enemy:check_status()
     local bbox = self.sprite_:getBoundingBox()
     local real_position = self:convertToWorldSpace(cc.p(bbox.x, bbox.y))
@@ -249,7 +279,7 @@ end
 
 
 function enemy:step(dt)
-    self:check_status()
+    --self:check_status()
 
     if self.status_ == cc.enemy_.status_.fighting_ then
 
