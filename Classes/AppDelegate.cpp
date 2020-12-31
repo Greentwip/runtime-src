@@ -100,10 +100,7 @@ void AppDelegate::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 {
      if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE || keyCode == EventKeyboard::KeyCode::KEY_BACK)
      {
-         if (true) // or whatever logic you want...");
-            {
-                event->stopPropagation();
-            }
+         event->stopPropagation();
      }
 }
 
