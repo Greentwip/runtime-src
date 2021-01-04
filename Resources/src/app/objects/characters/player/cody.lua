@@ -795,7 +795,7 @@ function cody:post_step(dt)
 
     self:kinematic_post_step(dt)
 
-    if cc.game_status_ == cc.GAME_STATUS.RUNNING or cc.boss_.spawning_ then
+    if cc.game_status_ == cc.GAME_STATUS.RUNNING or (cc.boss_.battle_status_ == cc.battle_status_.waiting_ and cc.camera_.target_door_ == nil) then
         self:trigger_actions()
     else
         if self.alive_ then
