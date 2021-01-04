@@ -45,8 +45,10 @@ end
 function cc.pause(freeze)
     if freeze then
         cc.game_status_ = cc.GAME_STATUS.PAUSED
+        print('paused')
     else
         cc.game_status_ = cc.GAME_STATUS.RUNNING
+        print('running')
     end
 end
 
@@ -163,6 +165,8 @@ function MyApp:setup_application()
 
     cc.frames_cache_ = {}
     cc.animations_cache_ = {}
+
+    cc.is_boss_area_ = false
 end
 
 function MyApp:setup_tags()
@@ -240,6 +244,7 @@ function MyApp:setup_keyboard()
 end
 
 function MyApp:setup_camera()
+    cc.camera_ = {}
     cc.CAMERA = {}
     cc.CAMERA.MODE = {}
     cc.CAMERA.SCROLL = {}
@@ -315,6 +320,8 @@ function MyApp:setup_player()
 end
 
 function MyApp:setup_enemy()
+    cc.boss_ = {}
+
     cc.enemy_ = {}
     cc.enemy_.status_ = {}
 

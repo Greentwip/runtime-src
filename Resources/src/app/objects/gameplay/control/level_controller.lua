@@ -90,7 +90,12 @@ function level_controller:setup()
     self:getScene():getDefaultCamera():setPositionX(cc.bounds_:getPositionX())
     self:getScene():getDefaultCamera():setPositionY(cc.bounds_:getPositionY())
 
+    self.camera_:setPosition(0, self.camera_:getPhysicsBody():getShapes()[1].size_.height * 0.25)
+
     self.player_.health_ = 29
+
+    cc.is_boss_area_ = false
+
 
     for _, browner in pairs(self.player_.browners_) do
         browner:spawn()
@@ -169,41 +174,53 @@ function level_controller:step(dt)
     local bounds_bbox = cc.bounds_:bbox_rect()
     for i, _ in pairs(self.scene_components_) do
 
-        if self.scene_components_[i].sprite_ ~= nil then
-            --print("sprite was not nil")
-
-            local bbox = self.scene_components_[i].sprite_:getBoundingBox()
-            local real_position = self.scene_components_[i]:convertToWorldSpace(cc.p(bbox.x, bbox.y))
-        
-            bbox.x = real_position.x
-            bbox.y = real_position.y
-        
-        
-            if cc.rectIntersectsRect(bounds_bbox, bbox)  then
-                if self.scene_components_[i].onscreen ~= nil then
-                    self.scene_components_[i]:onscreen()
-                end
-                self.scene_components_[i]:step(dt)
-            else
-                if self.scene_components_[i].offscreen ~= nil then
-                    self.scene_components_[i]:offscreen()
-                end
-            end
-
+        if self.scene_components_[i].forced_step then 
+            self.scene_components_[i]:forced_step(dt)
             self.scene_components_[i]:post_step(dt)
     
             if self.scene_components_[i].disposed_ then
                 self.scene_components_[i]:removeSelf()
                 self.scene_components_[i] = nil
             end
+
         else
-            self.scene_components_[i]:step(dt)
-            self.scene_components_[i]:post_step(dt)
+            if self.scene_components_[i].sprite_ ~= nil then
+                --print("sprite was not nil")
     
-            if self.scene_components_[i].disposed_ then
-                self.scene_components_[i]:removeSelf()
-                self.scene_components_[i] = nil
+                local bbox = self.scene_components_[i].sprite_:getBoundingBox()
+                local real_position = self.scene_components_[i]:convertToWorldSpace(cc.p(bbox.x, bbox.y))
+            
+                bbox.x = real_position.x
+                bbox.y = real_position.y
+            
+            
+                if cc.rectIntersectsRect(bounds_bbox, bbox)  then
+                    if self.scene_components_[i].onscreen ~= nil then
+                        self.scene_components_[i]:onscreen()
+                    end
+                    self.scene_components_[i]:step(dt)
+                else
+                    if self.scene_components_[i].offscreen ~= nil then
+                        self.scene_components_[i]:offscreen()
+                    end
+                end
+    
+                self.scene_components_[i]:post_step(dt)
+        
+                if self.scene_components_[i].disposed_ then
+                    self.scene_components_[i]:removeSelf()
+                    self.scene_components_[i] = nil
+                end
+            else
+                self.scene_components_[i]:step(dt)
+                self.scene_components_[i]:post_step(dt)
+        
+                if self.scene_components_[i].disposed_ then
+                    self.scene_components_[i]:removeSelf()
+                    self.scene_components_[i] = nil
+                end
             end
+    
         end
 
 

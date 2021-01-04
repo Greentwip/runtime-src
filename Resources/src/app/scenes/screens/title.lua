@@ -48,9 +48,9 @@ function title:onLoad()
     self.greentwip_:set_animation("greentwip")
 
 
-    self.selector_ = selector:create("arrow", "right")
+    --[[self.selector_ = selector:create("arrow", "right")
                              :setPosition(cc.p(64,96))
-                             :addTo(self, 128)
+                             :addTo(self, 128)]]
 
     self.start_text_ = label:create("start game",
                                     "fonts/megaman_2.ttf",

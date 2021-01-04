@@ -8,13 +8,13 @@ cc.FileUtils:getInstance():setPopupNotify(false)
 cc.FileUtils:getInstance():addSearchPath("src/")
 cc.FileUtils:getInstance():addSearchPath("res/")
 cc.FileUtils:getInstance():addSearchResolutionsOrder("src/")
-require("LuaDebug")("localhost", 7003)
 
 local json = require "json"
 
 cc.file = {
 exists = function() end,
 read = function() end,
+read_raw = function() end,
 write = function() end
 }
 
@@ -63,6 +63,21 @@ function cc.file.read(file)
     local contents = f:read("*all")
     f:close()
     return contents
+end
+
+function cc.file.read_raw(file)
+    --local file_path = file
+    --print(file_path)
+
+    --local f = io.open(file_path, "rb")
+
+    --local contents = f:read("*all")
+    --f:close()
+
+
+    --return contents
+
+    return cc.FileUtils:getInstance():getStringFromFile(file)
 end
 
 -- Write a string to a file.

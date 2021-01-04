@@ -10,7 +10,7 @@ function violet_browner:ctor(sprite)
     self.base_name_ = "violet"
 
     local actions = {}
-    actions[#actions + 1] = {name = "stand",      animation = {name = "violet_stand",       forever = true,  delay = 1.00} }
+    actions[#actions + 1] = {name = "stand",      animation = {name = "violet_stand",       forever = true,  delay = 0.10} }
     actions[#actions + 1] = {name = "slide",      animation = {name = "violet_slide",       forever = true,  delay = 0.10} }
     actions[#actions + 1] = {name = "climb",      animation = {name = "violet_climb",       forever = true,  delay = 0.16} }
     actions[#actions + 1] = {name = "jump",       animation = {name = "violet_jump",        forever = false, delay = 0.10} }

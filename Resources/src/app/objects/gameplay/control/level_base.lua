@@ -39,7 +39,7 @@ function level_base:load_intro()
 end
 
 -- anything related to physics should be created here
-function level_base:load(tmx_map, load_arguments)
+function level_base:load(tmx_map, map_path, load_arguments)
 
     display.removeUnusedSpriteFrames()
 
@@ -49,6 +49,38 @@ function level_base:load(tmx_map, load_arguments)
                                  :setAnchorPoint(cc.p(0,1))
                                  :setPosition(display.left_top)
                                  :addTo(self, 0)
+
+
+    local definition = cc.json.decode(cc.file.read_raw(map_path .. "/" .. "definitions.json"))
+
+    for _, l in pairs(definition["layers"]) do
+        local basename = l["basename"]
+        local order = l["order"]
+        local tile_x = l["tile_x"]
+        local tile_y = l["tile_y"]
+
+        for _, t in pairs(l["tiles"]) do
+            local path = t["path"]
+            local x = t["x"]
+            local y = t["y"]
+
+            local sprite_path = map_path .. "/" .. "__slices" .. "/" .. basename .. "/" .. path
+            print(sprite_path)
+            local sprite = cc.Sprite:create(sprite_path)
+            
+            local sprite_x = x * tile_x
+            local sprite_y = y * tile_y
+
+            local final_pos = cc.p(display.left_top.x + sprite_x, display.left_top.y - sprite_y)
+            
+            sprite:getTexture():setAliasTexParameters()
+            sprite:setPosition(final_pos)
+            sprite:setAnchorPoint(0, 1)
+            sprite:addTo(self, 0)      
+
+        end
+
+    end
 
     --------------------------------
     -- the physics components
@@ -113,6 +145,8 @@ function level_base:load(tmx_map, load_arguments)
                          :addTo(cc.bounds_)
 
     camera:setPosition(0, camera:getPhysicsBody():getShapes()[1].size_.height * 0.25)
+
+    cc.camera_ = camera
 
 
     --------------------------------
@@ -226,6 +260,8 @@ function level_base:load(tmx_map, load_arguments)
 
                 scene_components[#scene_components + 1] = boss
 
+                cc.boss_ = boss
+
             elseif group_array[i].name == "teleporter" then
                 local block_size = cc.size(group_array[i].width, group_array[i].height)
 
@@ -259,7 +295,7 @@ end
 function level_base:step(dt)
 
     if self.status_ == cc.level_status_.init_ then
-        self:load(self.tmx_map_, self.load_arguments_)
+        self:load(self.tmx_map_, self.map_path_, self.load_arguments_)
     else
         self.level_controller_:step(dt)
         self:post_step(dt)

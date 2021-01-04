@@ -161,8 +161,6 @@ function save:load_slot(slot)
 
     cc.player_.lives_ = json["lives"]
 
-    print(cc.player_.lives_)
-
     cc.browners_.freezer_.acquired_ = json["freezer"]
     cc.browners_.sheriff_.acquired_ = json["sheriff"]
     cc.browners_.boomer_.acquired_ = json["boomer"]
@@ -183,6 +181,8 @@ function save:load_slot(slot)
     cc.levels_[6].defeated_ = cc.browners_.shield_.acquired_
     cc.levels_[7].defeated_ = cc.browners_.night_.acquired_
     cc.levels_[8].defeated_ = cc.browners_.torch_.acquired_
+
+    cc.game_options_.helmet_activated_ = json["helmet_activated"] or false
 
 end
 
@@ -206,7 +206,8 @@ function save:save_slot(slot)
         vine = false,
         shield = false,
         night = false,
-        torch = false
+        torch = false,
+        helmet_activated = false
     }
 
     local encoded = cc.json.encode(settings)

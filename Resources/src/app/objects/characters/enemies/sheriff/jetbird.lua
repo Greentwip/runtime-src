@@ -47,16 +47,16 @@ function mob:flip(x_normal)
     self.is_flipping_ = false
 end
 
-function mob:check_status()
+function mob:onscreen()
     local bbox = self.sprite_:getBoundingBox()
     local real_position = self:convertToWorldSpace(cc.p(bbox.x, bbox.y))
 
     bbox.x = real_position.x
     bbox.y = real_position.y
 
-    if cc.bounds_:is_rect_inside(bbox) and cc.bounds_:is_point_inside(self.start_position_) then
+    if cc.bounds_:is_point_inside(self.start_position_) then
         if self.status_ == cc.enemy_.status_.active_ then
-            self.sprite_:setVisible(true)
+           self.sprite_:setVisible(true)
            self.status_ = cc.enemy_.status_.fighting_
            self.health_ = self.default_health_
 
@@ -70,30 +70,30 @@ function mob:check_status()
             self:setPosition(self.start_position_)
             self.status_ = cc.enemy_.status_.inactive_
         end
-    elseif cc.bounds_:is_rect_inside(bbox) and self.status_ == cc.enemy_.status_.defeated_ then
+    elseif self.status_ == cc.enemy_.status_.defeated_ then
             self.sprite_:stopAllActions()
             self:stopAllActions()
             self:onDefeated()
             self.sprite_:setVisible(false)
             self:setPosition(self.start_position_)
             self.status_ = cc.enemy_.status_.inactive_
-    
-    else
-        if self.status_ == cc.enemy_.status_.fighting_ or self.status_ == cc.enemy_.status_.preparing_ then
-            self:stopAllActions()
-            self.sprite_:stopAllActions()
+    end
 
-            if not cc.bounds_:is_point_inside(self.start_position_) then
-                self.sprite_:setVisible(true)
-                self:setPosition(self.start_position_)
-                self.status_ = cc.enemy_.status_.active_
-            end
+end
 
+function mob:offscreen()
+    if self.status_ == cc.enemy_.status_.fighting_ or self.status_ == cc.enemy_.status_.preparing_ then
+        self:stopAllActions()
+        self.sprite_:stopAllActions()
+
+        if not cc.bounds_:is_point_inside(self.start_position_) then
+            --self.sprite_:setVisible(true)
+            self:setPosition(self.start_position_)
+            self.status_ = cc.enemy_.status_.active_
         end
 
     end
 
-    
     if self.status_ == cc.enemy_.status_.active_  then
         if not cc.bounds_:is_point_inside(self.start_position_) then
             self.sprite_:setVisible(false)
@@ -115,6 +115,7 @@ function mob:walk()
             self.current_speed_.x = -self.walk_speed_
         end
     end
+
 end
 
 function mob:jump()

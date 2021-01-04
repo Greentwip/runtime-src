@@ -112,7 +112,52 @@ function pause_menu:ctor(settings)
 
     self:init_callbacks()
 
+    self:set_default_browner()       
+
     self:prepare()
+
+end
+
+function pause_menu:set_default_browner()
+
+    
+    local violet = self.browners_[cc.browners_.violet_.id_]
+    local helmet  = self.browners_[cc.browners_.helmet_.id_]
+    local extreme  = self.browners_[cc.browners_.extreme_.id_]
+
+    local new_default_browner
+
+    if cc.game_options_.helmet_activated_ then
+        if self.default_browner_ == violet or self.default_browner_ == extreme then
+            if cc.game_options_.extreme_activated_ then 
+                new_default_browner = extreme
+            else
+                new_default_browner = helmet
+            end
+            
+        else
+            if cc.game_options_.extreme_activated_ then 
+                if self.default_browner_ == violet or self.default_browner_ == helmet then
+                    new_default_browner = extreme
+                end
+                
+            end
+        end
+    else
+        if cc.game_options_.extreme_activated_ then
+            if self.default_browner_ == violet or self.default_browner_ == helmet then
+                new_default_browner = extreme
+            end
+        else
+            if self.default_browner_ == helmet or self.default_browner_ == extreme then
+                new_default_browner = violet
+            end
+        end
+    end
+
+    if new_default_browner ~= nil then
+        self.default_browner_ = new_default_browner
+    end
 end
 
 function pause_menu:setup_variables()
@@ -314,26 +359,33 @@ function pause_menu:switch_triggered(sender)
             cc.game_options_.helmet_activated_ = false
             visit_sender = true
         else
-            if cc.game_options_.extreme_activated_ then
+            --[[if cc.game_options_.extreme_activated_ then
                 cc.game_options_.extreme_activated_ = false
                 visit_target = true
                 target = self.ex_switch_
-            end
+            end]]
 
             cc.game_options_.helmet_activated_ = true
             visit_sender = true
             sender_value = 2
         end
+
+        local slot = cc.game.get_default_slot()
+
+        slot["helmet_activated"] = cc.game_options_.helmet_activated_
+
+        cc.game.save_default_slot(slot)
+
     elseif sender == self.ex_switch_ then
         if cc.game_options_.extreme_activated_ then
             cc.game_options_.extreme_activated_ = false
             visit_sender = true
         else
-            if cc.game_options_.helmet_activated_ then
+            --[[if cc.game_options_.helmet_activated_ then
                 cc.game_options_.helmet_activated_ = false
                 visit_target = true
                 target = self.helmet_switch_
-            end
+            end]]
 
             cc.game_options_.extreme_activated_ = true
             visit_sender = true
@@ -358,31 +410,7 @@ function pause_menu:switch_triggered(sender)
         sender.sprite_:set_image_index(sender_value)
     end
 
-    local violet = self.browners_[cc.browners_.violet_.id_]
-    local helmet  = self.browners_[cc.browners_.helmet_.id_]
-    local extreme  = self.browners_[cc.browners_.extreme_.id_]
-
-    local new_default_browner
-
-    if cc.game_options_.helmet_activated_ then
-        if self.default_browner_ == violet or self.default_browner_ == extreme then
-            new_default_browner = helmet
-        end
-    else
-        if cc.game_options_.extreme_activated_ then
-            if self.default_browner_ == violet or self.default_browner_ == helmet then
-                new_default_browner = extreme
-            end
-        else
-            if self.default_browner_ == helmet or self.default_browner_ == extreme then
-                new_default_browner = violet
-            end
-        end
-    end
-
-    if new_default_browner ~= nil then
-        self.default_browner_ = new_default_browner
-    end
+    self:set_default_browner()
 end
 
 function pause_menu:validate_weapons()
@@ -406,7 +434,7 @@ function pause_menu:validate_weapons()
     local extreme  = self.browners_[cc.browners_.extreme_.id_]
 
     violet:setVisible(not (cc.game_options_.helmet_activated_ or cc.game_options_.extreme_activated_))
-    helmet:setVisible(cc.game_options_.helmet_activated_)
+    helmet:setVisible(cc.game_options_.helmet_activated_ and not cc.game_options_.extreme_activated_)
     extreme:setVisible(cc.game_options_.extreme_activated_)
 
     helmet:setPosition(cc.p(violet:getPositionX(), violet:getPositionY()))

@@ -61,6 +61,8 @@ function boss:init_browners(args)
     local boss_browner = browner:create(self.sprite_, args)
                                 :addTo(self)
 
+    boss_browner:deactivate()
+
     self.browners_[cc.browners_.boss_.id_] = boss_browner
 
     self.demo_browner_id_ = boss_browner.browner_id_
@@ -77,7 +79,10 @@ function boss:init_browners(args)
                                                                  :addTo(self)
 
     self.current_browner_ = self.browners_[cc.browners_.teleport_.id_]
-    self.current_browner_:run_action("jump")
+    
+
+    self:switch_browner(cc.browners_.teleport_.id_)
+    self.current_browner_:run_action("stand")
 end
 
 function boss:reset()
@@ -96,10 +101,13 @@ function boss:spawn()
     self:setPosition(self.start_position_)
     self.health_            = 0
 
-    self:switch_browner(cc.browners_.teleport_.id_)
+    --self:switch_browner(cc.browners_.teleport_.id_)
     --self.current_browner_ = self.browners_[cc.browners_.teleport_.id_]
 
     self:reset()
+
+    self:switch_browner(cc.browners_.teleport_.id_)
+    self.current_browner_:run_action("stand")
 
     self.vulnerable_ = true
 
@@ -112,12 +120,15 @@ end
 function boss:switch_browner(id)
 
     self.current_browner_:stop_actions()
+    self.current_browner_:deactivate()
 
     local new_browner = self.browners_[id]
 
     new_browner.on_ground_ = self.current_browner_.on_ground_
 
     self.current_browner_ = new_browner
+    self.current_browner_:activate()
+
 end
 
 function boss:walk()
@@ -264,6 +275,7 @@ function boss:solve_collisions()
         if collision_tag == cc.tags.teleporter then
 
             if self.spawning_ then
+                cc.pause(false)
                 self.spawning_ = false
                 self.spawn_flag_ = false
                 self:switch_browner(cc.browners_.boss_.id_)
@@ -504,8 +516,32 @@ function boss:update(dt)
    self.current_browner_:update(dt) 
 end
 
+function boss:kinematic_step(dt)
+    if cc.game_status_ == cc.GAME_STATUS.RUNNING or self.spawning_ then
+        self:compute_position()
+        self:move(dt)
+    end
+end
 
-function boss:step(dt)
+function boss:kinematic_post_step(dt)
+
+    if cc.game_status_ == cc.GAME_STATUS.RUNNING or self.spawning_ then
+
+        if self.kinematic_body_.body_:getVelocity().x ~= self.current_speed_.x
+            or self.kinematic_body_.body_:getVelocity().y ~= self.current_speed_.y then
+
+            self.kinematic_body_.body_:setVelocity(self.current_speed_)
+
+        end
+
+    else
+        self.kinematic_body_.body_:setVelocity(cc.p(0, 0))
+        self.kinematic_body_.collisions_ = {}
+    end
+
+end
+
+function boss:forced_step(dt)
     self:kinematic_step(dt)
 
     local bbox = self.kinematic_body_:bbox()
@@ -513,6 +549,8 @@ function boss:step(dt)
     bbox.y = cc.bounds_:top() - cc.bounds_:height() / 2 -- battle offset
 
     if cc.bounds_:is_rect_inside(bbox) then
+        cc.is_boss_area_ = true
+
         if self.battle_status_ == cc.battle_status_.startup_ then
 
             local defeated = false
@@ -533,7 +571,7 @@ function boss:step(dt)
                 ccexp.AudioEngine:stopAll()
                 cc.audio.play_bgm("sounds/bgm_boss_vineman.mp3", true)
 
-                self.player_.can_move_ = false
+                --self.player_.can_move_ = false
                 self:spawn()
                 self.battle_status_ = cc.battle_status_.waiting_
             end
@@ -573,6 +611,11 @@ function boss:step(dt)
             self.health_bar_:removeSelf()
             self.health_bar_ = nil
             self.battle_status_ = cc.battle_status_.waiting_
+        end
+        if self.spawning_ and self.alive_ then
+            self:solve_collisions()
+        elseif self.alive_ then
+            self:solve_collisions()
         end
 
         if cc.game_status_ == cc.GAME_STATUS.RUNNING then
@@ -618,6 +661,10 @@ function boss:step(dt)
     end
 
     return self
+end
+
+function boss:step(dt)
+
 end
 
 function boss:post_step(dt)

@@ -8,8 +8,9 @@ local level  = class("level", level_base)
 function level:onLoad()
     self.super:onLoad()
 
-    self.level_bgm_ = "sounds/bgm_level_" .. cc.current_level_.mug_ .. ".mp3"
-    self.tmx_map_   = "tilemaps/" .. cc.current_level_.mug_  .. "/level" .. "_" .. cc.current_level_.mug_ .. ".tmx"
+    self.level_bgm_ = "sounds" .. "/" .. "bgm_level_" .. cc.current_level_.mug_ .. ".mp3"
+    self.tmx_map_   = "tilemaps" .. "/" .. cc.current_level_.mug_  .. "/" .. "level" .. "_" .. cc.current_level_.mug_ .. ".tmx"
+    self.map_path_  = "tilemaps" .. "/" .. cc.current_level_.mug_
 end
 
 return level

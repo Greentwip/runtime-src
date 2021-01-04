@@ -394,7 +394,15 @@ function cody:solve_collisions()
             if self.spawning_ then
                 self.spawning_ = false
                 self.kinematic_body_.ignore_block_collisions_ = false
-                self:switch_browner(cc.browners_.violet_.id_)
+    
+                cc.game_options_.extreme_activated_ = false
+
+                if cc.game_options_.helmet_activated_ then 
+                    self:switch_browner(cc.browners_.helmet_.id_)
+                else
+                    self:switch_browner(cc.browners_.violet_.id_)
+                end
+
                 cc.audio.play_sfx("sounds/sfx_teleport1.mp3", false)
             end
 
@@ -472,6 +480,33 @@ function cody:discharge_condition()
     return not cc.key_down(cc.key_code_.b)
 end
 
+function cody:kinematic_step(dt)
+     if cc.game_status_ == cc.GAME_STATUS.RUNNING or 
+        (cc.boss_.battle_status_ == cc.battle_status_.waiting_ and cc.camera_.target_door_ == nil) then
+        self:compute_position()
+        self:move(dt)
+    end
+end
+
+function cody:kinematic_post_step(dt)
+
+    if cc.game_status_ == cc.GAME_STATUS.RUNNING or 
+        (cc.boss_.battle_status_ == cc.battle_status_.waiting_ and cc.camera_.target_door_ == nil) then
+
+        if self.kinematic_body_.body_:getVelocity().x ~= self.current_speed_.x
+            or self.kinematic_body_.body_:getVelocity().y ~= self.current_speed_.y then
+
+            self.kinematic_body_.body_:setVelocity(self.current_speed_)
+
+        end
+
+    else
+        self.kinematic_body_.body_:setVelocity(cc.p(0, 0))
+        self.kinematic_body_.collisions_ = {}
+    end
+
+end
+
 function cody:move()
 
     self.current_browner_.speed_ = self.kinematic_body_.body_:getVelocity()
@@ -480,7 +515,7 @@ function cody:move()
         --print("contact")
         self.current_browner_.speed_.y = 0
 
-        if not self.current_browner_.on_ground_ and not self.current_browner_.climbing_ then
+        if not self.current_browner_.on_ground_ and not self.current_browner_.climbing_ and not self.spawning_ then
             self.current_browner_.on_ground_    = true
             self.current_browner_.dash_jumping_ = false
             self.current_browner_.jumping_      = false
@@ -505,10 +540,18 @@ function cody:move()
             self.current_browner_.speed_.y = -1
         end
     end
+    
 
-    self:walk()
-    self:jump()
-    self:dash_jump()
+    if cc.game_status_ == cc.GAME_STATUS.RUNNING then
+
+        self:walk()
+        self:jump()
+        self:dash_jump()        
+        
+    end
+
+
+    
 
     if self.contacts_[cc.kinematic_contact_.right] then
         if self.current_browner_.speed_.x > 0 then
@@ -705,6 +748,13 @@ end
 function cody:step(dt)
 
     if self.can_move_ then -- used for boss battles and demo
+
+        if cc.boss_.spawning_ then 
+            self.current_browner_.speed_.x = 0
+            self.current_browner_.walking_ = false
+            self.current_browner_.sliding_ = false
+        end
+
         self:kinematic_step(dt)
 
         if self.spawning_ and self.alive_ then
@@ -745,7 +795,7 @@ function cody:post_step(dt)
 
     self:kinematic_post_step(dt)
 
-    if cc.game_status_ == cc.GAME_STATUS.RUNNING then
+    if cc.game_status_ == cc.GAME_STATUS.RUNNING or cc.boss_.spawning_ then
         self:trigger_actions()
     else
         if self.alive_ then

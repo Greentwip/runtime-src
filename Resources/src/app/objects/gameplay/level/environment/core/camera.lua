@@ -70,6 +70,10 @@ function camera:solve_collisions()
             self.scroll_ = collision.scroll_
         end
 
+        if self.camera_mode_ == cc.CAMERA.MODE.SCROLL then
+            self.scroll_ = collision.scroll_
+        end
+
 
         self.scroll_collision_ = collision
         self.tolerance_        = collision.tolerance_
@@ -204,12 +208,13 @@ function camera:step(dt)
         end
 
         if self.target_door_ == nil then
+            local camera_self = self
             if self.player_.in_door_ and not self.boss_door_shift_ then
-                self.target_door_ = self.player_.in_door_
-                self.boss_door_shift_ = true
-                self.boss_door_working_ = true
-                self.target_door_:unlock(function()
-                    self.boss_door_working_ = false
+                camera_self.target_door_ = self.player_.in_door_
+                camera_self.boss_door_shift_ = true
+                camera_self.boss_door_working_ = true
+                camera_self.target_door_:unlock(function()
+                    camera_self.boss_door_working_ = false
                 end)
             end
         end
@@ -261,14 +266,17 @@ function camera:step(dt)
             if self.boss_door_shift_ then
                 self.boss_door_shift_ = false
 
+                local camera_self = self
                 self.target_door_:lock(function()
-                    self.camera_mode_ = cc.CAMERA.MODE.SCREEN
+                    camera_self.camera_mode_ = cc.CAMERA.MODE.SCREEN
 
-                    self.boss_door_shift_ = false
-                    self.target_door_ = nil
-                    self.boss_door_working_ = false
+                    camera_self.boss_door_shift_ = false
+                    camera_self.target_door_ = nil
+                    camera_self.boss_door_working_ = false
                     if cc.game_status_ == cc.GAME_STATUS.PAUSED then
-                        cc.pause(false)
+                        if not cc.is_boss_area_ then 
+                            cc.pause(false)
+                        end
                     end
                 end)
             else
@@ -276,7 +284,9 @@ function camera:step(dt)
                     self.camera_mode_ = cc.CAMERA.MODE.SCREEN
 
                     if cc.game_status_ == cc.GAME_STATUS.PAUSED then
-                        cc.pause(false)
+                        if not cc.is_boss_area_ then
+                            cc.pause(false)
+                        end
                     end
                 end
 

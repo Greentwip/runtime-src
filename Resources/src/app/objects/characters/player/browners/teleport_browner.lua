@@ -18,6 +18,7 @@ function teleport_browner:ctor(sprite)
 
     local actions = {}
     actions[#actions + 1] = {name = "jump",      animation = {name = "teleport_jump",       forever = true, delay = 0.12} }
+    actions[#actions + 1] = {name = "stand",      animation = {name = "teleport_stand",       forever = true, delay = 0.12} }
     self.sprite_:load_actions_set(actions, true, self.base_name_)
 
     self.browner_id_ = cc.browners_.teleport_.id_       -- overriden from parent
