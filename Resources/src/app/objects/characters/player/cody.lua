@@ -324,6 +324,9 @@ function cody:stun(damage)
 
         self.current_browner_.stunned_ = true
         self.vulnerable_ = false
+        
+        self.current_browner_.sliding_ = false
+        self.current_browner_.slide_timer_ = 0
 
         self.current_browner_.charge_power_ = "low"
         self.current_browner_.charging_ = false

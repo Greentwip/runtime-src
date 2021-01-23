@@ -16,6 +16,8 @@ function mob:onCreate()
         package_ = "weapon",
         cname_ = "directional_bullet"
     }
+    
+    self.facing_ = self:get_sprite_normal()
 end
 
 function mob:animate(cname)
@@ -42,24 +44,34 @@ end
 
 function mob:walk()
     self.current_speed_.y = 0
+    
+    
 
     if cc.pGetDistance(cc.p(self:getPositionX(), 0),
         cc.p(self.player_:getPositionX(), 0)) < 100 and self.still_  then
         self.still_ = false
+        
+        if (self.facing_ == -1 and
+            self.player_:getPositionX() <= self:getPositionX()) or
+            (self.facing_ == 1 and
+            self.player_:getPositionX() > self:getPositionX())
+             then
+                
+            local wake_up = cc.CallFunc:create(function()  self.sprite_:run_action("wake") end)
 
-        local wake_up = cc.CallFunc:create(function()  self.sprite_:run_action("wake") end)
+            local delay = cc.DelayTime:create(self.sprite_:get_action_duration("wake") * 1)
+            local callback = cc.CallFunc:create(function()
+                cc.audio.play_sfx("sounds/sfx_taban.mp3", false)
+                self.sprite_:run_action("fly")
+                self.flying_ = true
+            end)
 
-        local delay = cc.DelayTime:create(self.sprite_:get_action_duration("wake") * 2)
-        local callback = cc.CallFunc:create(function()
-            cc.audio.play_sfx("sounds/sfx_taban.mp3", false)
-            self.sprite_:run_action("fly")
-            self.flying_ = true
-        end)
+            local sequence = cc.Sequence:create(wake_up, delay, callback, nil)
 
-        local sequence = cc.Sequence:create(wake_up, delay, callback, nil)
-
-        self:stopAllActions()
-        self:runAction(sequence)
+            self:stopAllActions()
+            self:runAction(sequence)
+            
+        end
 
     end
 end
@@ -97,7 +109,7 @@ function mob:attack()
 
         self.attacking_ = true
 
-        local delay = cc.DelayTime:create(2.0)
+        local delay = cc.DelayTime:create(1.0)
         local callback = cc.CallFunc:create(function()
 
             local player_position = cc.p(self.player_:getPositionX(), self.player_:getPositionY())
