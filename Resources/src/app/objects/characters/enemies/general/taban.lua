@@ -17,7 +17,6 @@ function mob:onCreate()
         cname_ = "directional_bullet"
     }
     
-    self.facing_ = self:get_sprite_normal()
 end
 
 function mob:animate(cname)
@@ -30,6 +29,8 @@ function mob:animate(cname)
     self.sprite_:load_action(wake, false)
     self.sprite_:load_action(fly, false)
     self.sprite_:set_animation(still.animation.name)
+
+    self.facing_ = self:get_sprite_normal()
 
     return self
 end
