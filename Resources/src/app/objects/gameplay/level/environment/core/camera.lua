@@ -88,7 +88,15 @@ function camera:solve_collisions()
 --        self.scroll_        = cc.CAMERA.SCROLL.MOVING
         self:setPositionX(self:getPositionX() + self.player_:getPositionX() - cc.bounds_:getPositionX())
     end
+    
+    self.kinematic_body_:manual_update_collisions(cc.tags.check_point)
 
+
+    local collisions = self.kinematic_body_:get_collisions()
+
+    for _, collision in  pairs(collisions) do
+        cc.level_controller_.check_point_ = collision
+    end
 end
 
 function camera:step(dt)

@@ -17,6 +17,8 @@ function helmet_browner:ctor(sprite)
     actions[#actions + 1] = {name = "walk",       animation = {name = "helmet_walk",        forever = true,  delay = 0.12} }
     actions[#actions + 1] = {name = "hurt",       animation = {name = "helmet_hurt",        forever = false, delay = 0.02} }
     actions[#actions + 1] = {name = "standshoot", animation = {name = "helmet_standshoot",  forever = false, delay = 0.10} }
+    actions[#actions + 1] = {name = "climb",      animation = {name = "helmet_climb",       forever = true,  delay = 0.16} }
+
     actions[#actions + 1] = {name = "walkshoot",  animation = {name = "helmet_walkshoot",   forever = true,  delay = 0.12} }
     actions[#actions + 1] = {name = "jumpshoot",  animation = {name = "helmet_jumpshoot",   forever = false, delay = 0.10} }
 
