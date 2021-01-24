@@ -9,14 +9,25 @@ function claw_bullet:onCreate()
     self.power_ = 4
 end
 
+local function sign(number)
+   if number > 0 then
+      return 1
+   elseif number < 0 then
+      return -1
+   else
+      return 0
+   end
+end
+
 function claw_bullet:setup_movement(point)
 
     local delta_y = point.y - self:getPositionY()
     local delta_x = point.x - self:getPositionX()
 
     self.angle_ = math.atan2(delta_y, delta_x) -- * 180 / math.pi
-    self.velocity_ = 10000
-
+    self.velocity_ = 10000 * sign(delta_x)
+    
+    
     self.sprite_:setRotation(-(self.angle_ * 180 / math.pi) * 2)
 
     return self

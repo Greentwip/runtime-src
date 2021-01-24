@@ -115,6 +115,8 @@ function boss:spawn()
     self.sprite_:setVisible(true)
 
     self.alive_ = true
+    
+    self.current_browner_:reset_flags()
 end
 
 function boss:switch_browner(id)

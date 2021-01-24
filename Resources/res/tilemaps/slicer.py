@@ -35,6 +35,10 @@ def split_image_to_tiles(im):
 def get_args(name, level_name, spritesheet, layer):
     return level_name, spritesheet, layer
 
+'''
+    Usage: python slicer.py sheriffman path_to_full_texture 0
+'''
+
 def main():
     level_name, spritesheet, layer = get_args(*sys.argv)
     slice_master_path =  level_name + "/" + "__slices"

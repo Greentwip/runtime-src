@@ -45,8 +45,6 @@ end
 
 function mob:walk()
     self.current_speed_.y = 0
-    
-    
 
     if cc.pGetDistance(cc.p(self:getPositionX(), 0),
         cc.p(self.player_:getPositionX(), 0)) < 100 and self.still_  then

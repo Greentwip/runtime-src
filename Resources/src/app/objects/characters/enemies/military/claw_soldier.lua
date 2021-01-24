@@ -38,39 +38,58 @@ end
 
 function mob:attack()
 
-    if not self.attacking_ then
-        self.attacking_ = true
+    local player_position = cc.p(self.player_:getPositionX(), self.player_:getPositionY())
+    local self_position = cc.p(self:getPositionX(), self:getPositionY())
+    
+    player_position = self:convertToWorldSpace(player_position)
+    self_position = self:convertToWorldSpace(self_position)
+    
+    local delta_y = player_position.y - self_position.y
+    local delta_x = player_position.x - self_position.x
 
-        self.player_position_ = cc.p(self.player_:getPositionX(), self.player_:getPositionY())
+    local angle = math.atan2(delta_y, delta_x) -- * 180 / math.pi
+    
+    local euler_angle = angle * 180 / math.pi
+        
+    if  (euler_angle <= 60 and euler_angle >= -60) or
+        (euler_angle >= -120 and euler_angle <= -180) or
+        (euler_angle <= 180 and euler_angle >= 120) then
+        if not self.attacking_ then
+            self.attacking_ = true
 
-        local action_delay = cc.DelayTime:create(2)
+            self.player_position_ = cc.p(self.player_:getPositionX(), self.player_:getPositionY())
 
-        local attack  = cc.CallFunc:create(function()
-            self.sprite_:run_action("attack")
-        end)
+            local action_delay = cc.DelayTime:create(2)
 
-        local callback = cc.CallFunc:create(function()
+            local attack  = cc.CallFunc:create(function()
+                self.sprite_:run_action("attack")
+            end)
 
-            local bullet = self:fire({  sfx = nil,
-                offset = cc.p(20, 16),
-                weapon = self.weapon_,
-                parameters = self.weapon_parameters_})
+            local callback = cc.CallFunc:create(function()
 
-            bullet:setup_movement(self.player_position_)
+                local bullet = self:fire({  sfx = nil,
+                    offset = cc.p(20, 16),
+                    weapon = self.weapon_,
+                    parameters = self.weapon_parameters_})
 
-        end)
+                bullet:setup_movement(self.player_position_)
+
+            end)
 
 
-        local on_end = cc.CallFunc:create(function()
-            self.attacking_ = false
-            self.sprite_:run_action("stand")
-        end)
+            local on_end = cc.CallFunc:create(function()
+                self.attacking_ = false
+                self.sprite_:run_action("stand")
+            end)
 
-        local sequence = cc.Sequence:create(action_delay, attack, callback, action_delay, on_end, nil)
+            local sequence = cc.Sequence:create(action_delay, attack, callback, action_delay, on_end, nil)
 
-        self:stopAllActions()
-        self:runAction(sequence)
+            self:stopAllActions()
+            self:runAction(sequence)
     end
+
+    end
+
 
 end
 

@@ -31,9 +31,6 @@ function night_browner:ctor(sprite, args)
 
     self.browner_id_ = cc.browners_.night_.id_       -- overriden from parent
 
-    
-    self.ticks_ = 0
-
     self.state_nothing_ = 0
     self.state_initial_shoot_prepare_ = 1
     self.state_initial_shooting_ = 2
@@ -48,6 +45,13 @@ function night_browner:ctor(sprite, args)
     self.state_diagonal_slash_prepare_ = 8
     self.state_diagonal_slash_ = 9
     self.state_diagonal_slash_reset_ = 10
+    
+    self:reset_flags()
+
+end
+
+function night_browner:reset_flags()
+    self.ticks_ = 0
 
     self.jump_flag_ = false
 
