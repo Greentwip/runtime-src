@@ -52,13 +52,21 @@ function mob:attack()
     local euler_angle = angle * 180 / math.pi
         
     if  (euler_angle <= 60 and euler_angle >= -60) or
-        (euler_angle >= -120 and euler_angle <= -180) or
+        (euler_angle >= -180 and euler_angle <= -120) or
         (euler_angle <= 180 and euler_angle >= 120) then
         if not self.attacking_ then
             self.attacking_ = true
-
-            self.player_position_ = cc.p(self.player_:getPositionX(), self.player_:getPositionY())
-
+            
+            --[[local facing = 0
+            if  (euler_angle >= -180 and euler_angle <= -120) or
+                (euler_angle <= 180 and euler_angle >= 120) then
+                  facing = 1
+            else
+                  facing = -1
+            end
+            ]]
+        
+            
             local action_delay = cc.DelayTime:create(2)
 
             local attack  = cc.CallFunc:create(function()
@@ -67,11 +75,14 @@ function mob:attack()
 
             local callback = cc.CallFunc:create(function()
 
+                self.player_position_ = cc.p(self.player_:getPositionX(), self.player_:getPositionY())
+
                 local bullet = self:fire({  sfx = nil,
                     offset = cc.p(20, 16),
                     weapon = self.weapon_,
                     parameters = self.weapon_parameters_})
 
+                --bullet:setup_movement(self.player_position_, facing)
                 bullet:setup_movement(self.player_position_)
 
             end)

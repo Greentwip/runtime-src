@@ -33,6 +33,9 @@ end
 
 function mob:onRespawn()
     self.attacking_ = false
+    self.is_flipping_ = false
+    self.status_ = cc.enemy_.status_.fighting_
+    
     if self.sprite_:isFlippedX() then
         self.sprite_:setFlippedX(false)
     end
@@ -82,23 +85,33 @@ function mob:attack()
             self.attacking_ = true
 
 
-            local delay = cc.DelayTime:create(1.0)
+            local delay = cc.DelayTime:create(0.5)
             local callback = cc.CallFunc:create(function()
 
-                local player_position = cc.p(self.player_:getPositionX(), self.player_:getPositionY())
+            player_x_distance = cc.pGetDistance(cc.p(self:getPositionX(), 0), cc.p(self.player_:getPositionX(), 0))
+            player_y_distance = cc.pGetDistance(cc.p(0, self:getPositionY()), cc.p(0, self.player_:getPositionY()))
 
-                local bullet = self:fire({  sfx = nil,
-                                            offset = cc.p(20, 16),
-                                            weapon = self.weapon_,
-                                            parameters = self.weapon_parameters_})
+                if player_x_distance > 48 or player_y_distance <= 24 then
 
-                bullet:setup_movement(player_position)
+                    local player_position = cc.p(self.player_:getPositionX(), self.player_:getPositionY())
 
-                self.attacking_ = false
+                    local bullet = self:fire({  sfx = nil,
+                                                offset = cc.p(20, 16),
+                                                weapon = self.weapon_,
+                                                parameters = self.weapon_parameters_})
+
+                    bullet:setup_movement(player_position)
+                end
+
+                
 
             end)
+            
+            local cooldown = cc.CallFunc:create(function()
+                self.attacking_ = false
+            end)
 
-            local sequence = cc.Sequence:create(delay, callback, nil)
+            local sequence = cc.Sequence:create(delay, callback, delay, cooldown, nil)
 
             self:stopAllActions()
             self:runAction(sequence)

@@ -178,6 +178,15 @@ function cody:switch_browner(id)
     local new_browner = self.browners_[id]
 
     new_browner.on_ground_ = ground_backup
+    
+    local climbing_backup = false
+    
+    if self.current_browner_ ~= nil then
+        climbing_backup = self.current_browner_.climbing_
+    end
+    
+    new_browner.climbing_ = climbing_backup
+
 
     self.current_browner_ = new_browner
     self.current_browner_:activate()

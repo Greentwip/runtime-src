@@ -7,16 +7,7 @@ function claw_bullet:onCreate()
     self.super:onCreate()
     self.speed_ = cc.p(0, 0)
     self.power_ = 4
-end
-
-local function sign(number)
-   if number > 0 then
-      return 1
-   elseif number < 0 then
-      return -1
-   else
-      return 0
-   end
+    self.rotation_counter_ = 0
 end
 
 function claw_bullet:setup_movement(point)
@@ -25,7 +16,7 @@ function claw_bullet:setup_movement(point)
     local delta_x = point.x - self:getPositionX()
 
     self.angle_ = math.atan2(delta_y, delta_x) -- * 180 / math.pi
-    self.velocity_ = 10000 * sign(delta_x)
+    self.velocity_ = 10000
     
     
     self.sprite_:setRotation(-(self.angle_ * 180 / math.pi) * 2)
@@ -38,7 +29,11 @@ function claw_bullet:step(dt)
 
     self.current_speed_.x = self.velocity_ * math.cos(self.angle_) * dt
     self.current_speed_.y = self.velocity_ * math.sin(self.angle_) * dt
-
+        
+    self.sprite_:setRotation((-(self.angle_ * 180 / math.pi) * 2) + self.rotation_counter_)
+    
+    self.rotation_counter_ = self.rotation_counter_ + 18
+    
     return self
 end
 
