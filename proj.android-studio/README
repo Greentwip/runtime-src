@@ -5,7 +5,13 @@ Android SDK:
 
 
 Android NDK:
-21.1.6352462
+20.0.5594570
+
+Sync once gradle files, then after NDK errors come in, 
+check generated file local.properties and add:
+ndk.dir=/Users/<username>/Source/Android/Sdk/ndk/20.0.5594570
+
+or your Windows/Linux route to the NDK installed inside the SDK folder
 
 Change directory to Sdk/ndk/21.1.6352462 then
 ln -s aarch64-linux-android-4.9 mips64el-linux-android
