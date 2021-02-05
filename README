@@ -1,0 +1,18 @@
+Open Android Studio SDK Manager and install:
+
+SDK:
+5.1, API Level 22
+
+NDK:
+21.1.6352462
+
+After receiving NDK related errors add to local.properties:
+sdk.dir=/Users/<username>/Source/Android/Sdk
+ndk.dir=/Users/<username>/Source/Android/Sdk/ndk/21.1.6352462
+
+Finally cd into toolchains NDK dir and
+create symbolic links to nonexisten mips arch:
+
+ln -s aarch64-linux-android-4.9 mips64el-linux-android
+ln -s arm-linux-androideabi-4.9 mipsel-linux-android
+
