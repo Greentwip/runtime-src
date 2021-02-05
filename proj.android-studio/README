@@ -1,0 +1,14 @@
+Install (via SDK manager using Android Studio)
+
+Android SDK:
+5.1, API Level 22
+
+
+Android NDK:
+21.1.6352462
+
+Change directory to Sdk/ndk/21.1.6352462 then
+ln -s aarch64-linux-android-4.9 mips64el-linux-android
+ln -s arm-linux-androideabi-4.9 mipsel-linux-android
+
+(mips is unsupported and will compile as aarch64 and standar arm)
