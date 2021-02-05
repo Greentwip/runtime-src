@@ -20,7 +20,7 @@
         // Initialization code here.
         linesCount = [[NSMutableArray arrayWithCapacity:MAX_LINES_COUNT + 1] retain];
     }
-
+    
     return self;
 }
 
@@ -38,6 +38,8 @@
 
 - (void) trace:(NSString*)msg
 {
+    self->textView.textColor = NSColor.whiteColor;
+
     if (traceCount >= SKIP_LINES_COUNT && [msg length] > MAX_LINE_LEN)
     {
         msg = [NSString stringWithFormat:@"%@ ...", [msg substringToIndex:MAX_LINE_LEN - 4]];

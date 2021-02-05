@@ -178,6 +178,15 @@ function cody:switch_browner(id)
     local new_browner = self.browners_[id]
 
     new_browner.on_ground_ = ground_backup
+    
+    local climbing_backup = false
+    
+    if self.current_browner_ ~= nil then
+        climbing_backup = self.current_browner_.climbing_
+    end
+    
+    new_browner.climbing_ = climbing_backup
+
 
     self.current_browner_ = new_browner
     self.current_browner_:activate()
@@ -324,6 +333,9 @@ function cody:stun(damage)
 
         self.current_browner_.stunned_ = true
         self.vulnerable_ = false
+        
+        self.current_browner_.sliding_ = false
+        self.current_browner_.slide_timer_ = 0
 
         self.current_browner_.charge_power_ = "low"
         self.current_browner_.charging_ = false

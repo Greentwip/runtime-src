@@ -30,7 +30,6 @@ function sheriff_browner:ctor(sprite, args)
 
     self.browner_id_ = cc.browners_.sheriff_.id_       -- overriden from parent
 
-    self.ticks_ = 0
 
     self.state_nothing_ = 0
     self.state_initial_shoot_prepare_ = 1
@@ -47,6 +46,13 @@ function sheriff_browner:ctor(sprite, args)
     self.state_diagonal_slash_ = 9
     self.state_diagonal_slash_reset_ = 10
 
+    self:reset_flags()
+    
+end
+
+function sheriff_browner:reset_flags()
+    self.ticks_ = 0
+
     self.jump_flag_ = false
 
     self.jump_counter_ = 0
@@ -58,7 +64,6 @@ function sheriff_browner:ctor(sprite, args)
     self.rounds_ = 0
 
     self.state_ = self.state_nothing_
-    
 end
 
 function sheriff_browner:update(dt)
@@ -153,7 +158,7 @@ function sheriff_browner:update(dt)
         end)
         
 
-        local dash_delay_2 = cc.DelayTime:create(1)
+        local dash_delay_2 = cc.DelayTime:create(1.5)
 
         local dash_callback = cc.CallFunc:create(function()
             self.dash_direction_ = -self.dash_direction_

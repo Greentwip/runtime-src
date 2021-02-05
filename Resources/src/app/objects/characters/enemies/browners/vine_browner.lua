@@ -23,8 +23,6 @@ function vine_browner:ctor(sprite, args)
 
     self.browner_id_ = cc.browners_.vine_.id_       -- overriden from parent
 
-    self.ticks_ = 0
-
     self.dash_direction_ = 1
     
     self.state_nothing_ = 0
@@ -38,6 +36,12 @@ function vine_browner:ctor(sprite, args)
     self.state_dash_prepare_no_jump_ = 6
 
     self.state_dash_end_idle_ = 7
+    
+    self:reset_flags()
+end
+
+function vine_browner:reset_flgas()
+    self.ticks_ = 0
     
     self.jump_flag_ = false
     self.rounds_ = 0

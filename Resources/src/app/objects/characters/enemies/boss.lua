@@ -115,6 +115,8 @@ function boss:spawn()
     self.sprite_:setVisible(true)
 
     self.alive_ = true
+    
+    self.current_browner_:reset_flags()
 end
 
 function boss:switch_browner(id)
@@ -304,7 +306,8 @@ function boss:move()
             self.current_browner_.on_ground_    = true
             self.current_browner_.dash_jumping_ = false
             self.current_browner_.jumping_      = false
-            cc.audio.play_sfx("sounds/sfx_land.mp3", false)
+            --cc.audio.play_sfx("sounds/sfx_land.mp3", false)
+            --print("land")
         end
     end
 
