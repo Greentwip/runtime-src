@@ -285,6 +285,17 @@ function level_base:load(tmx_map, map_path, load_arguments)
     self.bullets_       = {}
 
     self.status_ = cc.level_status_.run_
+
+    self.joypad_:retain()
+
+    self:removeChild(self.joypad_, false)
+    cc.bounds_:addChild(self.joypad_)
+
+    self.joypad_:setPositionX(-cc.bounds_:width() * 0.5)
+    self.joypad_:setPositionY(-cc.bounds_:height() * 0.5)
+
+    self.joypad_:release()
+
 end
 
 function level_base:schedule_component(component)
