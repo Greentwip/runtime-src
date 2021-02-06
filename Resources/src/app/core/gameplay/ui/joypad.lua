@@ -113,10 +113,12 @@ function joypad:ctor(layout)
         end
 
         self.moving_joystick_ = false
-        self.in_range_ = false
+        self.in_horizontal_range_ = false
+        self.in_vertical_range_ = false
         self.can_move_ = false
         self.dead_zone_ = 5
-        self.range_key_ = cc.key_code_.none
+        self.horizontal_range_key_ = cc.key_code_.none
+        self.vertical_range_key_ = cc.key_code_.none
 
         self.joy_keys_ = {}
 
@@ -216,63 +218,63 @@ function joypad:onJoystick(event)
 
         if self.can_move_ then
 
-            if angle >= -30 and angle <= 30 then
-                if not self.in_range_ then
+            if angle >= -60 and angle <= 60 then
+                if not self.in_horizontal_range_ then
                     cc.keys_[cc.key_code_.right].status_  = cc.KEY_STATUS.DOWN
                     cc.keys_[cc.key_code_.right].pressed_ = true
-                    self.in_range_ = true
-                    self.range_key_ = cc.key_code_.right
+                    self.in_horizontal_range_ = true
+                    self.horizontal_range_key_ = cc.key_code_.right
                 end
             else
                 cc.keys_[cc.key_code_.right].status_ = cc.KEY_STATUS.UP
                 cc.keys_[cc.key_code_.right].released_ = true
-                if self.range_key_ == cc.key_code_.right then
-                    self.in_range_ = false
+                if self.horizontal_range_key_ == cc.key_code_.right then
+                    self.in_horizontal_range_ = false
                 end
             end
 
-            if math.abs(angle) >= 150 and math.abs(angle) <= 180 then
-                if not self.in_range_ then
+            if math.abs(angle) >= 120 and math.abs(angle) <= 180 then
+                if not self.in_horizontal_range_ then
                     cc.keys_[cc.key_code_.left].status_  = cc.KEY_STATUS.DOWN
                     cc.keys_[cc.key_code_.left].pressed_ = true
-                    self.in_range_ = true
-                    self.range_key_ = cc.key_code_.left
+                    self.in_horizontal_range_ = true
+                    self.horizontal_range_key_ = cc.key_code_.left
                 end
             else
                 cc.keys_[cc.key_code_.left].status_ = cc.KEY_STATUS.UP
                 cc.keys_[cc.key_code_.left].released_ = true
-                if self.range_key_ == cc.key_code_.left then
-                    self.in_range_ = false
+                if self.horizontal_range_key_ == cc.key_code_.left then
+                    self.in_horizontal_range_ = false
                 end
             end
 
-            if angle >= 60 and angle <= 120 then
-                if not self.in_range_ then
+            if angle >= 30 and angle <= 150 then
+                if not self.in_vertical_range_ then
                     cc.keys_[cc.key_code_.up].status_  = cc.KEY_STATUS.DOWN
                     cc.keys_[cc.key_code_.up].pressed_ = true
-                    self.in_range_ = true
-                    self.range_key_ = cc.key_code_.up
+                    self.in_vertical_range_ = true
+                    self.vertical_range_key_ = cc.key_code_.up
                 end
             else
                 cc.keys_[cc.key_code_.up].status_ = cc.KEY_STATUS.UP
                 cc.keys_[cc.key_code_.up].released_ = true
-                if self.range_key_ == cc.key_code_.up then
-                    self.in_range_ = false
+                if self.vertical_range_key_ == cc.key_code_.up then
+                    self.in_vertical_range_ = false
                 end
             end
 
-            if angle <= -60 and angle >= -120 then
-                if not self.in_range_ then
+            if angle <= -30 and angle >= -150 then
+                if not self.in_vertical_range_ then
                     cc.keys_[cc.key_code_.down].status_  = cc.KEY_STATUS.DOWN
                     cc.keys_[cc.key_code_.down].pressed_ = true
-                    self.in_range_ = true
-                    self.range_key_ = cc.key_code_.down
+                    self.in_vertical_range_ = true
+                    self.vertical_range_key_ = cc.key_code_.down
                 end
             else
                 cc.keys_[cc.key_code_.down].status_ = cc.KEY_STATUS.UP
                 cc.keys_[cc.key_code_.down].released_ = true
-                if self.range_key_ == cc.key_code_.down then
-                    self.in_range_ = false
+                if self.vertical_range_key_ == cc.key_code_.down then
+                    self.in_vertical_range_ = false
                 end
             end
 
@@ -285,7 +287,8 @@ function joypad:onJoystick(event)
         self.moving_joystick_ = false
         self.circle_:setPosition(cc.p(self.ring_:getPositionX(),
                                       self.ring_:getPositionY()))
-        self.in_range_ = false
+        self.in_horizontal_range_ = false
+        self.in_vertical_range_ = false
         self.can_move_ = false
 
         for i = 1, #self.joy_keys_ do
