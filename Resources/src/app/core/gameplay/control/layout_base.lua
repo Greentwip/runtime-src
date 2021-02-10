@@ -27,6 +27,26 @@ function layout_base.create(class_name)
 
     function layout:onAfterCreate()
         self.joypad_ = joypad:create(self):addTo(self, 4096)
+
+        if cc.platform_ == "mobile" then
+            self.blackout_a_ = cc.Sprite:create("sprites/core/blackout/bar.png")
+            :setAnchorPoint(cc.p(0, 0))
+            :setPosition(cc.p(display.left_bottom.x - 85, display.left_bottom.y))
+            :addTo(self, 2048)
+
+            self.blackout_b_ = cc.Sprite:create("sprites/core/blackout/bar.png")
+            :setAnchorPoint(cc.p(1, 0))
+            :setPosition(cc.p(display.right_bottom.x - 85, display.right_bottom.y))
+            :addTo(self, 2048)                                    
+        end
+
+        if self.onAfterLoad then
+            self:onAfterLoad()
+        end
+    end
+
+    function layout:onAfterLoad()
+
     end
 
     function layout:start()

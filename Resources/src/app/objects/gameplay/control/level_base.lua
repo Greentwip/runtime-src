@@ -14,6 +14,23 @@ function level_base:onLoad()
     self.status_ = cc.level_status_.init_
 end
 
+function level_base:onAfterLoad()
+    if cc.platform_ == "mobile" then
+        self.joypad_:setPositionX(85)
+    end
+
+
+    if cc.platform_ == "mobile" then
+        --self.blackout_a_:removeSelf()
+        --self.blackout_a_:addTo(cc.camera_)
+
+        --self.blackout_b_:removeSelf()
+        --self.blackout_b_:addTo(cc.camera_)        
+    end
+
+end
+
+
 function level_base:calculate_tmx_position(tmx_object, tmx_map)
 
     local block_tmx_y = (tmx_map:getMapSize().height * tmx_map:getTileSize().height) - tmx_object["y"]
@@ -40,6 +57,7 @@ end
 
 -- anything related to physics should be created here
 function level_base:load(tmx_map, map_path, load_arguments)
+    cc.level_base_ = self
 
     display.removeUnusedSpriteFrames()
 
@@ -49,6 +67,7 @@ function level_base:load(tmx_map, map_path, load_arguments)
                                  :setAnchorPoint(cc.p(0,1))
                                  :setPosition(display.left_top)
                                  :addTo(self, 0)
+                           
 
 
     local definition = cc.json.decode(cc.file.read_raw(map_path .. "/" .. "definitions.json"))
@@ -128,7 +147,6 @@ function level_base:load(tmx_map, map_path, load_arguments)
     cc.bounds_ = bounds:create()
                        :setPosition(cc.p(first_check_point:getPositionX(), first_check_point:getPositionY()))
                        :addTo(self, 1024)
-
 
     --------------------------------
     -- player
@@ -295,6 +313,30 @@ function level_base:load(tmx_map, map_path, load_arguments)
     self.joypad_:setPositionY(-cc.bounds_:height() * 0.5)
 
     self.joypad_:release()
+
+    if cc.platform_ == "mobile" then
+
+        self.blackout_a_:retain()
+        self:removeChild(self.blackout_a_, false)
+        cc.bounds_:addChild(self.blackout_a_)
+        self.blackout_a_:setPositionX((-cc.bounds_:width() * 0.5) - 85)
+        self.blackout_a_:setPositionY(-cc.bounds_:height() * 0.5)
+        self.blackout_a_:release()
+
+        self.blackout_b_:retain()
+        self:removeChild(self.blackout_b_, false)
+        cc.bounds_:addChild(self.blackout_b_)
+        self.blackout_b_:setPositionX((cc.bounds_:width() * 0.5) + 85)
+        self.blackout_b_:setPositionY(-cc.bounds_:height() * 0.5)
+        self.blackout_b_:release()
+
+        --self.blackout_a_:removeSelf()
+        --self.blackout_a_:addTo(cc.camera_)
+
+        --self.blackout_b_:removeSelf()
+        --self.blackout_b_:addTo(cc.camera_)        
+    end
+
 
 end
 

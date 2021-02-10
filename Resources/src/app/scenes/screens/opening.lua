@@ -15,6 +15,10 @@ function opening:onLoad()
 
     -- self variables
     self.triggered_ = false
+
+    if cc.platform_ == "mobile" then
+        self:setPositionX(85)
+    end
 end
 
 function opening:opening_intro_a()

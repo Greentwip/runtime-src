@@ -4,7 +4,10 @@ local options = import("app.core.gameplay.control.layout_base").create("title")
 
 function options:onLoad()
     -- self variables
-
+    if cc.platform_ == "mobile" then
+        self:setPositionX(85)
+    end
+    
     local root = cc.CSLoader:createNode("sprites/gameplay/screens/options/data.csb")
     root:addTo(self)
     

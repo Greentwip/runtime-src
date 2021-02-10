@@ -7,7 +7,10 @@ local label     = import("app.core.graphical.label")
 local selector  = import("app.objects.gameplay.level.ui.selector")
 
 function title:onLoad()
-
+    if cc.platform_ == "mobile" then
+        self:setPositionX(85)
+    end
+    
     self.background_ = sprite:create("sprites/gameplay/screens/title_screen/title_screen", cc.p(0, 0))
                              :setPosition(cc.p(0,0))
                              :addTo(self)

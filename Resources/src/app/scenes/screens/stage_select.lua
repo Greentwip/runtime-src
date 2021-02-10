@@ -6,7 +6,10 @@ local label  = import("app.core.graphical.label")
 local sprite        = import("app.core.graphical.sprite")
 
 function stage_select:onLoad()
-
+    if cc.platform_ == "mobile" then
+        self:setPositionX(85)
+    end
+    
     print("stopping")
     ccexp.AudioEngine:stopAll()
 

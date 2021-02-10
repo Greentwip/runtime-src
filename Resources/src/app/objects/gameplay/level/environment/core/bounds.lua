@@ -6,6 +6,9 @@ function bounds:ctor()
 
     self.size_   =  cc.Director:getInstance():getVisibleSize()
 
+    self.size_.width = 256
+    self.size_.height = 224
+
     self.body_ = cc.PhysicsBody:createEdgeBox(self.size_, cc.PhysicsMaterial(0.0, 0.0, 0.0), 1, cc.p(0.0, 0.0))
                                :setDynamic(false)
                                :setCollisionBitmask(0x00000000)

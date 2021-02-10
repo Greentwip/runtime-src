@@ -81,6 +81,10 @@ function level_controller:ctor(player, camera, scene_components, bgm, arguments)
         self.player_.energy_bar_ = self.hud_.energy_
 
     end
+
+    if cc.platform_ == "mobile" then
+        cc.level_base_.joypad_:setVisible(false)
+    end      
 end
 
 function level_controller:setup()
@@ -118,6 +122,8 @@ function level_controller:start()
 
         --        local delay = cc.DelayTime:create(4.0)
 
+        self.startup_fade_ = nil
+
         local on_fade_in = function()
             cc.pause(true)
             self:setup()
@@ -126,6 +132,11 @@ function level_controller:start()
 
         local on_fade_out = function()
             if self.ready_object_enabled_ then
+                if cc.platform_ == "mobile" then
+                    cc.level_base_.joypad_:setVisible(true)
+                end      
+            
+
                 ready_object:create(self.player_, function()    cc.pause(false) end)
                             :setPosition(cc.p(cc.bounds_:getPositionX(), cc.bounds_:getPositionY()))
                             :addTo(self)
@@ -133,21 +144,39 @@ function level_controller:start()
                 cc.pause(false)
                 self.player_:spawn()
             end
+
+            self.startup_fade_:removeSelf()
+            self.startup_fade_ = nil
         end
 
         if self.is_startup_ then
             self.is_startup_ = false
-            fade:create(4, nil, on_fade_in, on_fade_out, {fade_in = false, fade_out = true})
-                :addTo(cc.bounds_)
+
+            if cc.platform_ == "mobile" then
+                self.startup_fade_ = fade:create(4, nil, on_fade_in, on_fade_out, {fade_in = false, fade_out = true}, cc.p(0.5, 0.5), 2)
+                :setPositionX(85)
+                :addTo(cc.bounds_, 8192)
+            else
+                self.startup_fade_ = fade:create(4, nil, on_fade_in, on_fade_out, {fade_in = false, fade_out = true})
+                :addTo(cc.bounds_, 8192)
+            end                                     
         else
 
             self.on_fade_in_ = on_fade_in
             self.on_fade_out_ = on_fade_out
             local delay = cc.DelayTime:create(self.time_to_play_)
             local callback = cc.CallFunc:create(function()
-                fade:create(self.time_to_play_, nil, self.on_fade_in_, self.on_fade_out_, {fade_in = true, fade_out = true})
+
+                if cc.platform_ == "mobile" then
+                    self.startup_fade_ = fade:create(self.time_to_play_, nil, self.on_fade_in_, self.on_fade_out_, {fade_in = true, fade_out = true}, cc.p(0.5, 0.5), 2)
+                    :addTo(cc.bounds_, 8192)
+                else
+                    self.startup_fade_ = fade:create(self.time_to_play_, nil, self.on_fade_in_, self.on_fade_out_, {fade_in = true, fade_out = true})
                     :setPosition(0, 0)
-                    :addTo(cc.bounds_)
+                    :addTo(cc.bounds_, 8192)
+                end
+
+
             end)
 
             local sequence = cc.Sequence:create(delay, callback, nil)
@@ -302,11 +331,19 @@ function level_controller:step(dt)
 
                         local on_fade_out = function()
                             self.pause_menu_.ready_ = true
+                            self.pause_fade_:removeSelf()
                             self.pause_fade_ = nil
                         end
 
-                        self.pause_fade_ = fade:create(1.0, on_fade_begin, on_fade_in, on_fade_out, {fade_in = true, fade_out = true})
-                                               :addTo(cc.bounds_, 200)
+                        if cc.platform_ == "mobile" then
+                            self.pause_fade_ = fade:create(1.0, on_fade_begin, on_fade_in, on_fade_out, {fade_in = true, fade_out = true}, cc.p(0.5, 0.5))
+                            :addTo(cc.bounds_, 200)
+
+                        else
+                            self.pause_fade_ = fade:create(1.0, on_fade_begin, on_fade_in, on_fade_out, {fade_in = true, fade_out = true})
+                            :addTo(cc.bounds_, 200)
+                        end
+                    
 
                     end
                 elseif cc.pause_status_ == cc.PAUSE_STATUS.SCREEN then
@@ -334,11 +371,20 @@ function level_controller:step(dt)
                             local on_fade_out = function()
                                 cc.pause(false)
                                 cc.pause_status_ = cc.PAUSE_STATUS.NONE
+                                self.pause_fade_:removeSelf()
                                 self.pause_fade_ = nil
                             end
 
-                            self.pause_fade_ = fade:create(0.25, on_fade_begin, on_fade_in, on_fade_out, {fade_in = true, fade_out = true})
-                                                   :addTo(cc.bounds_)
+                            if cc.platform_ == "mobile" then
+                                self.pause_fade_ = fade:create(0.25, on_fade_begin, on_fade_in, on_fade_out, {fade_in = true, fade_out = true}, cc.p(0.5, 0.5))
+                                :addTo(cc.bounds_, 200)
+    
+                            else
+                                self.pause_fade_ = fade:create(0.25, on_fade_begin, on_fade_in, on_fade_out, {fade_in = true, fade_out = true})
+                                :addTo(cc.bounds_, 200)
+    
+                            end
+
                         end
                     end
                 end

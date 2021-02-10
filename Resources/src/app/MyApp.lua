@@ -11,7 +11,45 @@ function MyApp:setup()
     self:initiate()
 
     --cc.lite_edition_ = true
-    display.setAutoScale({autoscale = "SHOW_ALL", width = 256, height = 224}, {width = display.width, height = display.height})
+
+    
+    if device.platform ~= "android" and device.platform ~= "ios" then
+
+        display.setAutoScale({
+            autoscale = "SHOW_ALL", 
+            width = 256, 
+            height = 224
+        }, 
+        {
+            width = display.width, 
+            height = display.height
+        })
+
+        cc.platform_ = "desktop"
+    elseif device.platform == "winrt" then
+        display.setAutoScale({
+            autoscale = "SHOW_ALL", 
+            width = 256, 
+            height = 224
+        }, 
+        {
+            width = display.width, 
+            height = display.height
+        })
+
+        cc.platform_ = "console"
+    else
+        display.setAutoScale({
+            autoscale = "SHOW_ALL", 
+            width = 426, 
+            height = 224
+        }, 
+        {
+            width = display.width, 
+            height = display.height
+        })
+        cc.platform_ = "mobile"
+    end
 end
 
 cc.exports.UnanchoredPosition = function(newAnchorPoint, sprite)

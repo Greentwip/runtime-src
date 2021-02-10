@@ -63,6 +63,19 @@ function boss_intro:onLoad()
 
 end
 
+function boss_intro:onAfterLoad()
+    if cc.platform_ == "mobile" then
+        self.joypad_:setVisible(false)
+        self.joypad_:setPositionX(85)
+    end
+
+    if cc.platform_ == "mobile" then
+        self.blackout_a_:setPosition(cc.p(display.left_bottom.x, display.left_bottom.y))              
+        self.blackout_b_:setPosition(cc.p(display.right_bottom.x, display.right_bottom.y))              
+    end
+
+end
+
 function boss_intro:on_intro_complete()
 
     local boss_animate = cc.CallFunc:create(function()
@@ -92,17 +105,33 @@ function boss_intro:step(dt)
 
             ccexp.AudioEngine:stopAll()
 
-            fade:create(1.0, function() end, function()
-                self.sprite_ = sprite:create("sprites/core/fade/fade", cc.p(0.5, 0.5))
-                                     :addTo(self, 1024)
+            if cc.platform_ == "mobile" then
+                fade:create(1.0, function() end, function()
+                    self.sprite_ = sprite:create("sprites/core/fade/fade", cc.p(1, 0.5))
+                                         :addTo(self, 1024)
+    
+    
+                    self:getApp()
+                        :enterScene("levels.level", "FADE", 1, {physics = true})
+                
+                end, function() end, {fade_in = true, fade_out = false}, cc.p(1, 0.5))
+                                    :setPosition(0, 0)
+                                    :addTo(self, 1024)
+            else
+
+                fade:create(1.0, function() end, function()
+                    self.sprite_ = sprite:create("sprites/core/fade/fade", cc.p(0.5, 0.5))
+                                        :addTo(self, 1024)
 
 
-                self:getApp()
-                    :enterScene("levels.level", "FADE", 1, {physics = true})
-            
-            end, function() end, {fade_in = true, fade_out = false}, cc.p(0.5, 0.5))
-                                :setPosition(0, 0)
-                                :addTo(self, 1024)
+                    self:getApp()
+                        :enterScene("levels.level", "FADE", 1, {physics = true})
+                
+                    end, function() end, {fade_in = true, fade_out = false}, cc.p(0.5, 0.5))
+                                        :setPosition(0, 0)
+                                        :addTo(self, 1024)
+            end
+                            
     
 
     end

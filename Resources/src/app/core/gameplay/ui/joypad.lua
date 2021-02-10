@@ -50,7 +50,7 @@ function joypad:ctor(layout)
         self.ring_:loadTextures(tex_path.."/vjoy_ring.png", tex_path.."/vjoy_ring.png", "")
         self.ring_:addTo(self)
 
-        self.ring_:setPositionX(self.ring_:getPositionX() + self.ring_:getContentSize().width * 0.5)
+        self.ring_:setPositionX(self.ring_:getPositionX() - 85 / 2)
         self.ring_:setPositionY(self.ring_:getPositionY() + self.ring_:getContentSize().height * 0.5)
 
         self.circle_ = ccui.Button:create()
@@ -66,7 +66,7 @@ function joypad:ctor(layout)
         self.start_ = ccui.Button:create()
         self.start_:setTouchEnabled(true)
         self.start_:loadTextures(tex_path.."/start_button.png", tex_path.."/start_button.png", "")
-        self.start_:setPosition(cc.p(display.right_top.x - self.start_:getContentSize().width * 0.5,
+        self.start_:setPosition(cc.p(display.right_top.x - 85 * 2 + 85 * 0.5 - self.start_:getContentSize().width * 0.5,
                                      display.right_top.y - self.start_:getContentSize().height))
         self.start_:setPressedActionEnabled(true)
         self.start_:onTouch(function(event) self:onButton(event) end)
@@ -75,7 +75,7 @@ function joypad:ctor(layout)
         self.a_ = ccui.Button:create()
         self.a_:setTouchEnabled(true)
         self.a_:loadTextures(tex_path.."/a_button.png", tex_path.."/a_button.png", "")
-        self.a_:setPosition(cc.p(display.right_bottom.x - self.start_:getContentSize().width * 0.5,
+        self.a_:setPosition(cc.p(display.right_bottom.x - 85 * 2 + 85 * 0.5 - self.start_:getContentSize().width * 0.5,
                                  display.right_bottom.y + self.start_:getContentSize().height * 0.5))
         self.a_:setPressedActionEnabled(true)
         self.a_:onTouch(function(event) self:onButton(event) end)
@@ -84,7 +84,7 @@ function joypad:ctor(layout)
         self.b_ = ccui.Button:create()
         self.b_:setTouchEnabled(true)
         self.b_:loadTextures(tex_path.."/b_button.png", tex_path.."/b_button.png", "")
-        self.b_:setPosition(cc.p(self.a_:getPositionX() - self.b_:getContentSize().width, self.a_:getPositionY()))
+        self.b_:setPosition(cc.p(self.a_:getPositionX(), self.a_:getPositionY() + self.b_:getContentSize().height))
         self.b_:setPressedActionEnabled(true)
         self.b_:onTouch(function(event) self:onButton(event) end)
         self.b_:addTo(self)
@@ -304,6 +304,8 @@ end
 
 function joypad:onButton(event)
 
+    print("Touch")
+    
     local translated_key
 
     if event.target == self.a_ then

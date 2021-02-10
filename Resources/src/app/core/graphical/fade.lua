@@ -4,17 +4,29 @@
 local fade          = class("fade", cc.Node)
 local sprite        = import("app.core.graphical.sprite")
 
-function fade:ctor(duration, on_fade_begin, on_fade_in, on_fade_out, settings, anchor)
+function fade:ctor(duration, on_fade_begin, on_fade_in, on_fade_out, settings, anchor, delay)
 
     if anchor == nil then
-        self.sprite_ = sprite:create("sprites/core/fade/fade", cc.p(1,1))
-                             :addTo(self)
+--        self.sprite_ = sprite:create("sprites/core/fade/fade", cc.p(1,1))
+--                             :addTo(self)
+        self.sprite_ = cc.Sprite:create("sprites/core/fade/fade.png")
+                                :setAnchorPoint(cc.p(1,1))
+                                :addTo(self)
+
     else
-        self.sprite_ = sprite:create("sprites/core/fade/fade", anchor)
-                             :addTo(self)
+--        self.sprite_ = sprite:create("sprites/core/fade/fade", anchor)
+--                             :addTo(self)
+        self.sprite_ = cc.Sprite:create("sprites/core/fade/fade.png")
+                                :setAnchorPoint(anchor)
+                                :addTo(self)
+
     end
 
     local actions = {}
+
+    if delay ~= nil then
+        actions[#actions +1] = cc.DelayTime:create(delay)
+    end
 
     if on_fade_begin ~= nil then
         actions[#actions +1] = cc.CallFunc:create(on_fade_begin)

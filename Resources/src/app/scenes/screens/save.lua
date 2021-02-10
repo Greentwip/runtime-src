@@ -4,7 +4,10 @@ local save = import("app.core.gameplay.control.layout_base").create("title")
 
 function save:onLoad()
     -- self variables
-
+    if cc.platform_ == "mobile" then
+        self:setPositionX(85)
+    end
+    
     local root = cc.CSLoader:createNode("sprites/gameplay/screens/save/data.csb")
     root:addTo(self)
 
