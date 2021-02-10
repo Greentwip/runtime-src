@@ -27,6 +27,10 @@ function teleport_browner:init_constraints()
     self.can_charge_    = false
 end
 
+function teleport_browner:reset_flags()
+
+end
+
 
 return teleport_browner
 

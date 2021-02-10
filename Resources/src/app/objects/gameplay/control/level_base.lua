@@ -61,6 +61,8 @@ function level_base:load(tmx_map, map_path, load_arguments)
 
     display.removeUnusedSpriteFrames()
 
+    print("After unused sprite frames")
+
     --------------------------------
     -- the tmx level
     local map = ccexp.TMXTiledMap:create(tmx_map)
@@ -100,6 +102,8 @@ function level_base:load(tmx_map, map_path, load_arguments)
         end
 
     end
+
+    print("After map setting")
 
     --------------------------------
     -- the physics components
@@ -167,6 +171,7 @@ function level_base:load(tmx_map, map_path, load_arguments)
     cc.camera_ = camera
 
 
+    print("After camera")
     --------------------------------
     -- the scene components
     local scene_components = {}
@@ -292,6 +297,7 @@ function level_base:load(tmx_map, map_path, load_arguments)
         end
     end
 
+    print("After init")
 
     self.level_controller_ = level_controller:create(player, camera, scene_components, self.level_bgm_, self.load_arguments_)
                                              :addTo(self)
@@ -313,6 +319,8 @@ function level_base:load(tmx_map, map_path, load_arguments)
     self.joypad_:setPositionY(-cc.bounds_:height() * 0.5)
 
     self.joypad_:release()
+
+    print("After joypad")
 
     if cc.platform_ == "mobile" then
 

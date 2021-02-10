@@ -131,6 +131,9 @@ function boss:switch_browner(id)
     self.current_browner_ = new_browner
     self.current_browner_:activate()
 
+    self.current_browner_:reset_flags()
+
+
 end
 
 function boss:walk()
