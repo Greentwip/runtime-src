@@ -525,15 +525,15 @@ function MyApp:setup_browners()
         violet_     = {id_ = 2,  acquired_ = true,  pause_item_ = "violet"},
         fuzzy_      = {id_ = 3,  acquired_ = false,  pause_item_ = "fuzzy"},
         freezer_    = {id_ = 4,  acquired_ = false, pause_item_ = "freezer"},
-        sheriff_    = {id_ = 5,  acquired_ = true, pause_item_ = "sheriff"},
+        sheriff_    = {id_ = 5,  acquired_ = false, pause_item_ = "sheriff"},
         boomer_     = {id_ = 6,  acquired_ = false, pause_item_ = "boomer"},
         military_   = {id_ = 7,  acquired_ = false, pause_item_ = "military"},
-        vine_       = {id_ = 8,  acquired_ = true,  pause_item_ = "vine"},
+        vine_       = {id_ = 8,  acquired_ = false, pause_item_ = "vine"},
         shield_     = {id_ = 9,  acquired_ = false, pause_item_ = "shield"},
-        night_      = {id_ = 10, acquired_ = true, pause_item_ = "night"},
+        night_      = {id_ = 10, acquired_ = false, pause_item_ = "night"},
         torch_      = {id_ = 11, acquired_ = false, pause_item_ = "torch"},
-        helmet_     = {id_ = 12, acquired_ = true, pause_item_ = "helmet"},
-        extreme_    = {id_ = 13, acquired_ = true, pause_item_ = "ex"},
+        helmet_     = {id_ = 12, acquired_ = false, pause_item_ = "helmet"},
+        extreme_    = {id_ = 13, acquired_ = false, pause_item_ = "ex"},
         boss_       = {id_ = 14, acquired_ = nil, pause_item_ = nil }
     }
 

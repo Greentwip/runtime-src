@@ -305,6 +305,14 @@ function stage_select:step(dt)
 
                 self.triggered_ = true
             end
+
+        elseif cc.key_pressed(cc.key_code_.b) then
+            self.triggered_ = true
+
+            ccexp.AudioEngine:stopAll()
+
+            self:getApp()
+            :enterScene("screens.save", "FADE", 0.5)
         elseif cc.key_pressed(cc.key_code_.up) then
             switch_sprite = true
             self:move_up()

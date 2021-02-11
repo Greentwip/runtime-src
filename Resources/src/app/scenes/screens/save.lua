@@ -150,6 +150,125 @@ function save:populate_slot(slot)
 
 end
 
+function save:populate_slot_cheat(slot)
+    self:load_slot(slot)
+
+    local save_slot = nil
+
+    if slot == 1 then
+        save_slot = self.slot_1_customs_
+    elseif slot == 2 then
+        save_slot = self.slot_2_customs_
+    else
+        save_slot = self.slot_3_customs_
+    end
+
+    save_slot:setOpacity(255)
+
+    local e_tank = save_slot:getChildByName("etank"):getChildByName("label")
+    local m_tank = save_slot:getChildByName("mtank"):getChildByName("label")
+    local lives = save_slot:getChildByName("life"):getChildByName("label")
+
+    e_tank:setString(tostring(cc.player_.e_tanks_))
+    m_tank:setString(tostring(cc.player_.m_tanks_))
+    lives:setString(tostring(cc.player_.lives_))
+
+    local weapons = save_slot:getChildByName("weapons")
+
+    if cc.unlockables_.helmet_.acquired_ then
+        self:color_weapon(weapons, "helmet")
+    end
+    if cc.unlockables_.head_.acquired_ then
+        self:color_weapon(weapons, "head")
+    end
+    if cc.unlockables_.chest_.acquired_ then
+        self:color_weapon(weapons, "chest")
+    end
+
+    if cc.unlockables_.fist_.acquired_ then 
+        self:color_weapon(weapons, "fist")
+
+    end
+
+    if cc.unlockables_.boot_.acquired_ then 
+        self:color_weapon(weapons, "boot")
+    end
+
+    if cc.browners_.freezer_.acquired_ then 
+        self:color_weapon(weapons, "freezer")
+
+    end
+
+    if cc.browners_.sheriff_.acquired_ then 
+        self:color_weapon(weapons, "sheriff")
+
+    end
+
+    if cc.browners_.boomer_.acquired_ then 
+        self:color_weapon(weapons, "boomer")
+
+    end
+
+    if cc.browners_.military_.acquired_ then 
+        self:color_weapon(weapons, "military")
+
+    end
+
+    if cc.browners_.vine_.acquired_ then 
+        self:color_weapon(weapons, "vine")
+
+    end
+
+    if cc.browners_.shield_.acquired_ then 
+        self:color_weapon(weapons, "shield")
+
+    end
+
+    if cc.browners_.night_.acquired_ then 
+        self:color_weapon(weapons, "night")
+
+    end
+
+    if cc.browners_.torch_.acquired_ then 
+        self:color_weapon(weapons, "torch")
+
+    end
+
+    if cc.browners_.helmet_.acquired_ then 
+        self:color_weapon(weapons, "helmet")
+
+    end
+
+    if cc.browners_.extreme_.acquired_ then 
+        self:color_weapon(weapons, "ex")
+    end
+
+    cc.browners_ = {
+        teleport_   = {id_ = 1,  acquired_ = true,  pause_item_ = nil},
+        violet_     = {id_ = 2,  acquired_ = true,  pause_item_ = "violet"},
+        fuzzy_      = {id_ = 3,  acquired_ = true,  pause_item_ = "fuzzy"},
+        freezer_    = {id_ = 4,  acquired_ = false, pause_item_ = "freezer"},
+        sheriff_    = {id_ = 5,  acquired_ = true, pause_item_ = "sheriff"},
+        boomer_     = {id_ = 6,  acquired_ = false, pause_item_ = "boomer"},
+        military_   = {id_ = 7,  acquired_ = true, pause_item_ = "military"},
+        vine_       = {id_ = 8,  acquired_ = true,  pause_item_ = "vine"},
+        shield_     = {id_ = 9,  acquired_ = false, pause_item_ = "shield"},
+        night_      = {id_ = 10, acquired_ = true, pause_item_ = "night"},
+        torch_      = {id_ = 11, acquired_ = false, pause_item_ = "torch"},
+        helmet_     = {id_ = 12, acquired_ = true, pause_item_ = "helmet"},
+        extreme_    = {id_ = 13, acquired_ = true, pause_item_ = "ex"},
+        boss_       = {id_ = 14, acquired_ = nil, pause_item_ = nil }
+    }
+
+    cc.unlockables_.helmet_ = {id_ = 2, acquired_ = true }
+    cc.unlockables_.head_   = {id_ = 3, acquired_ = true }
+    cc.unlockables_.chest_  = {id_ = 4, acquired_ = true }
+    cc.unlockables_.fist_   = {id_ = 5, acquired_ = true }
+    cc.unlockables_.boot_   = {id_ = 6, acquired_ = true }
+
+
+end
+
 function save:load_slot(slot)
     local json = self:read_slot(slot)
 
@@ -280,7 +399,14 @@ function save:step(dt)
                 self:save_slot(selected_slot)
             end
             
-            self:populate_slot(selected_slot)
+
+            if selected_slot == 3 then
+                self:populate_slot_cheat(selected_slot)
+            else
+                self:populate_slot(selected_slot)
+            end
+
+            
 
             cc.game.slot_ = selected_slot
             
@@ -290,6 +416,14 @@ function save:step(dt)
 
             self:getApp()
             :enterScene("screens.stage_select", "FADE", 0.5)
+
+        elseif cc.key_pressed(cc.key_code_.b) then
+            self.triggered_ = true
+
+            ccexp.AudioEngine:stopAll()
+
+            self:getApp()
+            :enterScene("screens.title", "FADE", 0.5)    
         end
     end
 

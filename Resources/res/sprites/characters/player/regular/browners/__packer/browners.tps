@@ -493,7 +493,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">helmet/hurt/helmet_hurt_13 - copia.png</key>
+            <key type="filename">helmet/hurt/helmet_hurt_13.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1061,8 +1061,42 @@
             </struct>
             <key type="filename">violet/stand/violet_stand_0.png</key>
             <key type="filename">violet/stand/violet_stand_1.png</key>
+            <key type="filename">violet/stand/violet_stand_10.png</key>
+            <key type="filename">violet/stand/violet_stand_11.png</key>
+            <key type="filename">violet/stand/violet_stand_12.png</key>
+            <key type="filename">violet/stand/violet_stand_13.png</key>
+            <key type="filename">violet/stand/violet_stand_14.png</key>
+            <key type="filename">violet/stand/violet_stand_15.png</key>
+            <key type="filename">violet/stand/violet_stand_16.png</key>
+            <key type="filename">violet/stand/violet_stand_17.png</key>
+            <key type="filename">violet/stand/violet_stand_18.png</key>
+            <key type="filename">violet/stand/violet_stand_19.png</key>
             <key type="filename">violet/stand/violet_stand_2.png</key>
+            <key type="filename">violet/stand/violet_stand_20.png</key>
+            <key type="filename">violet/stand/violet_stand_21.png</key>
+            <key type="filename">violet/stand/violet_stand_22.png</key>
+            <key type="filename">violet/stand/violet_stand_23.png</key>
+            <key type="filename">violet/stand/violet_stand_24.png</key>
+            <key type="filename">violet/stand/violet_stand_25.png</key>
+            <key type="filename">violet/stand/violet_stand_26.png</key>
+            <key type="filename">violet/stand/violet_stand_27.png</key>
+            <key type="filename">violet/stand/violet_stand_28.png</key>
+            <key type="filename">violet/stand/violet_stand_29.png</key>
             <key type="filename">violet/stand/violet_stand_3.png</key>
+            <key type="filename">violet/stand/violet_stand_30.png</key>
+            <key type="filename">violet/stand/violet_stand_31.png</key>
+            <key type="filename">violet/stand/violet_stand_32.png</key>
+            <key type="filename">violet/stand/violet_stand_33.png</key>
+            <key type="filename">violet/stand/violet_stand_34.png</key>
+            <key type="filename">violet/stand/violet_stand_35.png</key>
+            <key type="filename">violet/stand/violet_stand_36.png</key>
+            <key type="filename">violet/stand/violet_stand_37.png</key>
+            <key type="filename">violet/stand/violet_stand_4.png</key>
+            <key type="filename">violet/stand/violet_stand_5.png</key>
+            <key type="filename">violet/stand/violet_stand_6.png</key>
+            <key type="filename">violet/stand/violet_stand_7.png</key>
+            <key type="filename">violet/stand/violet_stand_8.png</key>
+            <key type="filename">violet/stand/violet_stand_9.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

@@ -22,6 +22,10 @@ function pause_menu:ctor(settings)
                              :setPosition(cc.p(0,0))
                              :addTo(self)
 
+    self.box_ = sprite:create("sprites/gameplay/screens/pause_menu/pause_background/pause_box", cc.p(0, 0))
+                      :setPosition(cc.p(0,-self.background_:getContentSize().height))
+                      :addTo(self)                             
+
     self.selector_ = selector:create("arrow", "down")
                              :setPosition(cc.p(0,0))
                              :addTo(self, 20)
@@ -69,7 +73,7 @@ function pause_menu:ctor(settings)
 
     -- unlockables
     local head = pause_interruptor:create("extreme_helmet")
-                            :setPosition(cc.p(196, -176))
+                            :setPosition(cc.p(192, -185))
                             :addTo(self)
 
     local fist = pause_interruptor:create("extreme_fist")
@@ -87,20 +91,20 @@ function pause_menu:ctor(settings)
     -- buttons
     self.ex_switch_ = pause_interruptor:create("ex")
                                  :set_visitable(false)
-                                 :setPosition(cc.p(head:getPositionX(), -144))
+                                 :setPosition(cc.p(64, -134))
                                  :addTo(self)
 
     self.helmet_switch_ = pause_interruptor:create("helmet")
                                      :set_visitable(false)
-                                     :setPosition(cc.p(self.ex_switch_:getPositionX() - 20, self.ex_switch_:getPositionY()))
+                                     :setPosition(cc.p(self.ex_switch_:getPositionX() - 40, self.ex_switch_:getPositionY()))
                                      :addTo(self)
 
     self.exit_switch_ = pause_interruptor:create("exit")
-                                   :setPosition(cc.p(self.ex_switch_:getPositionX() + 20, self.ex_switch_:getPositionY()))
+                                   :setPosition(cc.p(self.ex_switch_:getPositionX() + 40, self.ex_switch_:getPositionY()))
                                    :addTo(self)
 
     self.weapon_animation_ = pause_animation:create()
-                                             :setPosition(cc.p(204, -128))
+                                             :setPosition(cc.p(256 / 4, -224 / 2 + 5))
                                              :swap(self.default_browner_.pause_item_)
                                              :addTo(self)
 
@@ -170,7 +174,7 @@ end
 
 function pause_menu:setup_browners()
 
-    local y_offset = -48
+    local y_offset = -24
 
     local pause_browners = {}
 
@@ -183,58 +187,65 @@ function pause_menu:setup_browners()
     self.default_browner_ = nil
 
     for i = 2, #pause_browners do -- because teleport browner is the first one
+        local browner = pause_browners[i]
 
-    local browner = pause_browners[i]
+        if browner.acquired_ == false then
+            goto continue
+        end
 
-    local browner_location = cc.p(80, y_offset)
+        local browner_location = cc.p(160, y_offset)
 
-    if browner.id_ % 2 == 0 then
-        browner_location.x = 12
-    end
+        --if browner.id_ % 2 == 0 then
+            --browner_location.x = 12
+        --end
 
-    local new_interruptor = pause_interruptor:create(browner.pause_item_ .. "_" .. "weapon")
-    :setPosition(browner_location)
-    :addTo(self)
+        local new_interruptor = pause_interruptor:create(browner.pause_item_ .. "_" .. "weapon")
+        :setPosition(browner_location)
+        :addTo(self)
 
-    local interruptor_label = label:create(browner.pause_item_,
-        "fonts/megaman_2.ttf",
-        8,
-        cc.TEXT_ALIGNMENT_LEFT,
-        cc.VERTICAL_TEXT_ALIGNMENT_TOP)
-    :addTo(new_interruptor)
+        local interruptor_label = label:create(browner.pause_item_,
+            "fonts/megaman_2.ttf",
+            8,
+            cc.TEXT_ALIGNMENT_LEFT,
+            cc.VERTICAL_TEXT_ALIGNMENT_TOP)
+        :addTo(new_interruptor)
 
-    interruptor_label:setPosition(cc.p(new_interruptor.sprite_:getContentSize().width + 1, 0))
+        interruptor_label:setPosition(cc.p(new_interruptor.sprite_:getContentSize().width + 1, 0))
 
-    new_interruptor.browner_id_ = browner.id_
-    new_interruptor.pause_item_ = browner.pause_item_
+        new_interruptor.browner_id_ = browner.id_
+        new_interruptor.pause_item_ = browner.pause_item_
 
-    new_interruptor.energy_bar_ = energy_bar:create(true)
-                                            :setPosition(cc.p(new_interruptor.sprite_:getContentSize().width,
-                                                -new_interruptor.sprite_:getContentSize().height))
-                                            :setRotation(-90)
-                                            :setScaleY(0.75)
-                                            :addTo(new_interruptor)
+        new_interruptor.energy_bar_ = energy_bar:create(true)
+                                                :setPosition(cc.p(new_interruptor.sprite_:getContentSize().width,
+                                                    -new_interruptor.sprite_:getContentSize().height))
+                                                :setRotation(-90)
+                                                :setScaleY(0.75)
+                                                :addTo(new_interruptor)
 
-    if self.player_.browners_[new_interruptor.browner_id_] ~= nil then
-        new_interruptor.energy_bar_:set_meter(self.player_.browners_[new_interruptor.browner_id_].energy_)
-    end
+        if self.player_.browners_[new_interruptor.browner_id_] ~= nil then
+            new_interruptor.energy_bar_:set_meter(self.player_.browners_[new_interruptor.browner_id_].energy_)
+        end
 
-    if browner.acquired_ == true then
-        new_interruptor:setVisible(true)
-    else
-        new_interruptor:setVisible(false)
-    end
+        if browner.acquired_ == true then
+            new_interruptor:setVisible(true)
+        else
+            new_interruptor:setVisible(false)
+        end
 
-    self.items_[#self.items_ + 1] = new_interruptor
-    self.browners_[new_interruptor.browner_id_] = new_interruptor
+        self.items_[#self.items_ + 1] = new_interruptor
+        self.browners_[new_interruptor.browner_id_] = new_interruptor
 
-    if browner_location.x == 80 then
+        --if browner_location.x == 80 then
+            --y_offset  = y_offset - 24
+        --end
+
         y_offset  = y_offset - 24
-    end
 
-    if new_interruptor.browner_id_ == self.player_.current_browner_.browner_id_ then
-        self.default_browner_ = new_interruptor
-    end
+        if new_interruptor.browner_id_ == self.player_.current_browner_.browner_id_ then
+            self.default_browner_ = new_interruptor
+        end
+
+        ::continue::
     end
 end
 

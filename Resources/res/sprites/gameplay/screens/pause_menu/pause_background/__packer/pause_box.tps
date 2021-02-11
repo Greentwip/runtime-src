@@ -132,7 +132,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../pause_interruptor.plist</filename>
+                <filename>../pause_box.plist</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -181,20 +181,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">armor/extreme_boot_interruptor_0.png</key>
-            <key type="filename">armor/extreme_boot_interruptor_1.png</key>
-            <key type="filename">armor/extreme_chest_interruptor_0.png</key>
-            <key type="filename">armor/extreme_chest_interruptor_1.png</key>
-            <key type="filename">armor/extreme_fist_interruptor_0.png</key>
-            <key type="filename">armor/extreme_fist_interruptor_1.png</key>
-            <key type="filename">armor/extreme_helmet_interruptor_0.png</key>
-            <key type="filename">armor/extreme_helmet_interruptor_1.png</key>
-            <key type="filename">life/life_interruptor_0.png</key>
-            <key type="filename">life/life_interruptor_1.png</key>
-            <key type="filename">switch/ex_interruptor_0.png</key>
-            <key type="filename">switch/ex_interruptor_1.png</key>
-            <key type="filename">switch/helmet_interruptor_0.png</key>
-            <key type="filename">switch/helmet_interruptor_1.png</key>
+            <key type="filename">pause_box_0.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -203,78 +190,16 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>5,4,9,9</rect>
+                <rect>61,14,122,28</rect>
                 <key>scale9Paddings</key>
-                <rect>5,4,9,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">switch/exit_interruptor_0.png</key>
-            <key type="filename">switch/exit_interruptor_1.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,4,9,8</rect>
-                <key>scale9Paddings</key>
-                <rect>4,4,9,8</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">tank/e_tank_interruptor_0.png</key>
-            <key type="filename">tank/e_tank_interruptor_1.png</key>
-            <key type="filename">tank/m_tank_interruptor_0.png</key>
-            <key type="filename">tank/m_tank_interruptor_1.png</key>
-            <key type="filename">weapon/boomer_weapon_interruptor_0.png</key>
-            <key type="filename">weapon/boomer_weapon_interruptor_1.png</key>
-            <key type="filename">weapon/ex_weapon_interruptor_0.png</key>
-            <key type="filename">weapon/ex_weapon_interruptor_1.png</key>
-            <key type="filename">weapon/freezer_weapon_interruptor_0.png</key>
-            <key type="filename">weapon/freezer_weapon_interruptor_1.png</key>
-            <key type="filename">weapon/fuzzy_weapon_interruptor_0.png</key>
-            <key type="filename">weapon/fuzzy_weapon_interruptor_1.png</key>
-            <key type="filename">weapon/helmet_weapon_interruptor_0.png</key>
-            <key type="filename">weapon/helmet_weapon_interruptor_1.png</key>
-            <key type="filename">weapon/military_weapon_interruptor_0.png</key>
-            <key type="filename">weapon/military_weapon_interruptor_1.png</key>
-            <key type="filename">weapon/night_weapon_interruptor_0.png</key>
-            <key type="filename">weapon/night_weapon_interruptor_1.png</key>
-            <key type="filename">weapon/sheriff_weapon_interruptor_0.png</key>
-            <key type="filename">weapon/sheriff_weapon_interruptor_1.png</key>
-            <key type="filename">weapon/shield_weapon_interruptor_0.png</key>
-            <key type="filename">weapon/shield_weapon_interruptor_1.png</key>
-            <key type="filename">weapon/torch_weapon_interruptor_0.png</key>
-            <key type="filename">weapon/torch_weapon_interruptor_1.png</key>
-            <key type="filename">weapon/vine_weapon_interruptor_0.png</key>
-            <key type="filename">weapon/vine_weapon_interruptor_1.png</key>
-            <key type="filename">weapon/violet_weapon_interruptor_0.png</key>
-            <key type="filename">weapon/violet_weapon_interruptor_1.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,4,8,8</rect>
-                <key>scale9Paddings</key>
-                <rect>4,4,8,8</rect>
+                <rect>61,14,122,28</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>weapon</filename>
-            <filename>armor</filename>
-            <filename>life</filename>
-            <filename>tank</filename>
-            <filename>switch</filename>
+            <filename>pause_box_0.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
