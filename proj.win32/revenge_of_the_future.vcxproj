@@ -128,7 +128,7 @@
   <ItemDefinitionGroup>
     <CustomBuildStep>
       <Command>if not exist "$(LocalDebuggerWorkingDirectory)" mkdir "$(LocalDebuggerWorkingDirectory)"
-xcopy /Y /Q "$(OutDir)*.dll" "$(LocalDebuggerWorkingDirectory)"
+xcopy /Y /Q "$(Configuration).win32\*.dll" "$(LocalDebuggerWorkingDirectory)"
 xcopy "$(ProjectDir)..\Resources\res" "$(LocalDebuggerWorkingDirectory)\res" /D /E /I /F /Y
 xcopy "$(ProjectDir)..\Resources\src" "$(LocalDebuggerWorkingDirectory)\src" /D /E /I /F /Y</Command>
       <Outputs>$(TargetName).cab</Outputs>
