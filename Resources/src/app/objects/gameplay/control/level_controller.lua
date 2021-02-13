@@ -157,7 +157,7 @@ function level_controller:start()
                 :setPositionX(85)
                 :addTo(cc.bounds_, 8192)
             else
-                self.startup_fade_ = fade:create(4, nil, on_fade_in, on_fade_out, {fade_in = false, fade_out = true})
+                self.startup_fade_ = fade:create(4, nil, on_fade_in, on_fade_out, {fade_in = false, fade_out = true}, cc.p(0.5, 0.5))
                 :addTo(cc.bounds_, 8192)
             end                                     
         else
@@ -171,7 +171,7 @@ function level_controller:start()
                     self.startup_fade_ = fade:create(self.time_to_play_, nil, self.on_fade_in_, self.on_fade_out_, {fade_in = true, fade_out = true}, cc.p(0.5, 0.5), 2)
                     :addTo(cc.bounds_, 8192)
                 else
-                    self.startup_fade_ = fade:create(self.time_to_play_, nil, self.on_fade_in_, self.on_fade_out_, {fade_in = true, fade_out = true})
+                    self.startup_fade_ = fade:create(self.time_to_play_, nil, self.on_fade_in_, self.on_fade_out_, {fade_in = true, fade_out = true}, cc.p(0.5, 0.5))
                     :setPosition(0, 0)
                     :addTo(cc.bounds_, 8192)
                 end
@@ -340,7 +340,7 @@ function level_controller:step(dt)
                             :addTo(cc.bounds_, 200)
 
                         else
-                            self.pause_fade_ = fade:create(1.0, on_fade_begin, on_fade_in, on_fade_out, {fade_in = true, fade_out = true})
+                            self.pause_fade_ = fade:create(1.0, on_fade_begin, on_fade_in, on_fade_out, {fade_in = true, fade_out = true}, cc.p(0.5, 0.5))
                             :addTo(cc.bounds_, 200)
                         end
                     
@@ -380,7 +380,7 @@ function level_controller:step(dt)
                                 :addTo(cc.bounds_, 200)
     
                             else
-                                self.pause_fade_ = fade:create(0.25, on_fade_begin, on_fade_in, on_fade_out, {fade_in = true, fade_out = true})
+                                self.pause_fade_ = fade:create(0.25, on_fade_begin, on_fade_in, on_fade_out, {fade_in = true, fade_out = true}, cc.p(0.5, 0.5))
                                 :addTo(cc.bounds_, 200)
     
                             end
