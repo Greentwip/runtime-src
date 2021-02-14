@@ -364,6 +364,7 @@ function save:step(dt)
             self.active_slot_:setColor(self.active_color_)
             self.slot_3_:setColor(self.inactive_color_)
         end
+        cc.audio.play_sfx("sounds/sfx_select.mp3", false)
     end
 
     if cc.key_pressed(cc.key_code_.down) then
@@ -380,6 +381,7 @@ function save:step(dt)
             self.active_slot_:setColor(self.active_color_)
             self.slot_3_:setColor(self.inactive_color_)
         end
+        cc.audio.play_sfx("sounds/sfx_select.mp3", false)
     end
 
     if not self.triggered_ then

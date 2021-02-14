@@ -445,12 +445,17 @@ function pause_menu:validate_weapons()
     local extreme  = self.browners_[cc.browners_.extreme_.id_]
 
     violet:setVisible(not (cc.game_options_.helmet_activated_ or cc.game_options_.extreme_activated_))
-    helmet:setVisible(cc.game_options_.helmet_activated_ and not cc.game_options_.extreme_activated_)
-    extreme:setVisible(cc.game_options_.extreme_activated_)
 
-    helmet:setPosition(cc.p(violet:getPositionX(), violet:getPositionY()))
-    extreme:setPosition(cc.p(violet:getPositionX(), violet:getPositionY()))
 
+    if helmet ~= nil then
+        helmet:setVisible(cc.game_options_.helmet_activated_ and not cc.game_options_.extreme_activated_)
+        helmet:setPosition(cc.p(violet:getPositionX(), violet:getPositionY()))
+    end
+
+    if extreme ~= nil then 
+        extreme:setVisible(cc.game_options_.extreme_activated_)
+        extreme:setPosition(cc.p(violet:getPositionX(), violet:getPositionY()))
+    end
 end
 
 function pause_menu:ex_triggered()

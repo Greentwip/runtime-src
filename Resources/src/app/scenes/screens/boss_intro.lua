@@ -6,7 +6,7 @@ local label  = import("app.core.graphical.label")
 local sprite = import("app.core.graphical.sprite")
 
 local intro = import("app.scenes.special.intro")
-local fade              = import("app.core.graphical.fade")
+local fade  = import("app.core.graphical.fade")
 
 function boss_intro:onLoad()
 

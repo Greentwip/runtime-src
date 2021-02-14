@@ -2,81 +2,121 @@
 
 local level_complete = import("app.core.gameplay.control.layout_base").create("level_complete")
 
-local sprite    = import("app.core.graphical.sprite")
-local label     = import("app.core.graphical.label")
-local selector  = import("app.objects.gameplay.level.ui.selector")
-
 function level_complete:onLoad() -- weird bug when using onLoad
 
-    self.background_ = sprite:create("sprites/gameplay/screens/level_complete/level_complete", cc.p(0, 0))
-                             :setPosition(cc.p(0,0))
-                             :addTo(self)
+    if cc.platform_ == "mobile" then
+        self:setPositionX(85)
+    end
+    
+    local root = cc.CSLoader:createNode("sprites/gameplay/screens/gameover/data.csb")
+    root:addTo(self)
+
+    self.yes_button_ = root:getChildByName("yes_button")
+    self.no_button_ = root:getChildByName("no_button")
+
+    self.current_option_ = self.yes_button_
+
+    self.inactive_color_ = cc.c3b(127, 127, 127)
+    self.active_color_ = cc.c3b(255, 255, 255)
+
+    self.triggered_ = false
+    self.ready_ = false
+
+    local root_timeline = cc.CSLoader:createTimeline("sprites/gameplay/screens/gameover/data.csb")
+
+    root:runAction(root_timeline)
+
+    root_timeline:gotoFrameAndPause(0)
 
 
-    self.selector_ = selector:create("square", "large")
-                             :addTo(self, 128)
+    local fly_primary_delay = cc.DelayTime:create((1.0 / 60.0) * 30)
+    local fly_secondary_delay = cc.DelayTime:create((1.0 / 60.0) * 45)
 
-    self.selector_:setPosition(cc.p(self.background_:getContentSize().width * 0.5, 66 - self.selector_.sprite_:getContentSize().height * 0.5))
+    local pre_fly_callback = cc.CallFunc:create(function()
+        root_timeline:play("fly_in_primary", false)    
+    end)
 
-    self.text_continue_ = label:create("continue",
-                                "fonts/megaman_2.ttf",
-                                8,
-                                cc.TEXT_ALIGNMENT_CENTER,
-                                cc.VERTICAL_TEXT_ALIGNMENT_TOP, cc.p(0.5, 0.5))
-                               :addTo(self, 128)
+    local fly_in_primary_callback = cc.CallFunc:create(function()
+        root_timeline:play("fly_out_primary", false)
+    end)
 
-    self.text_quit_ = label:create("quit",
-                                "fonts/megaman_2.ttf",
-                                8,
-                                cc.TEXT_ALIGNMENT_CENTER,
-                                cc.VERTICAL_TEXT_ALIGNMENT_TOP, cc.p(0.5, 0.5))
-                           :addTo(self, 128)
-
-    self.text_title_ = label:create("Finish",
-                                    "fonts/megaman_2.ttf",
-                                    8,
-                                    cc.TEXT_ALIGNMENT_CENTER,
-                                    cc.VERTICAL_TEXT_ALIGNMENT_TOP, cc.p(0.5, 0.5))
-                                :addTo(self, 128)
+    local fly_out_primary_callback = cc.CallFunc:create(function()
+        root_timeline:play("fly_in_secondary", false)
+    end)
 
 
-    self.text_continue_:setPosition(cc.p(self.selector_:getPositionX(), self.selector_:getPositionY()))
-    self.text_quit_:setPosition(cc.p(self.selector_:getPositionX(), self.selector_:getPositionY() - self.selector_.sprite_:getContentSize().height))
+    local fly_in_secondary_callback = cc.CallFunc:create(function()
+        self.yes_button_:setVisible(true)
+        self.no_button_:setVisible(true)
+        self.ready_ = true
 
-    self.text_title_:setPosition(cc.p(self.selector_:getPositionX(),
-                                      self.background_:getContentSize().height - self.text_title_.label_:getContentSize().height * 1.6))
+        self.yes_button_:setColor(self.active_color_)
+        self.no_button_:setColor(self.inactive_color_)
+    end)
 
+    local fly_sequence  = cc.Sequence:create(fly_primary_delay, 
+                                             fly_primary_delay,
+                                             fly_primary_delay,
+                                             fly_primary_delay,
+                                             pre_fly_callback,
+                                             fly_primary_delay,
+                                             fly_in_primary_callback, 
+                                             fly_primary_delay,
+                                             fly_out_primary_callback,
+                                             fly_secondary_delay,
+                                             fly_in_secondary_callback,
+                                             nil)
+
+    self:runAction(fly_sequence)
                                       
     cc.audio.play_bgm("sounds/bgm_gameover.mp3", false)
-
-    -- self variables
-    self.triggered_ = false
-
-    self.items_ = {}
-    self.items_[#self.items_ + 1] = self.text_continue_
-    self.items_[#self.items_ + 1] = self.text_quit_
-
-    self.text_continue_.trigger = function()
-        self:getApp():enterScene("screens.stage_select", "FADE", 0.5)
-    end
-
-    self.text_quit_.trigger = function()
-        cc.Director:getInstance():endToLua()
-    end
-
-    self.selector_:set_selected_item(self.text_continue_)
-
 end
 
 function level_complete:step(dt)
+    if not self.triggered_ and self.ready_ then    
+        if cc.key_pressed(cc.key_code_.left) then
+            if self.current_option_ == self.yes_button_ then
+                self.yes_button_:setColor(self.inactive_color_)
+                self.no_button_:setColor(self.active_color_)
+                self.current_option_ = self.no_button_
+            else 
+                self.no_button_:setColor(self.inactive_color_)
+                self.yes_button_:setColor(self.active_color_)
+                self.current_option_ = self.yes_button_
+            end
+            cc.audio.play_sfx("sounds/sfx_select.mp3", false)
+        end
+    
+        if cc.key_pressed(cc.key_code_.right) then
+            if self.current_option_ == self.yes_button_ then
+                self.yes_button_:setColor(self.inactive_color_)
+                self.no_button_:setColor(self.active_color_)
+                self.current_option_ = self.no_button_
+            else 
+                self.no_button_:setColor(self.inactive_color_)
+                self.yes_button_:setColor(self.active_color_)
+                self.current_option_ = self.yes_button_
+            end
+            cc.audio.play_sfx("sounds/sfx_select.mp3", false)
+        end
+    
+    end
+
+
     if not self.triggered_ then
         if cc.key_pressed(cc.key_code_.a) then
             self.triggered_ = true
             cc.audio.play_sfx("sounds/sfx_selected.mp3")
+
+            if self.current_option_ == self.yes_button_ then
+                cc.player_.lives_ = 3
+                self:getApp():enterScene("levels.level", "FADE", 1, {physics = true})
+            else
+                self:getApp():enterScene("screens.stage_select", "FADE", 0.5)
+            end
+
         end
-
-
-        self.selector_:select_from(self.items_)
+       
     end
 
     self:post_step(dt)

@@ -297,7 +297,6 @@ function stage_select:step(dt)
                 if cc.current_level_.defeated_ then
                     self:getApp()
                         :enterScene("levels.level", "FADE", 2, {physics = true})
-                        :prepare()
                 else
                     self:getApp()
                         :enterScene("screens.boss_intro", "FADE", 1, {physics = false})

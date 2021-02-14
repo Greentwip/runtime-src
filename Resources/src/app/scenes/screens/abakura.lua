@@ -23,23 +23,23 @@ function opening:onLoad()
 end
 
 function opening:opening_intro_a()
-    self.greentwip_logo_ = sprite:create("sprites/gameplay/screens/opening/greentwip/greentwip_logo", cc.p(0, 0))
+    self.greentwip_logo_ = sprite:create("sprites/gameplay/screens/opening/abakura/abakura_logo", cc.p(0, 0))
                                  :setPosition(cc.p(0,0))
                                  :addTo(self)
 
     local actions = {}
-    actions[#actions + 1] = {name = "greentwip_logo",   animation = {name = "greentwip_logo",  forever = false, delay = 0.20} }
+    actions[#actions + 1] = {name = "abakura_logo",   animation = {name = "abakura_logo",  forever = false, delay = 0.20} }
 
     self.greentwip_logo_:load_actions_set(actions, false)
 
     local pre_callback = cc.CallFunc:create(function()
-        self.greentwip_logo_:run_action("greentwip_logo")
+        self.greentwip_logo_:run_action("abakura_logo")
     end)
 
-    local duration = cc.DelayTime:create(self.greentwip_logo_:get_action_duration("greentwip_logo"))
+    local duration = cc.DelayTime:create(self.greentwip_logo_:get_action_duration("abakura_logo"))
     local post_callback = cc.CallFunc:create(function()
 
-        self:getApp():enterScene("screens.abakura", "FADE", 1)
+        self:getApp():enterScene("screens.title", "FADE", 1)
 
         
     end)

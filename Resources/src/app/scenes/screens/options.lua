@@ -86,62 +86,67 @@ function options:step(dt)
     end
     ]]
 
-    if cc.key_pressed(cc.key_code_.up) then
-        if self.current_option_ == self.bgm_ then
-            self.bgm_:setColor(self.inactive_color_)
-            self.sfx_:setColor(self.active_color_)
-            self.current_option_ = self.sfx_
-        else 
-            self.bgm_:setColor(self.active_color_)
-            self.sfx_:setColor(self.inactive_color_)
-            self.current_option_ = self.bgm_     
-        end
-    end
-
-    if cc.key_pressed(cc.key_code_.down) then
-        if self.current_option_ == self.bgm_ then
-            self.bgm_:setColor(self.inactive_color_)
-            self.sfx_:setColor(self.active_color_)
-            self.current_option_ = self.sfx_
-        else 
-            self.bgm_:setColor(self.active_color_)
-            self.sfx_:setColor(self.inactive_color_)
-            self.current_option_ = self.bgm_     
-        end
-    end
-
-    if cc.key_pressed(cc.key_code_.left) then
-        if self.current_option_ == self.bgm_ then
-            if self.bgm_volume_ > 0 then 
-                self.bgm_volume_ = self.bgm_volume_ - 10
-                self.bgm_slider_:setPercent(self.bgm_volume_)
-                self:save(self.bgm_volume_ / 100, self.sfx_volume_ / 100)
+    if not self.triggered_ then
+        if cc.key_pressed(cc.key_code_.up) then
+            if self.current_option_ == self.bgm_ then
+                self.bgm_:setColor(self.inactive_color_)
+                self.sfx_:setColor(self.active_color_)
+                self.current_option_ = self.sfx_
+            else 
+                self.bgm_:setColor(self.active_color_)
+                self.sfx_:setColor(self.inactive_color_)
+                self.current_option_ = self.bgm_     
             end
-        else
-            if self.sfx_volume_ > 0 then 
-                self.sfx_volume_ = self.sfx_volume_ - 10
-                self.sfx_slider_:setPercent(self.sfx_volume_)
-                self:save(self.bgm_volume_ / 100, self.sfx_volume_ / 100)
-                cc.audio.play_sfx("sounds/sfx_select.mp3")
-            end
+            cc.audio.play_sfx("sounds/sfx_select.mp3", false)
         end
-    end
-
-    if cc.key_pressed(cc.key_code_.right) then
-        if self.current_option_ == self.bgm_ then
-            if self.bgm_volume_ < 100 then 
-                self.bgm_volume_ = self.bgm_volume_ + 10
-                self.bgm_slider_:setPercent(self.bgm_volume_)
-                self:save(self.bgm_volume_ / 100, self.sfx_volume_ / 100)
+    
+        if cc.key_pressed(cc.key_code_.down) then
+            if self.current_option_ == self.bgm_ then
+                self.bgm_:setColor(self.inactive_color_)
+                self.sfx_:setColor(self.active_color_)
+                self.current_option_ = self.sfx_
+            else 
+                self.bgm_:setColor(self.active_color_)
+                self.sfx_:setColor(self.inactive_color_)
+                self.current_option_ = self.bgm_     
             end
-        else
-            if self.sfx_volume_ < 100 then 
-                self.sfx_volume_ = self.sfx_volume_ + 10
-                self.sfx_slider_:setPercent(self.sfx_volume_)
-                self:save(self.bgm_volume_ / 100, self.sfx_volume_ / 100)
-                cc.audio.play_sfx("sounds/sfx_select.mp3")
+            cc.audio.play_sfx("sounds/sfx_select.mp3", false)
+        end
+    
+        if cc.key_pressed(cc.key_code_.left) then
+            if self.current_option_ == self.bgm_ then
+                if self.bgm_volume_ > 0 then 
+                    self.bgm_volume_ = self.bgm_volume_ - 10
+                    self.bgm_slider_:setPercent(self.bgm_volume_)
+                    self:save(self.bgm_volume_ / 100, self.sfx_volume_ / 100)
+                end
+            else
+                if self.sfx_volume_ > 0 then 
+                    self.sfx_volume_ = self.sfx_volume_ - 10
+                    self.sfx_slider_:setPercent(self.sfx_volume_)
+                    self:save(self.bgm_volume_ / 100, self.sfx_volume_ / 100)
+                    cc.audio.play_sfx("sounds/sfx_select.mp3")
+                end
             end
         end
+    
+        if cc.key_pressed(cc.key_code_.right) then
+            if self.current_option_ == self.bgm_ then
+                if self.bgm_volume_ < 100 then 
+                    self.bgm_volume_ = self.bgm_volume_ + 10
+                    self.bgm_slider_:setPercent(self.bgm_volume_)
+                    self:save(self.bgm_volume_ / 100, self.sfx_volume_ / 100)
+                end
+            else
+                if self.sfx_volume_ < 100 then 
+                    self.sfx_volume_ = self.sfx_volume_ + 10
+                    self.sfx_slider_:setPercent(self.sfx_volume_)
+                    self:save(self.bgm_volume_ / 100, self.sfx_volume_ / 100)
+                    cc.audio.play_sfx("sounds/sfx_select.mp3")
+                end
+            end
+        end
+    
     end
 
     if not self.triggered_ then

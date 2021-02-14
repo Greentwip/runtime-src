@@ -61,6 +61,7 @@ function mob:flip(x_normal)
 
     local flip_callback = cc.CallFunc:create(function()
         self.is_flipping_ = false
+        self.attacking_ = false
     end)
 
     local stand = cc.CallFunc:create(function()
@@ -99,8 +100,19 @@ function mob:attack()
                                                 offset = cc.p(20, 16),
                                                 weapon = self.weapon_,
                                                 parameters = self.weapon_parameters_})
+                    
+                    if player_x_distance < 30 and player_y_distance < 16 then
+                        local x_normal = 0
+                        if self.sprite_:isFlippedX() then
+                            x_normal = 1
+                        else
+                            x_normal = -1
+                        end
 
-                    bullet:setup_movement(player_position)
+                        bullet:fire_straight(x_normal)
+                    else
+                        bullet:setup_movement(player_position)
+                    end
                 end
 
                 

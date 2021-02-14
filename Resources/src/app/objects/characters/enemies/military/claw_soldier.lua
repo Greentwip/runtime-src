@@ -74,7 +74,9 @@ function mob:attack()
             end)
 
             local callback = cc.CallFunc:create(function()
-
+                local player_x_distance = cc.pGetDistance(cc.p(self:getPositionX(), 0), cc.p(self.player_:getPositionX(), 0))
+                local player_y_distance = cc.pGetDistance(cc.p(0, self:getPositionY()), cc.p(0, self.player_:getPositionY()))
+    
                 self.player_position_ = cc.p(self.player_:getPositionX(), self.player_:getPositionY())
 
                 local bullet = self:fire({  sfx = nil,
@@ -82,8 +84,18 @@ function mob:attack()
                     weapon = self.weapon_,
                     parameters = self.weapon_parameters_})
 
-                --bullet:setup_movement(self.player_position_, facing)
-                bullet:setup_movement(self.player_position_)
+                if player_x_distance < 30 and player_y_distance < 16 then
+                    local x_normal = 0
+                    if self.sprite_:isFlippedX() then
+                        x_normal = 1
+                    else
+                        x_normal = -1
+                    end
+
+                    bullet:fire_straight(x_normal)
+                else
+                    bullet:setup_movement(player_position)
+                end
 
             end)
 

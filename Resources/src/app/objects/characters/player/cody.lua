@@ -653,6 +653,9 @@ function cody:check_health()
     
                 cc.game.save_default_slot(slot)
 
+                print("lives reduced")
+                print(cc.player_.lives_)
+
             end)
 
             local sequence = cc.Sequence:create(explosion_a, delay, explosion_b, kill_delay, life_callback, nil)
@@ -661,6 +664,16 @@ function cody:check_health()
 
         else
             self.sprite_:setVisible(false)
+            cc.player_.lives_ = cc.player_.lives_ - 1
+            local slot = cc.game.get_default_slot()
+
+            slot["lives"] = cc.player_.lives_
+
+            cc.game.save_default_slot(slot)
+
+            print("lives reduced")
+            print(cc.player_.lives_)
+
         end
     end
 
