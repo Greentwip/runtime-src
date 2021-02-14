@@ -56,8 +56,6 @@ function save:color_weapon(custom, weapon_name)
 end
 
 function save:populate_slot(slot)
-    self:load_slot(slot)
-
     local save_slot = nil
 
     if slot == 1 then
@@ -151,7 +149,6 @@ function save:populate_slot(slot)
 end
 
 function save:populate_slot_cheat(slot)
-    self:load_slot(slot)
 
     local save_slot = nil
 
@@ -319,7 +316,7 @@ function save:save_slot(slot)
 
         e = 0,
         m = 0,
-        lives = 0,
+        lives = 3,
 
         freezer = false,
         sheriff = false,
@@ -402,15 +399,25 @@ function save:step(dt)
             end
             
 
+            self:load_slot(selected_slot)
+            
+            if cc.player_.lives_ <= 0 then
+                cc.player_.lives_ = 3
+            end
+
             if selected_slot == 3 then
                 self:populate_slot_cheat(selected_slot)
             else
                 self:populate_slot(selected_slot)
             end
 
-            
-
             cc.game.slot_ = selected_slot
+
+            local slot = cc.game.get_default_slot()
+
+            slot["lives"] = cc.player_.lives_
+        
+            cc.game.save_default_slot(slot)
             
             self.triggered_ = true
 

@@ -34,10 +34,15 @@ end
 
 function extreme_browner:fire()
 
-    local bullet_offset = 50
+    local bullet_offset = 50 * self:get_sprite_normal().x
+
+    if self:get_sprite_normal().x == -1 then
+        bullet_offset = -25
+    end
+
     cc.audio.play_sfx("sounds/sfx_buster_shoot_high.mp3", false)
 
-    local bullet_position = cc.p(self:getParent():getPositionX() + (bullet_offset * self:get_sprite_normal().x),
+    local bullet_position = cc.p(self:getParent():getPositionX() + bullet_offset,
                                  self:getParent():getPositionY() + 16)
 
     local bullet = extreme_bullet:create()

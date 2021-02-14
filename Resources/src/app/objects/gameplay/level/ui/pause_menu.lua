@@ -88,6 +88,25 @@ function pause_menu:ctor(settings)
                              :setPosition(cc.p(chest:getPositionX() + 16, chest:getPositionY()))
                              :addTo(self)
 
+
+    if cc.unlockables_.head_.acquired_ then
+        head:visit()
+    end
+
+    if cc.unlockables_.chest_.acquired_ then
+        chest:visit()
+    end
+    
+    if cc.unlockables_.fist_.acquired_ then
+        fist:visit()
+    end
+
+    if cc.unlockables_.boot_.acquired_ then
+        boot:visit()
+    end
+    
+
+
     -- buttons
     self.ex_switch_ = pause_interruptor:create("ex")
                                  :set_visitable(false)
@@ -366,41 +385,50 @@ function pause_menu:switch_triggered(sender)
     local target
 
     if sender == self.helmet_switch_ then
-        if cc.game_options_.helmet_activated_ then
-            cc.game_options_.helmet_activated_ = false
-            visit_sender = true
-        else
-            --[[if cc.game_options_.extreme_activated_ then
-                cc.game_options_.extreme_activated_ = false
-                visit_target = true
-                target = self.ex_switch_
-            end]]
-
-            cc.game_options_.helmet_activated_ = true
-            visit_sender = true
-            sender_value = 2
-        end
-
-        local slot = cc.game.get_default_slot()
-
-        slot["helmet_activated"] = cc.game_options_.helmet_activated_
-
-        cc.game.save_default_slot(slot)
-
-    elseif sender == self.ex_switch_ then
-        if cc.game_options_.extreme_activated_ then
-            cc.game_options_.extreme_activated_ = false
-            visit_sender = true
-        else
-            --[[if cc.game_options_.helmet_activated_ then
+        if cc.browners_.helmet_.acquired_ then
+            if cc.game_options_.helmet_activated_ then
                 cc.game_options_.helmet_activated_ = false
-                visit_target = true
-                target = self.helmet_switch_
-            end]]
+                visit_sender = true
+            else
+                --[[if cc.game_options_.extreme_activated_ then
+                    cc.game_options_.extreme_activated_ = false
+                    visit_target = true
+                    target = self.ex_switch_
+                end]]
 
-            cc.game_options_.extreme_activated_ = true
-            visit_sender = true
-            sender_value = 2
+                cc.game_options_.helmet_activated_ = true
+                visit_sender = true
+                sender_value = 2
+            end
+
+            local slot = cc.game.get_default_slot()
+
+            slot["helmet_activated"] = cc.game_options_.helmet_activated_
+
+            cc.game.save_default_slot(slot)
+        else
+            cc.audio.play_sfx("sounds/sfx_error.mp3", false)
+        end
+    elseif sender == self.ex_switch_ then
+
+        if cc.browners_.extreme_.acquired_ then
+
+            if cc.game_options_.extreme_activated_ then
+                cc.game_options_.extreme_activated_ = false
+                visit_sender = true
+            else
+                --[[if cc.game_options_.helmet_activated_ then
+                    cc.game_options_.helmet_activated_ = false
+                    visit_target = true
+                    target = self.helmet_switch_
+                end]]
+
+                cc.game_options_.extreme_activated_ = true
+                visit_sender = true
+                sender_value = 2
+            end
+        else
+            cc.audio.play_sfx("sounds/sfx_error.mp3", false)
         end
     elseif sender == self.exit_switch_ then
         cc.audio.play_sfx("sounds/sfx_selected.mp3", false)

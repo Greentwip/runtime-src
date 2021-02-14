@@ -126,6 +126,9 @@ function level_controller:start()
 
         local on_fade_in = function()
             cc.pause(true)
+            self.player_:switch_browner(cc.browners_.violet_.id_)
+            self.hud_.energy_:setVisible(false)
+
             self:setup()
             cc.audio.play_bgm(self.level_bgm_, true)
         end

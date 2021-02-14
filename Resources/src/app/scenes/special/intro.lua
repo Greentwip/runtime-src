@@ -85,11 +85,28 @@ function intro:ctor(parallax_arguments)
                 self:on_ring_move_complete()
             end
 
+            local start_shine_left = function()
+                self.belt_left_:run_action("shine")
+            end
+
+            local start_shine_right = function()
+                self.belt_right_:run_action("shine")
+            end
+
             local belt_left_move   = cc.MoveTo:create(1, cc.p(display.center.x + 13, self.belt_left_:getPositionY()))
             local belt_right_move  = cc.MoveTo:create(1, cc.p(display.center.x - 18, self.belt_right_:getPositionY()))
 
-            local ring_a_sequence = cc.Sequence:create(belt_left_move, cc.CallFunc:create(boss_callback), nil)
-            local ring_b_sequence = cc.Sequence:create(belt_right_move, cc.CallFunc:create(boss_callback), nil)
+            local ring_a_sequence = 
+            cc.Sequence:create(belt_left_move, 
+                               cc.CallFunc:create(start_shine_left),
+                               cc.CallFunc:create(boss_callback), 
+                               nil)
+
+            local ring_b_sequence = 
+            cc.Sequence:create(belt_right_move, 
+                               cc.CallFunc:create(start_shine_right),
+                               cc.CallFunc:create(boss_callback), 
+                               nil)
 
             self.belt_left_:runAction(ring_a_sequence)
             self.belt_right_:runAction(ring_b_sequence)
