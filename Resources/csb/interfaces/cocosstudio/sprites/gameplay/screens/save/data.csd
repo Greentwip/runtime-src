@@ -69,7 +69,7 @@
               <AbstractNodeData Name="customs" ActionTag="908763651" Tag="116" IconVisible="True" ctype="SingleNodeObjectData">
                 <Size X="0.0000" Y="0.0000" />
                 <Children>
-                  <AbstractNodeData Name="etank" ActionTag="-579717782" Tag="49" IconVisible="True" TopMargin="0.0000" BottomMargin="0.0000" ctype="SingleNodeObjectData">
+                  <AbstractNodeData Name="etank" ActionTag="-579717782" Tag="49" IconVisible="True" ctype="SingleNodeObjectData">
                     <Size X="0.0000" Y="0.0000" />
                     <Children>
                       <AbstractNodeData Name="interruptor" ActionTag="1068683359" Tag="47" IconVisible="False" LeftMargin="-8.0000" RightMargin="-8.0000" BottomMargin="-16.0000" ctype="SpriteObjectData">
@@ -97,7 +97,7 @@
                       </AbstractNodeData>
                     </Children>
                     <AnchorPoint />
-                    <Position Y="0.0000" />
+                    <Position />
                     <Scale ScaleX="1.0000" ScaleY="1.0000" />
                     <CColor A="255" R="255" G="255" B="255" />
                     <PrePosition />
@@ -284,8 +284,8 @@
                         <FileData Type="Normal" Path="sprites/gameplay/screens/save/interruptors/weapon/ex_weapon_interruptor_1.png" Plist="" />
                         <BlendFunc Src="1" Dst="771" />
                       </AbstractNodeData>
-                      <AbstractNodeData Name="boot" ActionTag="947857280" Tag="41" IconVisible="False" LeftMargin="-72.0000" RightMargin="56.0000" BottomMargin="-16.0000" ctype="SpriteObjectData">
-                        <Size X="16.0000" Y="16.0000" />
+                      <AbstractNodeData Name="boot" ActionTag="947857280" Tag="41" IconVisible="False" LeftMargin="-73.0000" RightMargin="55.0000" TopMargin="-0.5000" BottomMargin="-16.5000" ctype="SpriteObjectData">
+                        <Size X="18.0000" Y="17.0000" />
                         <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
                         <Position X="-64.0000" Y="-8.0000" />
                         <Scale ScaleX="0.5000" ScaleY="0.5000" />
@@ -295,8 +295,8 @@
                         <FileData Type="Normal" Path="sprites/gameplay/screens/save/interruptors/armor/extreme_boot_interruptor_1.png" Plist="" />
                         <BlendFunc Src="1" Dst="771" />
                       </AbstractNodeData>
-                      <AbstractNodeData Name="fist" ActionTag="1309989405" Tag="42" IconVisible="False" LeftMargin="-62.0000" RightMargin="46.0000" BottomMargin="-16.0000" ctype="SpriteObjectData">
-                        <Size X="16.0000" Y="16.0000" />
+                      <AbstractNodeData Name="fist" ActionTag="1309989405" Tag="42" IconVisible="False" LeftMargin="-63.0000" RightMargin="45.0000" TopMargin="-0.5000" BottomMargin="-16.5000" ctype="SpriteObjectData">
+                        <Size X="18.0000" Y="17.0000" />
                         <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
                         <Position X="-54.0000" Y="-8.0000" />
                         <Scale ScaleX="0.5000" ScaleY="0.5000" />
@@ -306,8 +306,8 @@
                         <FileData Type="Normal" Path="sprites/gameplay/screens/save/interruptors/armor/extreme_fist_interruptor_1.png" Plist="" />
                         <BlendFunc Src="1" Dst="771" />
                       </AbstractNodeData>
-                      <AbstractNodeData Name="chest" ActionTag="-757359875" Tag="43" IconVisible="False" LeftMargin="-52.0000" RightMargin="36.0000" BottomMargin="-16.0000" ctype="SpriteObjectData">
-                        <Size X="16.0000" Y="16.0000" />
+                      <AbstractNodeData Name="chest" ActionTag="-757359875" Tag="43" IconVisible="False" LeftMargin="-53.0000" RightMargin="35.0000" TopMargin="-0.5000" BottomMargin="-16.5000" ctype="SpriteObjectData">
+                        <Size X="18.0000" Y="17.0000" />
                         <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
                         <Position X="-44.0000" Y="-8.0000" />
                         <Scale ScaleX="0.5000" ScaleY="0.5000" />
@@ -317,8 +317,8 @@
                         <FileData Type="Normal" Path="sprites/gameplay/screens/save/interruptors/armor/extreme_chest_interruptor_1.png" Plist="" />
                         <BlendFunc Src="1" Dst="771" />
                       </AbstractNodeData>
-                      <AbstractNodeData Name="ex_helmet" ActionTag="-316668978" Tag="44" IconVisible="False" LeftMargin="-42.0000" RightMargin="26.0000" BottomMargin="-16.0000" ctype="SpriteObjectData">
-                        <Size X="16.0000" Y="16.0000" />
+                      <AbstractNodeData Name="ex_helmet" ActionTag="-316668978" Tag="44" IconVisible="False" LeftMargin="-43.0000" RightMargin="25.0000" TopMargin="-0.5000" BottomMargin="-16.5000" ctype="SpriteObjectData">
+                        <Size X="18.0000" Y="17.0000" />
                         <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
                         <Position X="-34.0000" Y="-8.0000" />
                         <Scale ScaleX="0.5000" ScaleY="0.5000" />
@@ -381,7 +381,7 @@
               <AbstractNodeData Name="customs" ActionTag="1425415084" Tag="117" IconVisible="True" ctype="SingleNodeObjectData">
                 <Size X="0.0000" Y="0.0000" />
                 <Children>
-                  <AbstractNodeData Name="etank" ActionTag="-409730905" Tag="61" IconVisible="True" TopMargin="0.0000" BottomMargin="0.0000" ctype="SingleNodeObjectData">
+                  <AbstractNodeData Name="etank" ActionTag="-409730905" Tag="61" IconVisible="True" ctype="SingleNodeObjectData">
                     <Size X="0.0000" Y="0.0000" />
                     <Children>
                       <AbstractNodeData Name="interruptor" ActionTag="1756329810" Tag="62" IconVisible="False" LeftMargin="-8.0000" RightMargin="-8.0000" BottomMargin="-16.0000" ctype="SpriteObjectData">
@@ -409,7 +409,7 @@
                       </AbstractNodeData>
                     </Children>
                     <AnchorPoint />
-                    <Position Y="0.0000" />
+                    <Position />
                     <Scale ScaleX="1.0000" ScaleY="1.0000" />
                     <CColor A="255" R="255" G="255" B="255" />
                     <PrePosition />
@@ -596,8 +596,8 @@
                         <FileData Type="Normal" Path="sprites/gameplay/screens/save/interruptors/weapon/ex_weapon_interruptor_1.png" Plist="" />
                         <BlendFunc Src="1" Dst="771" />
                       </AbstractNodeData>
-                      <AbstractNodeData Name="boot" ActionTag="1727121706" Tag="81" IconVisible="False" LeftMargin="-72.0000" RightMargin="56.0000" BottomMargin="-16.0000" ctype="SpriteObjectData">
-                        <Size X="16.0000" Y="16.0000" />
+                      <AbstractNodeData Name="boot" ActionTag="1727121706" Tag="81" IconVisible="False" LeftMargin="-73.0000" RightMargin="55.0000" TopMargin="-0.5000" BottomMargin="-16.5000" ctype="SpriteObjectData">
+                        <Size X="18.0000" Y="17.0000" />
                         <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
                         <Position X="-64.0000" Y="-8.0000" />
                         <Scale ScaleX="0.5000" ScaleY="0.5000" />
@@ -607,8 +607,8 @@
                         <FileData Type="Normal" Path="sprites/gameplay/screens/save/interruptors/armor/extreme_boot_interruptor_1.png" Plist="" />
                         <BlendFunc Src="1" Dst="771" />
                       </AbstractNodeData>
-                      <AbstractNodeData Name="fist" ActionTag="555372390" Tag="82" IconVisible="False" LeftMargin="-62.0000" RightMargin="46.0000" BottomMargin="-16.0000" ctype="SpriteObjectData">
-                        <Size X="16.0000" Y="16.0000" />
+                      <AbstractNodeData Name="fist" ActionTag="555372390" Tag="82" IconVisible="False" LeftMargin="-63.0000" RightMargin="45.0000" TopMargin="-0.5000" BottomMargin="-16.5000" ctype="SpriteObjectData">
+                        <Size X="18.0000" Y="17.0000" />
                         <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
                         <Position X="-54.0000" Y="-8.0000" />
                         <Scale ScaleX="0.5000" ScaleY="0.5000" />
@@ -618,8 +618,8 @@
                         <FileData Type="Normal" Path="sprites/gameplay/screens/save/interruptors/armor/extreme_fist_interruptor_1.png" Plist="" />
                         <BlendFunc Src="1" Dst="771" />
                       </AbstractNodeData>
-                      <AbstractNodeData Name="chest" ActionTag="1001897301" Tag="83" IconVisible="False" LeftMargin="-52.0000" RightMargin="36.0000" BottomMargin="-16.0000" ctype="SpriteObjectData">
-                        <Size X="16.0000" Y="16.0000" />
+                      <AbstractNodeData Name="chest" ActionTag="1001897301" Tag="83" IconVisible="False" LeftMargin="-53.0000" RightMargin="35.0000" TopMargin="-0.5000" BottomMargin="-16.5000" ctype="SpriteObjectData">
+                        <Size X="18.0000" Y="17.0000" />
                         <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
                         <Position X="-44.0000" Y="-8.0000" />
                         <Scale ScaleX="0.5000" ScaleY="0.5000" />
@@ -629,8 +629,8 @@
                         <FileData Type="Normal" Path="sprites/gameplay/screens/save/interruptors/armor/extreme_chest_interruptor_1.png" Plist="" />
                         <BlendFunc Src="1" Dst="771" />
                       </AbstractNodeData>
-                      <AbstractNodeData Name="ex_helmet" ActionTag="-930235236" Tag="84" IconVisible="False" LeftMargin="-42.0000" RightMargin="26.0000" BottomMargin="-16.0000" ctype="SpriteObjectData">
-                        <Size X="16.0000" Y="16.0000" />
+                      <AbstractNodeData Name="ex_helmet" ActionTag="-930235236" Tag="84" IconVisible="False" LeftMargin="-43.0000" RightMargin="25.0000" TopMargin="-0.5000" BottomMargin="-16.5000" ctype="SpriteObjectData">
+                        <Size X="18.0000" Y="17.0000" />
                         <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
                         <Position X="-34.0000" Y="-8.0000" />
                         <Scale ScaleX="0.5000" ScaleY="0.5000" />
@@ -693,7 +693,7 @@
               <AbstractNodeData Name="customs" ActionTag="1087938084" Tag="118" IconVisible="True" ctype="SingleNodeObjectData">
                 <Size X="0.0000" Y="0.0000" />
                 <Children>
-                  <AbstractNodeData Name="etank" ActionTag="566789919" Tag="90" IconVisible="True" TopMargin="0.0000" BottomMargin="0.0000" ctype="SingleNodeObjectData">
+                  <AbstractNodeData Name="etank" ActionTag="566789919" Tag="90" IconVisible="True" ctype="SingleNodeObjectData">
                     <Size X="0.0000" Y="0.0000" />
                     <Children>
                       <AbstractNodeData Name="interruptor" ActionTag="-1981794498" Tag="91" IconVisible="False" LeftMargin="-8.0000" RightMargin="-8.0000" BottomMargin="-16.0000" ctype="SpriteObjectData">
@@ -721,7 +721,7 @@
                       </AbstractNodeData>
                     </Children>
                     <AnchorPoint />
-                    <Position Y="0.0000" />
+                    <Position />
                     <Scale ScaleX="1.0000" ScaleY="1.0000" />
                     <CColor A="255" R="255" G="255" B="255" />
                     <PrePosition />
@@ -908,8 +908,8 @@
                         <FileData Type="Normal" Path="sprites/gameplay/screens/save/interruptors/weapon/ex_weapon_interruptor_1.png" Plist="" />
                         <BlendFunc Src="1" Dst="771" />
                       </AbstractNodeData>
-                      <AbstractNodeData Name="boot" ActionTag="-68293062" Tag="110" IconVisible="False" LeftMargin="-72.0000" RightMargin="56.0000" BottomMargin="-16.0000" ctype="SpriteObjectData">
-                        <Size X="16.0000" Y="16.0000" />
+                      <AbstractNodeData Name="boot" ActionTag="-68293062" Tag="110" IconVisible="False" LeftMargin="-73.0000" RightMargin="55.0000" TopMargin="-0.5000" BottomMargin="-16.5000" ctype="SpriteObjectData">
+                        <Size X="18.0000" Y="17.0000" />
                         <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
                         <Position X="-64.0000" Y="-8.0000" />
                         <Scale ScaleX="0.5000" ScaleY="0.5000" />
@@ -919,8 +919,8 @@
                         <FileData Type="Normal" Path="sprites/gameplay/screens/save/interruptors/armor/extreme_boot_interruptor_1.png" Plist="" />
                         <BlendFunc Src="1" Dst="771" />
                       </AbstractNodeData>
-                      <AbstractNodeData Name="fist" ActionTag="-959162639" Tag="111" IconVisible="False" LeftMargin="-62.0000" RightMargin="46.0000" BottomMargin="-16.0000" ctype="SpriteObjectData">
-                        <Size X="16.0000" Y="16.0000" />
+                      <AbstractNodeData Name="fist" ActionTag="-959162639" Tag="111" IconVisible="False" LeftMargin="-63.0000" RightMargin="45.0000" TopMargin="-0.5000" BottomMargin="-16.5000" ctype="SpriteObjectData">
+                        <Size X="18.0000" Y="17.0000" />
                         <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
                         <Position X="-54.0000" Y="-8.0000" />
                         <Scale ScaleX="0.5000" ScaleY="0.5000" />
@@ -930,8 +930,8 @@
                         <FileData Type="Normal" Path="sprites/gameplay/screens/save/interruptors/armor/extreme_fist_interruptor_1.png" Plist="" />
                         <BlendFunc Src="1" Dst="771" />
                       </AbstractNodeData>
-                      <AbstractNodeData Name="chest" ActionTag="463044690" Tag="112" IconVisible="False" LeftMargin="-52.0000" RightMargin="36.0000" BottomMargin="-16.0000" ctype="SpriteObjectData">
-                        <Size X="16.0000" Y="16.0000" />
+                      <AbstractNodeData Name="chest" ActionTag="463044690" Tag="112" IconVisible="False" LeftMargin="-53.0000" RightMargin="35.0000" TopMargin="-0.5000" BottomMargin="-16.5000" ctype="SpriteObjectData">
+                        <Size X="18.0000" Y="17.0000" />
                         <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
                         <Position X="-44.0000" Y="-8.0000" />
                         <Scale ScaleX="0.5000" ScaleY="0.5000" />
@@ -941,8 +941,8 @@
                         <FileData Type="Normal" Path="sprites/gameplay/screens/save/interruptors/armor/extreme_chest_interruptor_1.png" Plist="" />
                         <BlendFunc Src="1" Dst="771" />
                       </AbstractNodeData>
-                      <AbstractNodeData Name="ex_helmet" ActionTag="-585204343" Tag="113" IconVisible="False" LeftMargin="-42.0000" RightMargin="26.0000" BottomMargin="-16.0000" ctype="SpriteObjectData">
-                        <Size X="16.0000" Y="16.0000" />
+                      <AbstractNodeData Name="ex_helmet" ActionTag="-585204343" Tag="113" IconVisible="False" LeftMargin="-43.0000" RightMargin="25.0000" TopMargin="-0.5000" BottomMargin="-16.5000" ctype="SpriteObjectData">
+                        <Size X="18.0000" Y="17.0000" />
                         <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
                         <Position X="-34.0000" Y="-8.0000" />
                         <Scale ScaleX="0.5000" ScaleY="0.5000" />
