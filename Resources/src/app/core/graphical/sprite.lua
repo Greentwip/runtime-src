@@ -84,6 +84,18 @@ function sprite:set_image_index(image_index)
     self:setSpriteFrame(self.frames_[self.current_animation_][self.image_index_])
 end
 
+function sprite:increase_or_loop_frame()
+
+    local image_index = self.image_index_ + 1
+    if image_index > #self.frames_[self.current_animation_] then
+        image_index = 1
+    end
+
+    self:setSpriteFrame(self.frames_[self.current_animation_][image_index])
+
+    self.image_index_ = image_index
+end
+
 function sprite:set_animation(animation_name)
     if animation_name ~= self.current_animation_ then
         if self.frames_[animation_name] ~= nil then
@@ -104,6 +116,10 @@ function sprite:get_animation_frames(animation_name)
 
     return frames
 
+end
+
+function sprite:get_current_animation_number_of_frames()
+    return #self.frames_[self.current_animation_]
 end
 
 function sprite:get_image_index()

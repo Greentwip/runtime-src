@@ -63,6 +63,8 @@ function browner:init_variables()
     self.attack_timer_      = 0
 
     self.browner_id_ = -2       -- override in children
+
+    self.climb_counter_ = 0
 end
 
 function browner:spawn()
@@ -89,6 +91,10 @@ function browner:get_action_duration(action)
     return duration
 end
 
+function browner:get_animation_number_of_frames()
+    return self.sprite_:get_current_animation_number_of_frames()
+end
+
 function browner:stop_actions()
     self.sprite_:stop_actions()
 end
@@ -99,6 +105,10 @@ end
 
 function browner:resume_actions()
     self.sprite_:resume_actions()
+end
+
+function browner:increase_or_loop_frame()
+    self.sprite_:increase_or_loop_frame()
 end
 
 function browner:walk()
@@ -245,6 +255,23 @@ function browner:slide()
     end
 end
 
+function browner:shift_climb()
+    local active_ladder = self:getParent().active_ladder_
+
+    if active_ladder ~= nil then
+        self.climb_counter_ = self.climb_counter_ + 1
+    end
+
+    if active_ladder ~= nil then
+        if self.climb_counter_ >
+        ((self:get_action_duration("climb") / self:get_animation_number_of_frames()) * 60) then
+            self:increase_or_loop_frame()
+            self.climb_counter_ = 0
+        end
+    end
+
+end
+
 function browner:climb()
     local active_ladder = self:getParent().active_ladder_
     local climb_direction
@@ -253,8 +280,10 @@ function browner:climb()
 
         if cc.key_down(cc.key_code_.up) and not cc.key_down(cc.key_code_.down) then
             climb_direction = cc.player_.climb_direction_.up_
+            self.climb_counter_ = self.climb_counter_ + 1
         elseif cc.key_down(cc.key_code_.down) and not cc.key_down(cc.key_code_.up) then
             climb_direction = cc.player_.climb_direction_.down_
+            self.climb_counter_ = self.climb_counter_ + 1
         else
             if self.climbing_ then
                 climb_direction = cc.player_.climb_direction_.none_
@@ -271,7 +300,11 @@ function browner:climb()
     end
 
     if climb_direction ~= nil and active_ladder ~= nil then
-        self:resume_actions()
+        if self.climb_counter_ >
+        ((self:get_action_duration("climb") / self:get_animation_number_of_frames()) * 60) then
+            self:increase_or_loop_frame()
+            self.climb_counter_ = 0
+        end
 
         local x_backup = self.speed_.x
         local ground_backup = self.on_ground_
@@ -288,10 +321,12 @@ function browner:climb()
             if self:getParent():center().y >= active_ladder.top_ then
                 if self:getParent():bottom() < active_ladder.top_ then
                     self.climbing_ = false
+                    self.climb_counter_ = 0
                     self:getParent():setPositionY(active_ladder.top_ + 2)
                     active_ladder:solidify()
                 else
                     self.climbing_ = false
+                    self.climb_counter_ = 0
                     self.speed_.x = x_backup
                     self.on_ground_ = ground_backup
                 end
@@ -305,6 +340,7 @@ function browner:climb()
         elseif climb_direction == cc.player_.climb_direction_.down_ then
             if self:getParent():bottom() < active_ladder.bottom_ then
                 self.climbing_ = false
+                self.climb_counter_ = 0
                 self.speed_.x = x_backup
                 self.on_ground_ = ground_backup
                 active_ladder:solidify()
@@ -330,6 +366,7 @@ function browner:climb()
     else
 
         self.climbing_ = false
+        self.climb_counter_ = 0
         self:resume_actions()
 
     end

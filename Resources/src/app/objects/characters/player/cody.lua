@@ -269,6 +269,12 @@ function cody:climb()
     end
 end
 
+function cody:shift_climb()
+    if self.current_browner_.can_climb_ then
+        self.current_browner_:shift_climb()
+    end
+end
+
 function cody:attack()
     if self.current_browner_.can_attack_ then
         self.current_browner_:attack()
@@ -792,6 +798,12 @@ function cody:step(dt)
                 self:slide()
                 self:climb()
                 self:check_health()
+            else
+                if (cc.camera_.shift_direction_ == cc.CAMERA.SHIFT.DOWN or
+                    cc.camera_.shift_direction_ == cc.CAMERA.SHIFT.UP) and 
+                    self.current_browner_.climbing_ then
+                        self:shift_climb(true)
+                end
             end
         end
     else
