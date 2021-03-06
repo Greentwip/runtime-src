@@ -804,6 +804,16 @@ function cody:step(dt)
                     self.current_browner_.climbing_ then
                         self:shift_climb(true)
                 end
+
+                if (cc.camera_.shift_direction_ == cc.CAMERA.SHIFT.LEFT or
+                    cc.camera_.shift_direction_ == cc.CAMERA.SHIFT.RIGHT) and 
+                    (self.current_browner_.on_ground_ and 
+                     not self.current_browner_.walking_ and
+                     not self.current_browner_.sliding_ and
+                     not self.current_browner_.stunned_ and
+                     not self.current_browner_.attacking_) then
+                        self.current_browner_:run_action("walk")
+                end
             end
         end
     else

@@ -30,7 +30,6 @@ function mob:onRespawn()
     self.moving_    = false
     self.orientation_set_ = false
     self.current_speed_.x = 0
-
 end
 
 function mob:flip(x_normal)
@@ -100,6 +99,10 @@ function mob:offscreen()
         else
             self.sprite_:setVisible(true)
         end
+    end
+
+    if self.status_ == cc.enemy_.status_.inactive_ or self.status_ == cc.enemy_.status_.defeated_ then
+        self.status_ = cc.enemy_.status_.preparing_
     end
 
 end
