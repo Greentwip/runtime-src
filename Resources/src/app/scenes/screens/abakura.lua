@@ -44,7 +44,11 @@ function opening:opening_intro_a()
         
     end)
 
-    local sequence = cc.Sequence:create(pre_callback, duration, post_callback, nil)
+    local audio_callback = cc.CallFunc:create(function()
+        cc.audio.play_sfx("sounds/sfx_abakura.mp3", false)       
+    end)
+
+    local sequence = cc.Sequence:create(pre_callback, duration, audio_callback, duration, post_callback, nil)
 
     self:runAction(sequence)
 end

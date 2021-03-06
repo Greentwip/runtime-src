@@ -34,6 +34,8 @@ function opening:opening_intro_a()
 
     local pre_callback = cc.CallFunc:create(function()
         self.greentwip_logo_:run_action("greentwip_logo")
+        cc.audio.play_sfx("sounds/sfx_opening.mp3", false)       
+
     end)
 
     local duration = cc.DelayTime:create(self.greentwip_logo_:get_action_duration("greentwip_logo"))
