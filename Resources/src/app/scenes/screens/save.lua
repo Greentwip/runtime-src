@@ -15,6 +15,9 @@ function save:onLoad()
     self.slot_2_ = root:getChildByName("file_2")
     self.slot_3_ = root:getChildByName("file_3")
 
+    self.delete_button_ = root:getChildByName("delete")
+    self.delete_confirm_ = root:getChildByName("confirm")
+
     self.slot_1_customs_ = root:getChildByName("file_1"):getChildByName("customs")
     self.slot_2_customs_ = root:getChildByName("file_2"):getChildByName("customs")
     self.slot_3_customs_ = root:getChildByName("file_3"):getChildByName("customs")
@@ -30,6 +33,13 @@ function save:onLoad()
     self.slot_2_:setColor(self.inactive_color_)
     self.slot_3_:setColor(self.inactive_color_)
 
+    self.delete_button_:setColor(self.inactive_color_)
+    self.delete_confirm_:setVisible(false)
+    
+    self.selecting_ = 0
+    self.deleting_confirmation_ = 1
+    self.state_ = self.selecting_
+    
     self.active_slot_ = self.slot_1_
 
     print("populating")
@@ -53,6 +63,50 @@ end
 
 function save:color_weapon(custom, weapon_name)
     custom:getChildByName(weapon_name):setColor(self.active_color_)
+end
+
+function save:uncolor_weapon(custom, weapon_name)
+    custom:getChildByName(weapon_name):setColor(self.inactive_color_)
+end
+
+function save:clear_slot(slot)
+    local save_slot = nil
+
+    if slot == 1 then
+        save_slot = self.slot_1_customs_
+    elseif slot == 2 then
+        save_slot = self.slot_2_customs_
+    else
+        save_slot = self.slot_3_customs_
+    end
+
+    save_slot:setOpacity(0)
+
+    local e_tank = save_slot:getChildByName("etank"):getChildByName("label")
+    local m_tank = save_slot:getChildByName("mtank"):getChildByName("label")
+    local lives = save_slot:getChildByName("life"):getChildByName("label")
+
+    e_tank:setString(tostring(0))
+    m_tank:setString(tostring(0))
+    lives:setString(tostring(0))
+
+    local weapons = save_slot:getChildByName("weapons")
+
+    self:uncolor_weapon(weapons, "helmet")
+    self:uncolor_weapon(weapons, "ex_helmet")
+    self:uncolor_weapon(weapons, "chest")    
+    self:uncolor_weapon(weapons, "fist")
+    self:uncolor_weapon(weapons, "boot")
+    self:uncolor_weapon(weapons, "freezer")
+    self:uncolor_weapon(weapons, "sheriff")
+    self:uncolor_weapon(weapons, "boomer")
+    self:uncolor_weapon(weapons, "military")
+    self:uncolor_weapon(weapons, "vine")
+    self:uncolor_weapon(weapons, "shield")
+    self:uncolor_weapon(weapons, "night")
+    self:uncolor_weapon(weapons, "torch")
+    self:uncolor_weapon(weapons, "helmet")
+    self:uncolor_weapon(weapons, "ex")
 end
 
 function save:populate_slot(slot)
@@ -82,7 +136,7 @@ function save:populate_slot(slot)
         self:color_weapon(weapons, "helmet")
     end
     if cc.unlockables_.head_.acquired_ then
-        self:color_weapon(weapons, "head")
+        self:color_weapon(weapons, "ex_helmet")
     end
     if cc.unlockables_.chest_.acquired_ then
         self:color_weapon(weapons, "chest")
@@ -176,7 +230,7 @@ function save:populate_slot_cheat(slot)
         self:color_weapon(weapons, "helmet")
     end
     if cc.unlockables_.head_.acquired_ then
-        self:color_weapon(weapons, "head")
+        self:color_weapon(weapons, "ex_helmet")
     end
     if cc.unlockables_.chest_.acquired_ then
         self:color_weapon(weapons, "chest")
@@ -184,7 +238,6 @@ function save:populate_slot_cheat(slot)
 
     if cc.unlockables_.fist_.acquired_ then 
         self:color_weapon(weapons, "fist")
-
     end
 
     if cc.unlockables_.boot_.acquired_ then 
@@ -335,11 +388,18 @@ function save:save_slot(slot)
 
 end
 
-function save:delete_slot(file_slot)
-
+function save:delete_slot(slot)
+    cc.file.remove("save" .. tostring(slot) .. ".json")
 end
 
-
+function save:reset_deleting()
+    self.active_slot_ = self.slot_1_
+    self.active_slot_:setColor(self.active_color_)
+    self.slot_3_:setColor(self.inactive_color_)
+    self.slot_2_:setColor(self.inactive_color_)
+    self.delete_button_:setColor(self.inactive_color_)
+    self.delete_confirm_:setVisible(false)
+end
 
 function save:slot_exists(slot)
     return cc.file.exists("save" .. tostring(slot) .. ".json")
@@ -347,95 +407,230 @@ end
 
 function save:step(dt)
 
-    if cc.key_pressed(cc.key_code_.up) then
-        if self.active_slot_ == self.slot_1_ then
-            self.active_slot_ = self.slot_3_
-            self.active_slot_:setColor(self.active_color_)
-            self.slot_1_:setColor(self.inactive_color_)
-        elseif self.active_slot_ == self.slot_2_ then
-            self.active_slot_ = self.slot_1_
-            self.active_slot_:setColor(self.active_color_)
-            self.slot_2_:setColor(self.inactive_color_)
-        else
-            self.active_slot_ = self.slot_2_
-            self.active_slot_:setColor(self.active_color_)
-            self.slot_3_:setColor(self.inactive_color_)
+    if self.state_ == self.deleting_confirmation_ then
+        if cc.key_pressed(cc.key_code_.up) then
+            if self.active_slot_ == self.slot_1_ then
+                if self:slot_exists(3) then
+                    self.active_slot_ = self.slot_3_
+                    self.active_slot_:setColor(self.active_color_)
+                    self.slot_1_:setColor(self.inactive_color_)
+                elseif self:slot_exists(2) then
+                    self.active_slot_ = self.slot_2_
+                    self.active_slot_:setColor(self.active_color_)
+                    self.slot_1_:setColor(self.inactive_color_)
+                end
+            elseif self.active_slot_ == self.slot_2_ then
+                if self:slot_exists(1) then
+                    self.active_slot_ = self.slot_1_
+                    self.active_slot_:setColor(self.active_color_)
+                    self.slot_2_:setColor(self.inactive_color_)
+                elseif self:slot_exists(3) then
+                    self.active_slot_ = self.slot_3_
+                    self.active_slot_:setColor(self.active_color_)
+                    self.slot_2_:setColor(self.inactive_color_)
+                end
+            else
+                if self:slot_exists(2) then
+                    self.active_slot_ = self.slot_2_
+                    self.active_slot_:setColor(self.active_color_)
+                    self.slot_3_:setColor(self.inactive_color_)
+                elseif self:slot_exists(1) then
+                    self.active_slot_ = self.slot_1_
+                    self.active_slot_:setColor(self.active_color_)
+                    self.slot_3_:setColor(self.inactive_color_)
+                end
+            end
+            cc.audio.play_sfx("sounds/sfx_select.mp3", false)
         end
-        cc.audio.play_sfx("sounds/sfx_select.mp3", false)
+
+        if cc.key_pressed(cc.key_code_.down) then
+            if self.active_slot_ == self.slot_1_ then
+                if self:slot_exists(2) then
+                    self.active_slot_ = self.slot_2_
+                    self.active_slot_:setColor(self.active_color_)
+                    self.slot_1_:setColor(self.inactive_color_)
+                elseif self:slot_exists(3) then
+                    self.active_slot_ = self.slot_3_
+                    self.active_slot_:setColor(self.active_color_)
+                    self.slot_1_:setColor(self.inactive_color_)
+                end
+            elseif self.active_slot_ == self.slot_2_ then
+                if self:slot_exists(3) then
+                    self.active_slot_ = self.slot_3_
+                    self.active_slot_:setColor(self.active_color_)
+                    self.slot_2_:setColor(self.inactive_color_)
+                elseif self:slot_exists(1) then
+                    self.active_slot_ = self.slot_1_
+                    self.active_slot_:setColor(self.active_color_)
+                    self.slot_2_:setColor(self.inactive_color_)
+                end
+            else
+                if self:slot_exists(1) then
+                    self.active_slot_ = self.slot_1_
+                    self.active_slot_:setColor(self.active_color_)
+                    self.slot_3_:setColor(self.inactive_color_)
+                elseif self:slot_exists(2) then
+                    self.active_slot_ = self.slot_2_
+                    self.active_slot_:setColor(self.active_color_)
+                    self.slot_3_:setColor(self.inactive_color_)
+                end
+            end
+            cc.audio.play_sfx("sounds/sfx_select.mp3", false)
+        end
+
     end
 
-    if cc.key_pressed(cc.key_code_.down) then
-        if self.active_slot_ == self.slot_1_ then
-            self.active_slot_ = self.slot_2_
-            self.active_slot_:setColor(self.active_color_)
-            self.slot_1_:setColor(self.inactive_color_)
-        elseif self.active_slot_ == self.slot_2_ then
-            self.active_slot_ = self.slot_3_
-            self.active_slot_:setColor(self.active_color_)
-            self.slot_2_:setColor(self.inactive_color_)
-        else
-            self.active_slot_ = self.slot_1_
-            self.active_slot_:setColor(self.active_color_)
-            self.slot_3_:setColor(self.inactive_color_)
+    if self.state_ == self.selecting_ then
+        if cc.key_pressed(cc.key_code_.up) then
+            if self.active_slot_ == self.slot_1_ then
+                if self:slot_exists(1) or self:slot_exists(2) or self:slot_exists(3) then
+                    self.active_slot_ = self.delete_button_
+                    self.active_slot_:setColor(self.active_color_)
+                    self.slot_1_:setColor(self.inactive_color_)
+                else
+                    self.active_slot_ = self.slot_3_
+                    self.active_slot_:setColor(self.active_color_)
+                    self.slot_1_:setColor(self.inactive_color_)
+                end
+            elseif self.active_slot_ == self.slot_2_ then
+                self.active_slot_ = self.slot_1_
+                self.active_slot_:setColor(self.active_color_)
+                self.slot_2_:setColor(self.inactive_color_)
+            elseif self.active_slot_ == self.slot_3_ then
+                self.active_slot_ = self.slot_2_
+                self.active_slot_:setColor(self.active_color_)
+                self.slot_3_:setColor(self.inactive_color_)
+            else
+                self.active_slot_ = self.slot_3_
+                self.active_slot_:setColor(self.active_color_)
+                self.delete_button_:setColor(self.inactive_color_)            
+            end
+            cc.audio.play_sfx("sounds/sfx_select.mp3", false)
         end
-        cc.audio.play_sfx("sounds/sfx_select.mp3", false)
+
+        if cc.key_pressed(cc.key_code_.down) then
+            if self.active_slot_ == self.slot_1_ then
+                self.active_slot_ = self.slot_2_
+                self.active_slot_:setColor(self.active_color_)
+                self.slot_1_:setColor(self.inactive_color_)
+            elseif self.active_slot_ == self.slot_2_ then
+                self.active_slot_ = self.slot_3_
+                self.active_slot_:setColor(self.active_color_)
+                self.slot_2_:setColor(self.inactive_color_)
+            elseif self.active_slot_ == self.slot_3_ then
+                if self:slot_exists(1) or self:slot_exists(2) or self:slot_exists(3) then
+                    self.active_slot_ = self.delete_button_
+                    self.active_slot_:setColor(self.active_color_)
+                    self.slot_3_:setColor(self.inactive_color_)
+                else
+                    self.active_slot_ = self.slot_1_
+                    self.active_slot_:setColor(self.active_color_)
+                    self.slot_3_:setColor(self.inactive_color_)            
+                end
+            else
+                self.active_slot_ = self.slot_1_
+                self.active_slot_:setColor(self.active_color_)
+                self.delete_button_:setColor(self.inactive_color_)            
+            end
+
+            cc.audio.play_sfx("sounds/sfx_select.mp3", false)
+        end
     end
 
     if not self.triggered_ then
 
         if cc.key_pressed(cc.key_code_.a) then
+            cc.audio.play_sfx("sounds/sfx_selected.mp3", false)
+
+            local delete_state = false
 
             local selected_slot = 0
             if self.active_slot_ == self.slot_1_ then
                 selected_slot = 1
             elseif self.active_slot_ == self.slot_2_ then
                 selected_slot = 2
-            else
+            elseif self.active_slot_ == self.slot_3_ then
                 selected_slot = 3
-            end
-
-            if not self:slot_exists(selected_slot) then
-                self:save_slot(selected_slot)
-            end
-            
-
-            self:load_slot(selected_slot)
-            
-            if cc.player_.lives_ <= 0 then
-                cc.player_.lives_ = 3
-            end
-
-            if selected_slot == 3 then
-                self:populate_slot_cheat(selected_slot)
             else
-                self:populate_slot(selected_slot)
+                delete_state = true
             end
 
-            cc.game.slot_ = selected_slot
+            if self.state_ == self.deleting_confirmation_ then
+                delete_state = true
+            end
 
-            local slot = cc.game.get_default_slot()
+            if delete_state then
 
-            slot["lives"] = cc.player_.lives_
-        
-            cc.game.save_default_slot(slot)
+                    
+                if self.state_ == self.selecting_ then    
+                    self.delete_confirm_:setOpacity(255)
+                    self.delete_confirm_:setVisible(true)
+                    self.active_slot_ = self.slot_1_
+                    self.active_slot_:setColor(self.active_color_)                
+                    self.state_ = self.deleting_confirmation_
+                else
+                    self.delete_confirm_:setOpacity(0)
+                    self:delete_slot(selected_slot)
+                    self:clear_slot(selected_slot)
+                    self:reset_deleting()
+                    self.state_ = self.selecting_
+                end
             
-            self.triggered_ = true
-
-            ccexp.AudioEngine:stopAll()
-
-            self:getApp()
-            :enterScene("screens.stage_select", "FADE", 0.5)
+            else
+                if not self:slot_exists(selected_slot) then
+                    self:save_slot(selected_slot)
+                end
+                
+    
+                self:load_slot(selected_slot)
+                
+                if cc.player_.lives_ <= 0 then
+                    cc.player_.lives_ = 3
+                end
+    
+                if selected_slot == 3 then
+                    self:populate_slot_cheat(selected_slot)
+                else
+                    self:populate_slot(selected_slot)
+                end
+    
+                cc.game.slot_ = selected_slot
+    
+                local slot = cc.game.get_default_slot()
+    
+                slot["lives"] = cc.player_.lives_
+            
+                cc.game.save_default_slot(slot)
+                
+                self.triggered_ = true
+    
+                ccexp.AudioEngine:stopAll()
+    
+                self:getApp()
+                :enterScene("screens.stage_select", "FADE", 0.5)
+    
+    
+    
+            end
 
         elseif cc.key_pressed(cc.key_code_.b) then
-            self.triggered_ = true
 
-            ccexp.AudioEngine:stopAll()
+            if self.state_ == self.deleting_confirmation_ then
+                self.state_ = self.selecting_
+                self:reset_deleting()
+            else
+                self.triggered_ = true
 
-            self:getApp()
-            :enterScene("screens.title", "FADE", 0.5)    
+                ccexp.AudioEngine:stopAll()
+    
+                self:getApp()
+                :enterScene("screens.title", "FADE", 0.5)    
+            end
+            
         end
     end
 
+    -- joypad reset
     self:post_step(dt)
 
     return self

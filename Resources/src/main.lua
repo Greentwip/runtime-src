@@ -15,7 +15,8 @@ cc.file = {
 exists = function() end,
 read = function() end,
 read_raw = function() end,
-write = function() end
+write = function() end,
+remove = function() end
 }
 
 cc.json = {
@@ -78,6 +79,14 @@ function cc.file.read_raw(file)
     --return contents
 
     return cc.FileUtils:getInstance():getStringFromFile(file)
+end
+
+function cc.file.remove(file)
+    local writable_path = cc.FileUtils:getInstance():getWritablePath() 
+
+    local file_path = writable_path .. "/" .. file
+
+    cc.FileUtils:getInstance():removeFile(file_path)
 end
 
 -- Write a string to a file.

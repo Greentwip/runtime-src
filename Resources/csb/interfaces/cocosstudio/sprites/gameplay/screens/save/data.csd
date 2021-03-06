@@ -976,6 +976,63 @@
             <PrePosition X="0.5000" Y="0.2232" />
             <PreSize X="0.0000" Y="0.0000" />
           </AbstractNodeData>
+          <AbstractNodeData Name="delete" ActionTag="-671719713" Tag="92" IconVisible="True" LeftMargin="84.0000" RightMargin="172.0000" TopMargin="208.0000" BottomMargin="16.0000" ctype="SingleNodeObjectData">
+            <Size X="0.0000" Y="0.0000" />
+            <Children>
+              <AbstractNodeData Name="delete_button" ActionTag="-140150897" Tag="89" RotationSkewY="-0.0004" IconVisible="False" LeftMargin="-46.0000" RightMargin="-46.0000" TopMargin="-12.0000" BottomMargin="-12.0000" ctype="SpriteObjectData">
+                <Size X="92.0000" Y="24.0000" />
+                <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+                <Position />
+                <Scale ScaleX="0.7000" ScaleY="0.6000" />
+                <CColor A="255" R="255" G="255" B="255" />
+                <PrePosition />
+                <PreSize X="0.0000" Y="0.0000" />
+                <FileData Type="Normal" Path="sprites/gameplay/screens/gameover/button_right_active.png" Plist="" />
+                <BlendFunc Src="1" Dst="771" />
+              </AbstractNodeData>
+              <AbstractNodeData Name="label" ActionTag="-1231659096" Tag="91" IconVisible="False" LeftMargin="-24.5000" RightMargin="-24.5000" TopMargin="-4.0000" BottomMargin="-4.0000" FontSize="8" LabelText="DELETE" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="TextObjectData">
+                <Size X="49.0000" Y="8.0000" />
+                <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+                <Position />
+                <Scale ScaleX="1.0000" ScaleY="1.0000" />
+                <CColor A="255" R="255" G="255" B="255" />
+                <PrePosition />
+                <PreSize X="0.0000" Y="0.0000" />
+                <FontResource Type="Normal" Path="megaman_2.ttf" Plist="" />
+                <OutlineColor A="255" R="255" G="0" B="0" />
+                <ShadowColor A="255" R="110" G="110" B="110" />
+              </AbstractNodeData>
+            </Children>
+            <AnchorPoint />
+            <Position X="84.0000" Y="16.0000" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.3281" Y="0.0714" />
+            <PreSize X="0.0000" Y="0.0000" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="confirm" ActionTag="511946208" Tag="94" IconVisible="True" LeftMargin="177.0000" RightMargin="79.0000" TopMargin="208.0000" BottomMargin="16.0000" ctype="SingleNodeObjectData">
+            <Size X="0.0000" Y="0.0000" />
+            <Children>
+              <AbstractNodeData Name="label" ActionTag="-282027490" Tag="96" IconVisible="False" LeftMargin="-31.5000" RightMargin="-31.5000" TopMargin="-4.0000" BottomMargin="-4.0000" FontSize="8" LabelText="CONFIRM?" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="TextObjectData">
+                <Size X="63.0000" Y="8.0000" />
+                <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+                <Position />
+                <Scale ScaleX="1.0000" ScaleY="1.0000" />
+                <CColor A="255" R="255" G="255" B="255" />
+                <PrePosition />
+                <PreSize X="0.0000" Y="0.0000" />
+                <FontResource Type="Normal" Path="megaman_2.ttf" Plist="" />
+                <OutlineColor A="255" R="255" G="0" B="0" />
+                <ShadowColor A="255" R="110" G="110" B="110" />
+              </AbstractNodeData>
+            </Children>
+            <AnchorPoint />
+            <Position X="177.0000" Y="16.0000" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.6914" Y="0.0714" />
+            <PreSize X="0.0000" Y="0.0000" />
+          </AbstractNodeData>
         </Children>
       </ObjectData>
     </Content>
