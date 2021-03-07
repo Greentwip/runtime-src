@@ -33,7 +33,11 @@ function fade:ctor(duration, on_fade_begin, on_fade_in, on_fade_out, settings, a
     end
 
     if settings.fade_in then
-        actions[#actions +1] = cc.FadeIn:create(duration * 0.5)
+        if settings.fade_out then
+            actions[#actions +1] = cc.FadeIn:create(duration * 0.5)
+        else
+            actions[#actions +1] = cc.FadeIn:create(duration)
+        end
     end
 
     if on_fade_in ~= nil then
@@ -41,7 +45,11 @@ function fade:ctor(duration, on_fade_begin, on_fade_in, on_fade_out, settings, a
     end
 
     if settings.fade_out then
-        actions[#actions +1] = cc.FadeOut:create(duration * 0.5)
+        if settings.fade_in then
+            actions[#actions +1] = cc.FadeOut:create(duration * 0.5)
+        else
+            actions[#actions +1] = cc.FadeOut:create(duration)
+        end
     end
 
     if on_fade_out ~= nil then
