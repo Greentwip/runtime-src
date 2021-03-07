@@ -9,7 +9,6 @@ local intro = import("app.scenes.special.intro")
 local fade  = import("app.core.graphical.fade")
 
 function boss_intro:onLoad()
-
     self.boss_ = sprite:create("sprites/gameplay/screens/boss_intro/boss_animation/boss_animation", cc.p(0.5, 0.0))
                        :setPosition(display.center)
                        :setVisible(false)
@@ -107,10 +106,6 @@ function boss_intro:step(dt)
 
             if cc.platform_ == "mobile" then
                 fade:create(1.0, function() end, function()
-                    self.sprite_ = sprite:create("sprites/core/fade/fade", cc.p(1, 0.5))
-                                         :addTo(self, 1024)
-    
-    
                     self:getApp()
                         :enterScene("levels.level", "FADE", 1, {physics = true})
                 
@@ -120,13 +115,14 @@ function boss_intro:step(dt)
             else
 
                 fade:create(1.0, function() end, function()
-
                     self:getApp()
                         :enterScene("levels.level", "FADE", 1, {physics = true})
-                
-                    end, function() end, {fade_in = true, fade_out = false}, cc.p(1, 0.5))
-                                        :setPosition(0, 0)
-                                        :addTo(self, 1024)
+                            
+                            end, function() end, {fade_in = true, fade_out = false}, cc.p(0, 1.0))
+                                                :setPosition(cc.p(display.left_top.x - 16, 
+                                                                display.left_top.y + 16))
+                                                :addTo(self, 1024)
+                            
             end
                             
     

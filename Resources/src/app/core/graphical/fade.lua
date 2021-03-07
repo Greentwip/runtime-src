@@ -6,20 +6,39 @@ local sprite        = import("app.core.graphical.sprite")
 
 function fade:ctor(duration, on_fade_begin, on_fade_in, on_fade_out, settings, anchor, delay)
 
-    if anchor == nil then
---        self.sprite_ = sprite:create("sprites/core/fade/fade", cc.p(1,1))
---                             :addTo(self)
-        self.sprite_ = cc.Sprite:create("sprites/core/fade/fade.png")
-                                :setAnchorPoint(cc.p(1,1))
-                                :addTo(self)
+    if cc.platform_ == "mobile" then
+        if anchor == nil then
+            --        self.sprite_ = sprite:create("sprites/core/fade/fade", cc.p(1,1))
+            --                             :addTo(self)
+            self.sprite_ = cc.Sprite:create("sprites/core/fade/fade_wide.png")
+                                    :setAnchorPoint(cc.p(1,1))
+                                    :addTo(self)
+    
+        else
+    --        self.sprite_ = sprite:create("sprites/core/fade/fade", anchor)
+    --                             :addTo(self)
+            self.sprite_ = cc.Sprite:create("sprites/core/fade/fade_wide.png")
+                                    :setAnchorPoint(anchor)
+                                    :addTo(self)
+    
+        end
 
     else
---        self.sprite_ = sprite:create("sprites/core/fade/fade", anchor)
---                             :addTo(self)
-        self.sprite_ = cc.Sprite:create("sprites/core/fade/fade.png")
-                                :setAnchorPoint(anchor)
-                                :addTo(self)
-
+        if anchor == nil then
+    --        self.sprite_ = sprite:create("sprites/core/fade/fade", cc.p(1,1))
+    --                             :addTo(self)
+            self.sprite_ = cc.Sprite:create("sprites/core/fade/fade.png")
+                                    :setAnchorPoint(cc.p(1,1))
+                                    :addTo(self)
+    
+        else
+    --        self.sprite_ = sprite:create("sprites/core/fade/fade", anchor)
+    --                             :addTo(self)
+            self.sprite_ = cc.Sprite:create("sprites/core/fade/fade.png")
+                                    :setAnchorPoint(anchor)
+                                    :addTo(self)
+    
+        end
     end
 
     local actions = {}
@@ -63,8 +82,6 @@ function fade:ctor(duration, on_fade_begin, on_fade_in, on_fade_out, settings, a
     if settings.fade_in then
         self.sprite_:setOpacity(0)
     end
-
-    actions[#actions+1] = cc.CallFunc:create(self.removeSelf)
 
     local sequence = cc.Sequence:create(actions)
     self.sprite_:runAction(sequence)
