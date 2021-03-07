@@ -106,25 +106,26 @@ function boss_intro:step(dt)
             ccexp.AudioEngine:stopAll()
 
             if cc.platform_ == "mobile" then
-                fade:create(1.0, function() end, function()
+                fade:create(1.0, function() end, function() 
                     self.sprite_ = sprite:create("sprites/core/fade/fade", cc.p(1, 0.5))
-                                         :addTo(self, 1024)
-    
-    
+                    :addTo(self, 1024)
+                end, 
+            
+                function()
                     self:getApp()
-                        :enterScene("levels.level", "FADE", 1, {physics = true})
-                
-                end, function() end, {fade_in = true, fade_out = false}, cc.p(1, 0.5))
+                    :enterScene("levels.level", "FADE", 1, {physics = true})
+
+                 end, {fade_in = true, fade_out = false}, cc.p(1, 0.5))
                                     :setPosition(0, 0)
                                     :addTo(self, 1024)
             else
 
-                fade:create(1.0, function() end, function()
-
-                    self:getApp()
-                        :enterScene("levels.level", "FADE", 1, {physics = true})
+                fade:create(1.0, function() end, function() end, 
                 
-                    end, function() end, {fade_in = true, fade_out = false}, cc.p(1, 0.5))
+                function() 
+                    self:getApp()
+                    :enterScene("levels.level", "FADE", 1, {physics = true})
+                end, {fade_in = true, fade_out = false}, cc.p(1, 0.5))
                                         :setPosition(0, 0)
                                         :addTo(self, 1024)
             end
