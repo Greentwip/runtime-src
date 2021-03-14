@@ -1,14 +1,24 @@
 -- Copyright 2014-2015 Greentwip. All Rights Reserved.
 
-local sprite           = import("app.objects.graphical.sprite")
-local enemy                 = import("app.objects.characters.enemies.base.enemy")
-local tremor                = class("tremor", enemy)
+local sprite = import("app.core.graphical.sprite")
+local enemy  = import("app.objects.characters.enemies.base.enemy")
+local tremor = class("tremor", enemy)
 
 function tremor:onCreate()
     self.default_health_ = 80
 
     self.kinematic_body_size_   = cc.size(40.0, 40.0) -- default is cc.size(16.0, 16.0)
     self.kinematic_body_offset_ = cc.p(0.0, 0.0)      -- default is cc.p(0, 0)
+
+    self.weapon_parameters_ = {
+        category_ = "gameplay",
+        sub_category_ = "level",
+        package_ = "weapon",
+        cname_ = "tremor_laser"
+    }
+
+    self.weapon_ = import("app.objects.weapons.enemies.sheriff.tremor_laser")
+
 end
 
 function tremor:animate(cname)
@@ -28,7 +38,7 @@ function tremor:animate(cname)
     local x_offset = 5
 
     for i = 1, 5 do
-        self.body_sprites_[i] = sprite:create("sprites/enemy/common/sheriff/tremor/tremor")
+        self.body_sprites_[i] = sprite:create("sprites/characters/enemy/sheriff/tremor/tremor")
                                       :addTo(self, -i)
 
         y_offset = y_offset - self.body_sprites_[i]:getContentSize().height * 0.75
@@ -48,7 +58,7 @@ function tremor:on_after_init() -- should be called after attached to parent
                         :setPosition(self:getPositionX(), self:getPositionY() - 256)
                         :addTo(self:getParent())
 
-    self.tail_.drill_ = sprite:create("sprites/enemy/common/sheriff/tremor/tremor")
+    self.tail_.drill_ = sprite:create("sprites/characters/enemy/sheriff/tremor/tremor")
                                 :setAnchorPoint(cc.p(0.5, 0.5))
                                 :setPosition(cc.p(0, 0))
                                 :addTo(self.tail_)
@@ -61,7 +71,7 @@ function tremor:on_after_init() -- should be called after attached to parent
     local y_offset = 0
 
     for i = 1, 5 do
-        local tail_body = sprite:create("sprites/enemy/common/sheriff/tremor/tremor")
+        local tail_body = sprite:create("sprites/characters/enemy/sheriff/tremor/tremor")
                                 :addTo(self.tail_, -i)
 
         y_offset = y_offset - tail_body:getContentSize().height * 0.75
@@ -70,7 +80,7 @@ function tremor:on_after_init() -- should be called after attached to parent
     end
 end
 
-function tremor:on_respawn()
+function tremor:onRespawn()
     self.shooting_ = false
     self.moving_ = false
     self.move_count_ = 0
@@ -90,45 +100,48 @@ function tremor:on_cannon_attack_end() -- prepare tail attack
 
     self.sprite_:reverse_action()
 
-    if self.cannon_attack_count_ % 8 == 0 then
-        local player_xy = cc.MoveTo:create(1, cc.p(self.player_:getPositionX(), self.player_:getPositionY()))
+    --if self.cannon_attack_count_ % 8 == 0 then
+    local player_xy = cc.MoveTo:create(1, cc.p(self.player_:getPositionX(), self.player_:getPositionY()))
 
-        local screen_xy = cc.MoveTo:create(1, cc.p(self:getPositionX(), self:getPositionY() - 256))
+    local screen_xy = cc.MoveTo:create(1, cc.p(self:getPositionX(), self:getPositionY() - 256))
 
-        local delay = cc.DelayTime:create(self.tail_.drill_:get_action_duration("tail_a") * 8)
+    local delay = cc.DelayTime:create(self.tail_.drill_:get_action_duration("tail_a") * 8)
 
-        local sequence = cc.Sequence:create(player_xy,
-                                            cc.CallFunc:create(function()
-                                                self.tail_.drill_:run_action("tail_a")
-                                            end),
-                                            delay,
-                                            cc.CallFunc:create(function()
-                                                self.tail_.drill_:run_action("tail_b")
-                                            end),
-                                            delay,
-                                            screen_xy,
-                                            nil)
+    local sequence = cc.Sequence:create(player_xy,
+                                        cc.CallFunc:create(function()
+                                            self.tail_.drill_:run_action("tail_a")
+                                        end),
+                                        delay,
+                                        cc.CallFunc:create(function()
+                                            self.tail_.drill_:run_action("tail_b")
+                                        end),
+                                        delay,
+                                        screen_xy,
+                                        nil)
 
-        self.tail_:stopAllActions()
-        self.tail_:runAction(sequence)
-    end
+    self.tail_:stopAllActions()
+    self.tail_:runAction(sequence)
+    --end
 end
 
 function tremor:on_move_end() -- prepare cannon attack
     self.move_count_ = self.move_count_ + 1
-    self.moving_ = false
 end
 
 function tremor:walk()
 
-    if not self.moving_ and self.move_count_ < 0 then
-       self.moving_ = true
+    if not self.attacking_ then
 
-       local move_left  = cc.MoveTo:create(1, cc.p(cc.bounds_:left() + cc.bounds_:width() * 0.25, self:getPositionY()))
-       local move_right = cc.MoveTo:create(1, cc.p(cc.bounds_:right() - cc.bounds_:width() * 0.25, self:getPositionY()))
+       local move_down  = cc.MoveTo:create(4, cc.p(self:getPositionX(), self:getPositionY() - 128))
+       local move_up  = cc.MoveTo:create(4, cc.p(self:getPositionX(), self:getPositionY() + 128))
        local move_delay = cc.DelayTime:create(1)
 
-       local sequence   = cc.Sequence:create(move_left, move_delay, move_right, move_delay, cc.CallFunc:create(self.on_move_end), nil)
+       local sequence   = cc.Sequence:create(move_down, 
+                                             move_delay, 
+                                             move_up, 
+                                             move_delay, 
+                                             cc.CallFunc:create(self.on_move_end), nil)
+
        --local action     = cc.RepeatForever:create(sequence)
 
        self:stopAllActions()
@@ -146,6 +159,8 @@ function tremor:attack()
 
     if self.move_count_ >= 0 and self.cannon_attack_count_ < 99 and not self.attacking_ then
 
+        self.move_count_ = 0
+
         self.attacking_ = true
 
         local locate_player_y  = cc.MoveTo:create(1, cc.p(self:getPositionX(), self.player_:getPositionY()))
@@ -161,14 +176,15 @@ function tremor:attack()
             local laser = self:fire({
                             sfx = nil,
                             offset = offset,
-                            weapon = import("app.objects.weapons.tremor_laser")
+                            weapon = self.weapon_,
+                            parameters = self.weapon_parameters_
                           })
 
             laser:setPositionX(laser:getPositionX() + (laser.kinematic_body_size_.width * 0.5 * self:get_sprite_normal().x))
 
         end)
 
-        local attack_delay = cc.DelayTime:create(1)
+        local attack_delay = cc.DelayTime:create(2)
 
         local attack_end_callback = cc.CallFunc:create(self.on_cannon_attack_end)
 

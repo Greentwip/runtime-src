@@ -15,8 +15,10 @@
 
             <key>robot_worm</key>
             <dict>
+                <key>size</key>
+                <string>{ 26.00000,33.00000 }</string>
                 <key>anchorpoint</key>
-                <string>{ 0.69800,0.00000 }</string>
+                <string>{ 0.50000,0.00000 }</string>
                 <key>is_dynamic</key>
                 <true/>
                 <key>affected_by_gravity</key>
@@ -57,10 +59,10 @@
                         <key>polygons</key>
                         <array>
                             <array>
-                                <string>{ 21.50000,13.50000 }</string>
-                                <string>{ 21.50000,-16.50000 }</string>
-                                <string>{ -3.50000,-16.50000 }</string>
-                                <string>{ -3.50000,13.50000 }</string>
+                                <string>{ 13.00000,13.50000 }</string>
+                                <string>{ 13.00000,-16.50000 }</string>
+                                <string>{ -13.00000,-16.50000 }</string>
+                                <string>{ -13.00000,13.50000 }</string>
                             </array>
                         </array>
                         

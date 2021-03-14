@@ -48,6 +48,7 @@ function save:onLoad()
         print(tostring(i))
         if self:slot_exists(i) then
             print("exists")
+            self:load_slot(i)
             self:populate_slot(i)
         end
     end
@@ -608,9 +609,6 @@ function save:step(dt)
     
                 self:getApp()
                 :enterScene("screens.stage_select", "FADE", 0.5)
-    
-    
-    
             end
 
         elseif cc.key_pressed(cc.key_code_.b) then

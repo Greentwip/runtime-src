@@ -40,7 +40,7 @@ function vine_browner:ctor(sprite, args)
     self:reset_flags()
 end
 
-function vine_browner:reset_flgas()
+function vine_browner:reset_flags()
     self.ticks_ = 0
     
     self.jump_flag_ = false

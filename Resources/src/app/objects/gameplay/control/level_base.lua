@@ -365,20 +365,30 @@ function level_base:step(dt)
             bullet:step(dt)
             bullet:post_step(dt)
 
-            if bullet.disposed_ then
-                self.bullets_[bullet]:removeSelf()
-                self.bullets_[bullet] = nil
+            if cc.game_status_ == cc.GAME_STATUS.RUNNING then
+                if bullet.disposed_ then
+                    print("removing bullet")
+                    --if self.bullets_[bullet].kinematic_body_ ~= nil then
+                        --print("removing")
+                        --self:getScene():getPhysicsWorld():removeBody()
+                        --self.bullets_[bullet].kinematic_body_.body_:removeFromWorld()
+                    --end
+                    self.bullets_[bullet]:removeSelf()
+                    self.bullets_[bullet] = nil
+                end
             end
-
         end
 
         for _, animation in pairs(self.animations_) do
             animation:step(dt)
             animation:post_step(dt)
 
-            if animation.disposed_ then
-                self.animations_[animation]:removeSelf()
-                self.animations_[animation] = nil
+            if cc.game_status_ == cc.GAME_STATUS.RUNNING then
+
+                if animation.disposed_ then
+                    self.animations_[animation]:removeSelf()
+                    self.animations_[animation] = nil
+                end
             end
         end
     end

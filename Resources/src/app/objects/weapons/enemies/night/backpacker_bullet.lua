@@ -28,7 +28,6 @@ function backpacker_bullet:jump()
         self.rising_ = true
         self.current_speed_.y  = self.rise_speed_
     end
-
 end
 
 

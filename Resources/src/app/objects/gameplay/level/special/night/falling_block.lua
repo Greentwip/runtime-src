@@ -55,7 +55,79 @@ function special:solve_collisions()
             end
         end
     end
+end
 
+function special:reappear()
+
+    self:setPosition(self.start_position_)
+
+
+    local blink = cc.Blink:create(1, 2)
+
+    local blink_callback = cc.CallFunc:create(function()
+        if not self:isVisible() then
+            self:setVisible(true)
+        end
+
+        if not self.sprite_:isVisible() then
+            self.sprite_:setVisible(true)
+        end
+
+        self.kinematic_body_.current_shape_:setTag(cc.tags.block)
+
+    end)
+
+    local sequence = cc.Sequence:create(blink, blink_callback, nil)
+
+    sequence:setTag(cc.tags.actions.visibility)
+    self.sprite_:stopAllActionsByTag(cc.tags.actions.visibility)
+    self.sprite_:runAction(sequence)
+end
+
+function special:offscreen()
+
+    if self.reappearing_ then
+        self.reappearing_ = false
+        self:reappear()
+    end
+
+    if self.status_ == cc.special_.status_.on_screen_ then
+        if not cc.bounds_:is_rect_inside(self.start_bbox_) then
+            self.sprite_:setVisible(true)
+            self:setPosition(self.start_position_)
+            self.status_ = cc.special_.status_.off_screen_
+            self.player_contact_ = false
+            self.falling_ = false
+            self.current_speed_.y = 0
+            self.appeared_ = false
+        end
+    end
+
+    if self.status_ == cc.special_.status_.on_screen_ then
+        print("onscreen - offscreen switch")
+        self.status_ = cc.special_.status_.off_screen_
+        self.player_contact_ = false
+        self.falling_ = false
+        self.current_speed_.y = 0
+
+        self.sprite_:setVisible(false)
+
+        self.kinematic_body_.current_shape_:setTag(cc.tags.none)
+
+
+        if self.appeared_ then
+            local delay = cc.DelayTime:create(2)
+            local callback = cc.CallFunc:create(function()
+                self.reappearing_ = true
+                self.status_ = cc.special_.status_.on_screen_
+                print("reappearing")
+            end)
+
+            local sequence = cc.Sequence:create(delay, callback, nil)
+
+            self:runAction(sequence)
+        end
+    end
 end
 
 
@@ -64,35 +136,6 @@ function special:jump() -- override in children
 
     if not self.falling_ then
         self.current_speed_.y = 0
-    end
-
-    if self.reappearing_ then
-        self.reappearing_ = false
-
-        self:setPosition(self.start_position_)
-
-
-        local blink = cc.Blink:create(1, 2)
-
-        local blink_callback = cc.CallFunc:create(function()
-            if not self:isVisible() then
-                self:setVisible(true)
-            end
-
-            if not self.sprite_:isVisible() then
-                self.sprite_:setVisible(true)
-            end
-
-            self.kinematic_body_.current_shape_:setTag(cc.tags.block)
-
-        end)
-
-        local sequence = cc.Sequence:create(blink, blink_callback, nil)
-
-        sequence:setTag(cc.tags.actions.visibility)
-        self.sprite_:stopAllActionsByTag(cc.tags.actions.visibility)
-        self.sprite_:runAction(sequence)
-
     end
 
     local bbox = self.sprite_:getBoundingBox()
@@ -108,45 +151,6 @@ function special:jump() -- override in children
                 self.appeared_ = true
             end
         end
-    else
-        if self.status_ == cc.special_.status_.on_screen_ then
-            if not cc.bounds_:is_rect_inside(self.start_bbox_) then
-                self.sprite_:setVisible(true)
-                self:setPosition(self.start_position_)
-                self.status_ = cc.special_.status_.off_screen_
-                self.player_contact_ = false
-                self.falling_ = false
-                self.current_speed_.y = 0
-                self.appeared_ = false
-            end
-        end
-
-        if self.status_ == cc.special_.status_.on_screen_ then
-            self.status_ = cc.special_.status_.off_screen_
-            self.player_contact_ = false
-            self.falling_ = false
-            self.current_speed_.y = 0
-
-            self.sprite_:setVisible(false)
-
-            self.kinematic_body_.current_shape_:setTag(cc.tags.none)
-
-
-            if self.appeared_ then
-                local delay = cc.DelayTime:create(2)
-                local callback = cc.CallFunc:create(function()
-                    self.reappearing_ = true
-                    self.status_ = cc.special_.status_.on_screen_
-                    print("reappearing")
-                end)
-
-                local sequence = cc.Sequence:create(delay, callback, nil)
-
-                self:runAction(sequence)
-            end
-        end
-
-
     end
 end
 

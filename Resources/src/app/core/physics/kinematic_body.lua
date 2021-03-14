@@ -387,10 +387,19 @@ function kinematic_body:compute_position()
     local rect = cc.rect(self.bbox_[7].x, self.bbox_[7].y, self.current_shape_.size_.width, self.current_shape_.size_.height)
 
     self:getScene():getPhysicsWorld():queryRect(self.collision_callback_, rect)
-
 end
 
 function kinematic_body:get_collisions()
+
+    -- filter disposed nodes
+
+--    for _, node in pairs(self.collisions_) do
+--        if node:getReferenceCount() == 0 then
+--            print("Reference error")
+--            os.exit()
+--            self.collisions_[node] = nil
+--        end
+--    end
     return self.collisions_
 end
 

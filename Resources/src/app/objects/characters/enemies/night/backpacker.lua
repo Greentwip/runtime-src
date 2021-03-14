@@ -52,11 +52,19 @@ function mob:attack()
 
         local callback = cc.CallFunc:create(function()
 
-            self:fire({  sfx = nil,
-                offset = cc.p(-18, 45),
-                weapon = self.weapon_,
-                parameters = self.weapon_parameters_})
+            local bullet = self:fire({  sfx = nil,
+                                        offset = cc.p(-18, 45),
+                                        weapon = self.weapon_,
+                                        parameters = self.weapon_parameters_})
 
+            local distance = cc.pGetDistance(cc.p(self:getPositionX(), 
+                                                    self:getPositionY()),
+                                                cc.p(self.player_:getPositionX(), 
+                                                    self.player_:getPositionY())) 
+
+            bullet.move_speed_ = distance
+
+                
         end)
 
 
