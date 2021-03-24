@@ -8,7 +8,7 @@ CC_USE_FRAMEWORK = true
 CC_SHOW_FPS = false
 
 -- draw physics debug
-CC_DRAW_PHYSICS = true
+CC_DRAW_PHYSICS = false
 
 -- disable create unexpected global variable
 CC_DISABLE_GLOBAL = false
@@ -26,3 +26,7 @@ CC_DESIGN_RESOLUTION = {
         end
     end
 }
+
+--CC_START_LEVEL = "screens.opening"
+CC_START_LEVEL = "screens.testwrapper"
+CC_DEBUG_MUG = "nightmantest"

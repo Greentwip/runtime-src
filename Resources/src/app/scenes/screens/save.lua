@@ -133,22 +133,22 @@ function save:populate_slot(slot)
 
     local weapons = save_slot:getChildByName("weapons")
 
-    if cc.unlockables_.helmet_.acquired_ then
+    if cc.unlockables_.items_.helmet_.acquired_ then
         self:color_weapon(weapons, "helmet")
     end
-    if cc.unlockables_.head_.acquired_ then
+    if cc.unlockables_.items_.head_.acquired_ then
         self:color_weapon(weapons, "ex_helmet")
     end
-    if cc.unlockables_.chest_.acquired_ then
+    if cc.unlockables_.items_.chest_.acquired_ then
         self:color_weapon(weapons, "chest")
     end
 
-    if cc.unlockables_.fist_.acquired_ then 
+    if cc.unlockables_.items_.fist_.acquired_ then 
         self:color_weapon(weapons, "fist")
 
     end
 
-    if cc.unlockables_.boot_.acquired_ then 
+    if cc.unlockables_.items_.boot_.acquired_ then 
         self:color_weapon(weapons, "boot")
     end
 
@@ -227,21 +227,21 @@ function save:populate_slot_cheat(slot)
 
     local weapons = save_slot:getChildByName("weapons")
 
-    if cc.unlockables_.helmet_.acquired_ then
+    if cc.unlockables_.items_.helmet_.acquired_ then
         self:color_weapon(weapons, "helmet")
     end
-    if cc.unlockables_.head_.acquired_ then
+    if cc.unlockables_.items_.head_.acquired_ then
         self:color_weapon(weapons, "ex_helmet")
     end
-    if cc.unlockables_.chest_.acquired_ then
+    if cc.unlockables_.items_.chest_.acquired_ then
         self:color_weapon(weapons, "chest")
     end
 
-    if cc.unlockables_.fist_.acquired_ then 
+    if cc.unlockables_.items_.fist_.acquired_ then 
         self:color_weapon(weapons, "fist")
     end
 
-    if cc.unlockables_.boot_.acquired_ then 
+    if cc.unlockables_.items_.boot_.acquired_ then 
         self:color_weapon(weapons, "boot")
     end
 
@@ -311,11 +311,11 @@ function save:populate_slot_cheat(slot)
         boss_       = {id_ = 14, acquired_ = nil, pause_item_ = nil }
     }
 
-    cc.unlockables_.helmet_ = {id_ = 2, acquired_ = true }
-    cc.unlockables_.head_   = {id_ = 3, acquired_ = true }
-    cc.unlockables_.chest_  = {id_ = 4, acquired_ = true }
-    cc.unlockables_.fist_   = {id_ = 5, acquired_ = true }
-    cc.unlockables_.boot_   = {id_ = 6, acquired_ = true }
+    cc.unlockables_.items_.helmet_ = {id_ = 2, acquired_ = true }
+    cc.unlockables_.items_.head_   = {id_ = 3, acquired_ = true }
+    cc.unlockables_.items_.chest_  = {id_ = 4, acquired_ = true }
+    cc.unlockables_.items_.fist_   = {id_ = 5, acquired_ = true }
+    cc.unlockables_.items_.boot_   = {id_ = 6, acquired_ = true }
 
 
 end
@@ -323,11 +323,11 @@ end
 function save:load_slot(slot)
     local json = self:read_slot(slot)
 
-    cc.unlockables_.helmet_.acquired_ = json["helmet"]
-    cc.unlockables_.head_.acquired_ = json["head"]
-    cc.unlockables_.chest_.acquired_ = json["chest"]
-    cc.unlockables_.fist_.acquired_ = json["fist"]
-    cc.unlockables_.boot_.acquired_ = json["boot"]
+    cc.unlockables_.items_.helmet_.acquired_ = json["helmet"]
+    cc.unlockables_.items_.head_.acquired_ = json["head"]
+    cc.unlockables_.items_.chest_.acquired_ = json["chest"]
+    cc.unlockables_.items_.fist_.acquired_ = json["fist"]
+    cc.unlockables_.items_.boot_.acquired_ = json["boot"]
 
     cc.player_.e_tanks_ = json["e"]
     cc.player_.m_tanks_ = json["m"]
@@ -541,7 +541,6 @@ function save:step(dt)
     if not self.triggered_ then
 
         if cc.key_pressed(cc.key_code_.a) then
-            cc.audio.play_sfx("sounds/sfx_selected.mp3", false)
 
             local delete_state = false
 
@@ -606,7 +605,8 @@ function save:step(dt)
                 self.triggered_ = true
     
                 ccexp.AudioEngine:stopAll()
-    
+                cc.audio.play_sfx("sounds/sfx_selected.mp3", false)
+
                 self:getApp()
                 :enterScene("screens.stage_select", "FADE", 0.5)
             end

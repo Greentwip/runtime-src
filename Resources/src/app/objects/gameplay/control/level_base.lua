@@ -10,6 +10,9 @@ local block             = import("app.objects.gameplay.level.environment.core.bl
 
 local cody              = import("app.objects.characters.player.cody")
 
+local item    = import("app.objects.gameplay.level.goods.item")
+
+
 function level_base:onLoad()
     self.status_ = cc.level_status_.init_
 end
@@ -255,6 +258,27 @@ function level_base:load(tmx_map, map_path, load_arguments)
         end
     end
 
+    local items = map:getObjectGroup("items")
+
+    if items ~= nil then
+        group_array = items:getObjects()
+        for  i = 1, #group_array do
+
+            local creation_args = {}
+            creation_args.real_position_    = self:calculate_tmx_position(group_array[i], map)
+
+            local item_good = item:create()
+                                  :setup("gameplay", "level", "goods", "item")
+                                  :setPosition(creation_args.real_position_)
+                                  :addTo(self, 2048)
+
+            item_good:swap(group_array[i].type, true)
+
+            scene_components[#scene_components + 1] = item_good
+        end
+    end
+
+
     -- add boss group
     local boss_group = map:getObjectGroup("boss")
 
@@ -286,6 +310,49 @@ function level_base:load(tmx_map, map_path, load_arguments)
                 cc.boss_ = boss
 
             elseif group_array[i].name == "teleporter" then
+                local block_size = cc.size(group_array[i].width, group_array[i].height)
+
+                local teleporter = import("app.objects.gameplay.level.environment.logic." .. group_array[i].name)
+                local logical = teleporter:create(self:calculate_tmx_position(group_array[i], map), block_size)
+
+                logical:prepare(group_array[i])
+                logical:addTo(self)
+            end
+        end
+    end
+
+    local subboss_group = map:getObjectGroup("subboss")
+
+    if subboss_group ~= nil then
+        group_array = subboss_group:getObjects()
+        for  i = 1, #group_array do
+
+            local creation_args = {}
+            creation_args.real_position_    = self:calculate_tmx_position(group_array[i], map)
+            creation_args.raw_object_       = group_array[i]
+
+            if group_array[i].type == "subboss" then
+                creation_args.player_ = player
+                creation_args.type_ = group_array[i].name
+
+                print("subboss name")
+                print(group_array[i].name)
+
+                local boss = import("app.objects.characters.enemies.boss")
+                            :create(creation_args)
+                            :setup("characters", "enemy", "regular", "browners" .. "-" .. group_array[i].name)
+                            :addTo(self, 768)
+
+                creation_args.anchored_position_ = self:offset_position(self:calculate_tmx_position(group_array[i], map), boss, group_array[i])
+
+                if boss.onAfterAnimate then
+                    boss:onAfterAnimate(creation_args)
+                end
+
+                scene_components[#scene_components + 1] = boss
+
+                cc.subboss_ = boss
+            elseif group_array[i].type == "teleporter" then
                 local block_size = cc.size(group_array[i].width, group_array[i].height)
 
                 local teleporter = import("app.objects.gameplay.level.environment.logic." .. group_array[i].name)

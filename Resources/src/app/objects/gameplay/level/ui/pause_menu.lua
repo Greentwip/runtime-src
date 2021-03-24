@@ -89,19 +89,19 @@ function pause_menu:ctor(settings)
                              :addTo(self)
 
 
-    if cc.unlockables_.head_.acquired_ then
+    if cc.unlockables_.items_.head_.acquired_ then
         head:visit()
     end
 
-    if cc.unlockables_.chest_.acquired_ then
+    if cc.unlockables_.items_.chest_.acquired_ then
         chest:visit()
     end
     
-    if cc.unlockables_.fist_.acquired_ then
+    if cc.unlockables_.items_.fist_.acquired_ then
         fist:visit()
     end
 
-    if cc.unlockables_.boot_.acquired_ then
+    if cc.unlockables_.items_.boot_.acquired_ then
         boot:visit()
     end
     
@@ -396,6 +396,12 @@ function pause_menu:switch_triggered(sender)
                     target = self.ex_switch_
                 end]]
 
+                if cc.game_options_.extreme_activated_ then
+                    cc.game_options_.extreme_activated_ = false
+                    visit_target = true
+                    target = self.ex_switch_
+                end
+
                 cc.game_options_.helmet_activated_ = true
                 visit_sender = true
                 sender_value = 2
@@ -422,6 +428,12 @@ function pause_menu:switch_triggered(sender)
                     visit_target = true
                     target = self.helmet_switch_
                 end]]
+
+                if cc.game_options_.helmet_activated_ then
+                    cc.game_options_.helmet_activated_ = false
+                    visit_target = true
+                    target = self.helmet_switch_
+                end
 
                 cc.game_options_.extreme_activated_ = true
                 visit_sender = true

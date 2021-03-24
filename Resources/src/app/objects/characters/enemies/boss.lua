@@ -43,7 +43,7 @@ function boss:init_variables()
     self.spawning_          = false
     self.vulnerable_        = true
     self.max_fall_speed_    = 400
-    self.health_            = 0            -- player
+    self.health_            = 0
     self.alive_             = false         -- level starts up player
     self.spawn_flag_        = false
 end
@@ -73,15 +73,23 @@ function boss:init_browners(args)
         v.weapon_tag_ = cc.tags.weapon.enemy
     end
 
-    -- teleport browner has no stand action
-    self.browners_[cc.browners_.teleport_.id_] = teleport_browner:create(self.sprite_)
-                                                                 :setPosition(cc.p(0, 0))
-                                                                 :addTo(self)
+    -- teleport browner has no stand action 
 
-    self.current_browner_ = self.browners_[cc.browners_.teleport_.id_]
-    
+    self.current_browner_ = boss_browner
 
-    self:switch_browner(cc.browners_.teleport_.id_)
+
+    if not self.current_browner_.skip_intro_ then
+        self.browners_[cc.browners_.teleport_.id_] = teleport_browner:create(self.sprite_)
+                                                                     :setPosition(cc.p(0, 0))
+                                                                     :addTo(self)
+
+        self.current_browner_ = self.browners_[cc.browners_.teleport_.id_]
+
+        self:switch_browner(cc.browners_.teleport_.id_)
+    else
+        self:switch_browner(cc.browners_.boss_.id_)
+    end
+
     self.current_browner_:run_action("stand")
 end
 
@@ -93,20 +101,32 @@ function boss:reset()
         browner:run_action("stand")
         browner.weapon_tag_ = cc.tags.weapon.enemy
     end
+    self:getPhysicsBody():getShapes()[1]:setTag(cc.tags.weapon.enemy)
 end
 
 function boss:spawn()
 
     self.spawning_ = true
     self:setPosition(self.start_position_)
-    self.health_            = 0
+
+    if self.current_browner_.default_health_ ~= nil then
+        self.health_            = self.current_browner_.default_health_
+    else
+        self.health_            = 0
+    end
+
 
     --self:switch_browner(cc.browners_.teleport_.id_)
     --self.current_browner_ = self.browners_[cc.browners_.teleport_.id_]
 
     self:reset()
 
-    self:switch_browner(cc.browners_.teleport_.id_)
+    if self.current_browner_.skip_intro_ == nil then
+        self:switch_browner(cc.browners_.teleport_.id_)
+    else
+        self:switch_browner(cc.browners_.boss_.id_)
+    end
+
     self.current_browner_:run_action("stand")
 
     self.vulnerable_ = true
@@ -203,15 +223,6 @@ function boss:resume_actions()
     self.current_browner_:resume_actions()
 end
 
-function boss:on_after_blink()
-    if not self:isVisible() then
-        if self.alive_ then
-            self:setVisible(true)
-        else
-            self:setVisible(false)
-        end
-    end
-end
 
 function boss:stun(damage)
     if not self.current_browner_.stunned_ and self.vulnerable_ then
@@ -225,8 +236,6 @@ function boss:stun(damage)
         self.current_browner_.charge_power_ = "low"
         self.current_browner_.charging_ = false
 
-        local delay = cc.DelayTime:create(self.current_browner_:get_action_duration("hurt"))
-
         if not self.current_browner_.sliding_ then
             self.current_browner_.speed_.x = -4 * self.current_browner_:get_sprite_normal().x
         end
@@ -235,28 +244,49 @@ function boss:stun(damage)
             self.current_browner_.stunned_ = false
         end)
 
-        local blink = cc.Blink:create(self.current_browner_:get_action_duration("hurt"), 8)
+        local sequence = nil
 
-        local blink_callback = cc.CallFunc:create(function()
-            if not self:isVisible() then
-                self:setVisible(true)
-            end
+        if self.current_browner_.simple_stun_ == nil then
+            local delay = cc.DelayTime:create(self.current_browner_:get_action_duration("hurt"))
 
-            if not self.sprite_:isVisible() then
-                self.sprite_:setVisible(true)
-            end
+            local blink = cc.Blink:create(self.current_browner_:get_action_duration("hurt"), 8)
 
-            self.vulnerable_ = true
-        end)
+            local blink_callback = cc.CallFunc:create(function()
+                if not self:isVisible() then
+                    self:setVisible(true)
+                end
 
-        local sequence = cc.Sequence:create(delay, callback, blink, blink, blink_callback, nil)
+                if not self.sprite_:isVisible() then
+                    self.sprite_:setVisible(true)
+                end
+
+                self.vulnerable_ = true
+            end)
+
+             sequence = cc.Sequence:create(delay, callback, blink, blink, blink_callback, nil)
+        else
+            local blink = cc.Blink:create(0.2, 4)
+
+            local blink_callback = cc.CallFunc:create(function()
+                if not self:isVisible() then
+                    self:setVisible(true)
+                end
+
+                if not self.sprite_:isVisible() then
+                    self.sprite_:setVisible(true)
+                end
+
+                self.vulnerable_ = true
+            end)
+
+             sequence = cc.Sequence:create(blink, blink_callback, callback, nil)
+        end
 
         sequence:setTag(cc.tags.actions.visibility)
         self.sprite_:stopAllActionsByTag(cc.tags.actions.visibility)
         self.sprite_:runAction(sequence)
     end
 end
-
 
 function boss:solve_collisions()
 
@@ -284,11 +314,16 @@ function boss:solve_collisions()
                 self.spawning_ = false
                 self.spawn_flag_ = false
                 self:switch_browner(cc.browners_.boss_.id_)
-                self.current_browner_:run_action("intro")
-                self.current_browner_.is_intro_ = true
 
-                cc.audio.play_sfx("sounds/sfx_teleport1.mp3", false)
-                self.battle_status_ = cc.battle_status_.intro_
+                if self.current_browner_.skip_intro_ == nil then
+                    self.current_browner_:run_action("intro")
+                    self.current_browner_.is_intro_ = true
+
+                    cc.audio.play_sfx("sounds/sfx_teleport1.mp3", false)
+                    self.battle_status_ = cc.battle_status_.intro_
+                else
+                    self.battle_status_ = cc.battle_status_.intro_
+                end
             end
 
         elseif collision_tag == cc.tags.weapon.player then
@@ -429,8 +464,12 @@ function boss:finish(full_callback)
 end
 
 function boss:check_health()
-
+    
     local kill_animation = true
+
+    if self.current_browner_.simple_stun_ ~= nil then
+        kill_animation = false
+    end
 
     if self.health_ <= 0 and self.alive_ then
         --cc.pause(true)
@@ -443,12 +482,13 @@ function boss:check_health()
         self.alive_ = false
 
         --cc.player_.lives_ = cc.player_.lives_ - 1
-        ccexp.AudioEngine:stopAll()
-        cc.audio.play_sfx("sounds/sfx_death.mp3", false)
-
-        self:finish(true)
 
         if kill_animation then
+            ccexp.AudioEngine:stopAll()
+            cc.audio.play_sfx("sounds/sfx_death.mp3", false)
+    
+            self:finish(true)
+    
 
             local explosion_a = cc.CallFunc:create(function()
                 self:explode(-16)
@@ -465,6 +505,7 @@ function boss:check_health()
             self:runAction(sequence)
 
         else
+            self:getPhysicsBody():getShapes()[1]:setTag(cc.tags.weapon.none)
             self.sprite_:setVisible(false)
         end
     end
@@ -472,7 +513,6 @@ function boss:check_health()
 end
 
 function boss:trigger_actions()
-
     if not self.current_browner_.stunned_ then
         if self.current_browner_.on_ground_ then
             if self.current_browner_.walking_ then
@@ -513,7 +553,9 @@ function boss:trigger_actions()
             end
         end
     else
-        self.current_browner_:run_action("hurt")
+        if self.current_browner_.simple_stun_ == nil then
+            self.current_browner_:run_action("hurt")
+        end
     end
 
 end
@@ -584,38 +626,62 @@ function boss:forced_step(dt)
 
         elseif self.battle_status_ == cc.battle_status_.intro_ then
 
-            if self.health_bar_ == nil then
-                self.health_bar_ = energy_bar:create()
-                                             :setPosition(cc.p(cc.bounds_:width() * 0.5 - 16, cc.bounds_:height() * 0.5 -16))
-                                             :addTo(cc.bounds_)     -- node positions are relative to parent's
+            if self.current_browner_.skip_intro_ == nil then
+
+                if self.health_bar_ == nil then
+                    self.health_bar_ = energy_bar:create()
+                                                :setPosition(cc.p(cc.bounds_:width() * 0.5 - 16, cc.bounds_:height() * 0.5 -16))
+                                                :addTo(cc.bounds_)     -- node positions are relative to parent's
+                else
+                    self.health_bar_:setVisible(true)
+                end
+
+                local callback = cc.CallFunc:create(function()
+                    self.current_browner_.is_intro_ = true
+                end)
+
+                local delay = cc.DelayTime:create(self.current_browner_:get_action_duration("intro"))
+
+                local fill_bar = cc.CallFunc:create(function()
+                    self:restore_health(28, function()
+                        self.current_browner_.is_intro_ = false
+                        self.player_.can_move_ = true
+                        self.battle_status_ = cc.battle_status_.fighting_
+                    end)
+
+                end)
+
+                local sequence = cc.Sequence:create(callback, delay, fill_bar, nil)
+
+                self:runAction(sequence)
+
+                self.battle_status_ = cc.battle_status_.waiting_
             else
-                self.health_bar_:setVisible(true)
-            end
 
-            local callback = cc.CallFunc:create(function()
-                self.current_browner_.is_intro_ = true
-            end)
-
-            local delay = cc.DelayTime:create(self.current_browner_:get_action_duration("intro"))
-
-            local fill_bar = cc.CallFunc:create(function()
-                self:restore_health(28, function()
+                local callback = cc.CallFunc:create(function()
                     self.current_browner_.is_intro_ = false
+                end)
+
+                local delay = cc.DelayTime:create(1)
+
+                local fill_bar = cc.CallFunc:create(function()
+                    self.health_ = self.current_browner_.default_health_
                     self.player_.can_move_ = true
                     self.battle_status_ = cc.battle_status_.fighting_
                 end)
 
-            end)
+                local sequence = cc.Sequence:create(callback, delay, fill_bar, nil)
 
-            local sequence = cc.Sequence:create(callback, delay, fill_bar, nil)
+                self:runAction(sequence)
 
-            self:runAction(sequence)
-
-            self.battle_status_ = cc.battle_status_.waiting_
+                self.battle_status_ = cc.battle_status_.waiting_
+            end
 
         elseif self.battle_status_ == cc.battle_status_.defeated_ then
-            self.health_bar_:removeSelf()
-            self.health_bar_ = nil
+            if self.current_browner_.skip_intro_ == nil then
+                self.health_bar_:removeSelf()
+                self.health_bar_ = nil
+            end
             self.battle_status_ = cc.battle_status_.waiting_
         end
         if self.spawning_ and self.alive_ then

@@ -31,9 +31,25 @@ function extreme_browner:ctor(sprite)
     self.browner_id_ = cc.browners_.extreme_.id_       -- overriden from parent
 end
 
+function extreme_browner:attack()
+
+    if self:getParent():attack_condition() and not self.stunned_ and not self.attacking_ then
+
+        if self.energy_ > 0 then
+
+            self.energy_ = self.energy_ - 1
+
+            self.attacking_ = true
+            
+            self:timed_shoot()
+        end
+
+    end
+
+end
+
 
 function extreme_browner:fire()
-
     local bullet_offset = 50 * self:get_sprite_normal().x
 
     if self:get_sprite_normal().x == -1 then
@@ -43,13 +59,13 @@ function extreme_browner:fire()
     cc.audio.play_sfx("sounds/sfx_buster_shoot_high.mp3", false)
 
     local bullet_position = cc.p(self:getParent():getPositionX() + bullet_offset,
-                                 self:getParent():getPositionY() + 16)
+                                self:getParent():getPositionY() + 16)
 
     local bullet = extreme_bullet:create()
-                                 :setPosition(bullet_position)
-                                 :setup("gameplay", "level", "weapon", "extreme_bullet")
-                                 :init_weapon(self:get_sprite_normal().x, self.weapon_tag_)
-                                 :addTo(self:getParent():getParent())
+                                :setPosition(bullet_position)
+                                :setup("gameplay", "level", "weapon", "extreme_bullet")
+                                :init_weapon(self:get_sprite_normal().x, self.weapon_tag_)
+                                :addTo(self:getParent():getParent())
 
     self:getParent():getParent().bullets_[bullet] = bullet
 end

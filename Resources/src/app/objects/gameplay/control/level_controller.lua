@@ -294,7 +294,16 @@ function level_controller:step(dt)
             if self.player_.on_exit_ then
                 self.hud_.energy_:setVisible(false)
             else
-                self.hud_.energy_:set_meter(self.player_.current_browner_.energy_)
+
+                if self.player_.current_browner_.browner_id_ == cc.browners_.violet_.id_ or 
+                self.player_.current_browner_.browner_id_ == cc.browners_.teleport_.id_ or 
+                self.player_.current_browner_.browner_id_ == cc.browners_.helmet_.id_ then
+                    if self.hud_.energy_ ~= nil then
+                        self.hud_.energy_:setVisible(false)
+                    end
+                else
+                    self.hud_.energy_:set_meter(self.player_.current_browner_.energy_)
+                end
             end
         end
 

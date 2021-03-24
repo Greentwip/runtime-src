@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="223" height="42" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="18">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="223" height="42" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="19">
  <tileset firstgid="1" name="level_sheriffman_bank.png" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="768" columns="48">
   <image source="level_sheriffman_bank.png" width="864" height="288"/>
  </tileset>
@@ -88,6 +88,7 @@
  <objectgroup id="5" name="special">
   <object id="5" name="door" type="general" x="3048" y="144" width="16" height="16"/>
   <object id="7" name="door" type="general" x="3304" y="144" width="16" height="16"/>
+  <object id="18" name="door" type="general" x="472" y="144" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="6" name="animations">
   <object id="3" name="spinner" type="sheriff" x="872" y="528" width="16" height="16"/>

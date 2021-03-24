@@ -1,15 +1,14 @@
 
 local AppBase = class("AppBase")
+require "config"
 
 
 function AppBase:ctor(configs)
 
-    --cc.current_level_ = { mug_="sheriffmantest" }    cc.current_level_ = cc.levels_[10]
-
     self.configs_ = {
         viewsRoot  = "app.scenes",
         modelsRoot = "app.models",
-        defaultSceneName = "screens.opening",
+        defaultSceneName = CC_START_LEVEL,
         --defaultSceneName = "screens.testwrapper",
     }
 

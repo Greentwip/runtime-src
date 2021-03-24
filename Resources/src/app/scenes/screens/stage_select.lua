@@ -79,7 +79,7 @@ function stage_select:setup_mugs()
     for i = 1, #cc.levels_ do
         local key = cc.levels_[i]
         if i == 5 then
-            x_offset = x_offset + 76;
+            x_offset = x_offset + 77;
         end
 
         local foe_name = key.mug_

@@ -321,20 +321,22 @@ function MyApp:setup_player()
 
     cc.unlockables_ = {}
 
-    cc.unlockables_.helmet_ = {id_ = 2, acquired_ = false }
-    cc.unlockables_.head_   = {id_ = 3, acquired_ = false }
-    cc.unlockables_.chest_  = {id_ = 4, acquired_ = false }
-    cc.unlockables_.fist_   = {id_ = 5, acquired_ = false }
-    cc.unlockables_.boot_   = {id_ = 6, acquired_ = false }
+    cc.unlockables_.items_ = {}
+
+    cc.unlockables_.items_.helmet_ = {id_ = 2, acquired_ = false, name_ = "helmet" }
+    cc.unlockables_.items_.head_   = {id_ = 3, acquired_ = false, name_ = "head" }
+    cc.unlockables_.items_.chest_  = {id_ = 4, acquired_ = false, name_ = "chest" }
+    cc.unlockables_.items_.fist_   = {id_ = 5, acquired_ = false, name_ = "fist" }
+    cc.unlockables_.items_.boot_   = {id_ = 6, acquired_ = false, name_ = "boot_" }
 
     cc.unlockables_.helmet_acquired_ = function()
-        return cc.unlockables_.helmet_.acquired_
+        return cc.unlockables_.items_.helmet_.acquired_
     end
 
     cc.unlockables_.extreme_acquired_ = function()
         local acquired = true
 
-        for _, unlockable in ipairs(cc.unlockables_) do
+        for _, unlockable in ipairs(cc.unlockables_.items_) do
             if not unlockable.acquired_ then
                acquired = false
             end
@@ -432,15 +434,35 @@ function MyApp:setup_items()
             cc.audio.play_sfx("sounds/sfx_getlife.mp3", false)
 
         elseif item.id_ >= cc.item_.helmet_.id_ and item.id_ <= cc.item_.boot_.id_ then
-            for _, unlockable in pairs(cc.unlockables_) do
+            local this_unlockable = nil
+            for _, unlockable in pairs(cc.unlockables_.items_) do
                 if item.id_ == unlockable.id_ then
-                   unlockable.acquired_ = true
+                    this_unlockable = unlockable
+                    unlockable.acquired_ = true
                 end
             end
 
             local slot = cc.game.get_default_slot()
 
-            slot[item.name] = true
+            slot[this_unlockable.name_] = true
+
+            if item.id_ == cc.item_.head_.id_ then
+                cc.unlockables_.items_.helmet_.acquired_ = true
+                cc.browners_.helmet_.acquired_ = true
+                slot["helmet"] = true
+            end
+
+            local extreme_acquired = true
+
+            for _, unlockable in ipairs(cc.unlockables_.items_) do
+                if not unlockable.acquired_ then
+                    extreme_acquired = false
+                end
+            end
+            
+            if extreme_acquired then
+                cc.browners_.extreme_.acquired_ = true
+            end
 
             cc.game.save_default_slot(slot)
 
@@ -534,7 +556,8 @@ function MyApp:setup_browners()
         torch_      = {id_ = 11, acquired_ = false, pause_item_ = "torch"},
         helmet_     = {id_ = 12, acquired_ = false, pause_item_ = "helmet"},
         extreme_    = {id_ = 13, acquired_ = false, pause_item_ = "ex"},
-        boss_       = {id_ = 14, acquired_ = nil, pause_item_ = nil }
+        boss_       = {id_ = 14, acquired_ = nil, pause_item_ = nil },
+        newnightmanboss_   = {id_ = 15,  acquired_ = false,  pause_item_ = nil}
     }
 
     for _, v in pairs(cc.browners_) do

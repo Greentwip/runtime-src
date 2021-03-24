@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="384" height="96" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="9">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="384" height="96" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="10">
  <tileset firstgid="1" name="level_nightman_bank.png" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="4648" columns="56">
   <image source="level_nightman_bank.png" width="1008" height="1496"/>
  </tileset>
@@ -109,7 +109,7 @@
   <object id="28" x="2570.13" y="519.919" width="17.55" height="149.332"/>
   <object id="1" x="2301.02" y="864.182" width="33.0344" height="19"/>
  </objectgroup>
- <objectgroup id="3" name="logic" visible="0">
+ <objectgroup id="3" name="logic">
   <object id="132" name="checkpoint" type="first" x="116" y="768" width="16" height="16"/>
   <object id="133" name="scroll" type="left" x="1148" y="768" width="16" height="16"/>
   <object id="134" name="teleporter" x="116" y="852" width="16" height="16"/>
@@ -139,6 +139,7 @@
   <object id="38" name="hole" x="1336" y="415.25" width="16" height="40"/>
   <object id="39" name="hole" x="1148" y="647.333" width="16.182" height="40"/>
   <object id="40" name="hole" x="1653" y="180" width="12" height="40"/>
+  <object id="9" name="checkpoint" type="last" x="5462" y="1000" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="4" name="enemies">
   <object id="136" name="backpacker" type="night" x="293.737" y="770.066" width="16" height="16"/>
@@ -221,7 +222,7 @@
   <object id="219" name="falling_skull" type="night" x="4534.65" y="1132.08" width="16" height="16"/>
   <object id="8" name="flash_brain" type="night" x="1094" y="837" width="16" height="16"/>
  </objectgroup>
- <objectgroup id="5" name="special" visible="0">
+ <objectgroup id="5" name="special">
   <object id="3" name="falling_block" type="night" x="2221" y="869" width="17" height="19"/>
   <object id="4" name="falling_block" type="night" x="2284.01" y="865.185" width="17" height="19"/>
   <object id="6" name="falling_block" type="night" x="2238" y="869" width="17" height="19"/>
