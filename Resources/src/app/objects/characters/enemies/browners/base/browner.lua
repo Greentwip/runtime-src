@@ -114,7 +114,7 @@ end
 function browner:walk()
 
     if  not self.climbing_ and not self.sliding_ and not self.stunned_ then
-        if cc.key_down(cc.key_code_.right) and not cc.key_down(cc.key_code_.left) then
+--[[        if cc.key_down(cc.key_code_.right) and not cc.key_down(cc.key_code_.left) then
             self.sprite_:setFlippedX(false)
             self.speed_.x = self.walk_speed_
             self.walking_ = true
@@ -131,7 +131,7 @@ function browner:walk()
             self.speed_.x = 0
             self.walking_ = false
         end
-
+]]
     else
         self.walking_ = false
     end

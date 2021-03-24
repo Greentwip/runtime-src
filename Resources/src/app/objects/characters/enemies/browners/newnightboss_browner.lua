@@ -22,7 +22,7 @@ function newnightmanboss_browner:ctor(sprite, args)
 
     local actions = {}
     actions[#actions + 1] = {name = "stand",      animation = {name = "newnightboss_stand",       forever = false, delay = 0.10} }
-    actions[#actions + 1] = {name = "jump",       animation = {name = "newnightboss_jump",        forever = false, delay = 0.10} }
+    actions[#actions + 1] = {name = "jump",       animation = {name = "newnightboss_jump",        forever = false, delay = 0.07} }
     actions[#actions + 1] = {name = "walk",       animation = {name = "newnightboss_walk",        forever = true,  delay = 0.12} }
     actions[#actions + 1] = {name = "walkshoot",  animation = {name = "newnightboss_walkshoot",        forever = true,  delay = 0.12} }
     actions[#actions + 1] = {name = "standshoot", animation = {name = "newnightboss_standshoot",  forever = false, delay = 0.10} }
@@ -44,6 +44,7 @@ function newnightmanboss_browner:ctor(sprite, args)
     self.state_dash_prepare_no_jump_ = 6
 
     self.state_dash_end_idle_ = 7
+    self.state_jump_flags_ = 8
         
     self:reset_flags()
 end
@@ -52,24 +53,78 @@ function newnightmanboss_browner:reset_flags()
     self.ticks_ = 0
 
     self.jump_flag_ = false
+    self.double_jump_flag_ = false
     self.rounds_ = 0
 
-    self.state_ = self.state_nothing_
+    self.double_jump_counter_ = 0
+
+    self.freeze_time_ticks_ = 0
+
+    self.state_ = self.state_jump_flags_
 end
 
 function newnightmanboss_browner:update(dt)
     self.ticks_ = self.ticks_ + dt
 
-    if self.state_ == self.state_nothing_ then
+    local self_position = self.sprite_:convertToWorldSpace(cc.p(self.sprite_:getPositionX(), self.sprite_:getPositionY()))
+    local bounds_position = cc.bounds_:center()
+    --print("self position x")
+    --print(self_position.x)
+
+    --print("bounds center x")
+    --print(bounds_position.x)  
+    if self.dash_direction_  == 1 then
+        if self.rounds_ == 3 then
+            if self_position.x <= bounds_position.x + 16 and self_position.x >= bounds_position.x then
+                if self.double_jump_counter_ == 0 then
+                    self.double_jump_flag_ = true    
+                end
+            end                    
+        end
+    else
+        if self.rounds_ == 3 then
+            if self_position.x >= bounds_position.x - 80 and self_position.x <= bounds_position.x then
+                if self.on_ground_ then
+                    if self.double_jump_counter_ == 0 then
+                        self.double_jump_flag_ = true    
+                    end
+                end
+            end
+        end
+    end
+
+    if self.dash_direction_  == 1 then
+
+        if self.rounds_ < 3 then
+        
+            if self_position.x <= bounds_position.x + 16 and self_position.x >= bounds_position.x then
+                if self.on_ground_ then
+                    self.jump_flag_ = true    
+                end
+            end
+        end
+    else
+        if self.rounds_ < 3 then
+            if self_position.x >= bounds_position.x - 64 and self_position.x <= bounds_position.x then
+                if self.on_ground_ then
+                    self.jump_flag_ = true    
+                end
+            end
+        end
+    end
+
+    if self.state_ == self.state_jump_flags_ then
+        self.state_ = self.state_nothing_    
+    elseif self.state_ == self.state_nothing_ then
         self.state_ = self.state_initial_shoot_prepare_
         self.jump_flag_ = false
 
-        if self.rounds_ == 1 then
-            print("rounds 1")
-            self.state_ = self.state_dash_prepare_no_jump_
-        end
-
     elseif self.state_ == self.state_initial_shoot_prepare_ then
+        self.speed_.x = 0
+        self.walking_ = false
+
+        self.rounds_ = self.rounds_ + 1
+
         self.state_ = self.state_initial_shooting_
 
         local pre_delay = cc.DelayTime:create(self:get_action_duration("standshoot"))
@@ -84,7 +139,6 @@ function newnightmanboss_browner:update(dt)
 
         local post_callback = cc.CallFunc:create(function()
             self.attacking_ = false
-            self.sprite_:stop_actions()
         end)
 
         local final_delay = cc.DelayTime:create(0.5)
@@ -112,92 +166,22 @@ function newnightmanboss_browner:update(dt)
         self:runAction(sequence)
     
     elseif self.state_ == self.state_initial_shooting_ then
+        self.speed_.x = 0
+        self.walking_ = false
+        
         return self
     elseif self.state_ == self.state_dash_prepare_ then
         self.state_ = self.state_dash_
-
-        local dash_delay = cc.DelayTime:create(0.5)
-
-        local jump_callback = cc.CallFunc:create(function()
-            self.jump_flag_ = true
-        end)
-
-        local post_callback = cc.CallFunc:create(function()
-            self.state_ = self.state_dash_end_
-        end)
-        
-
-        local dash_delay_2 = cc.DelayTime:create(2)
-
-        local dash_callback = cc.CallFunc:create(function()
-            self.dash_direction_ = -self.dash_direction_
-        end)
-
-
-        local sequence = cc.Sequence:create(dash_delay, 
-                                            jump_callback,
-                                            dash_delay,
-                                            dash_delay,
-                                            dash_delay,
-                                            dash_callback,
-                                            dash_delay, 
-                                            jump_callback,
-                                            dash_delay,
-                                            dash_delay,
-                                            dash_delay, 
-                                            dash_callback,
-                                            post_callback, 
-                                            nil)
-
-        self:runAction(sequence)        
     elseif self.state_ == self.state_dash_prepare_no_jump_ then
-        self.state_ = self.state_dash_
+        return self
+    elseif self.state_ == self.state_dash_ then       
 
-        local dash_delay = cc.DelayTime:create(0.5)
-
-        local jump_callback = cc.CallFunc:create(function()
-            --self.jump_flag_ = true
-        end)
-
-        local post_callback = cc.CallFunc:create(function()
-            self.state_ = self.state_dash_end_
-        end)
-
-        local dash_delay_2 = cc.DelayTime:create(2)
-
-        local dash_callback = cc.CallFunc:create(function()
-            self.dash_direction_ = -self.dash_direction_
-
-            if self.dash_direction_ == -1 then
-                self.sprite_:setFlippedX(false)
-            else
-                self.sprite_:setFlippedX(true)
-            end
-    
-        end)
-
-
-        local sequence = cc.Sequence:create(dash_delay, 
-                                            jump_callback,
-                                            dash_delay,
-                                            dash_delay,
-                                            dash_delay,
-                                            dash_callback,
-                                            post_callback,
-                                            nil)
-
-        self:runAction(sequence)
-
-
-    elseif self.state_ == self.state_dash_ then
-
-        if self.dash_direction_ == -1 then
-            self.sprite_:setFlippedX(false)
+        if self.rounds_ >= 3 then
+            --self.speed_.x = self.walk_speed_ * 2 * -self.dash_direction_
+            self.speed_.x = (self.walk_speed_ * 2 * -self.dash_direction_) / 1.50
         else
-            self.sprite_:setFlippedX(true)
+            self.speed_.x = self.walk_speed_ * 2 * -self.dash_direction_
         end
-        
-        self.speed_.x = self.walk_speed_ * 2 * -self.dash_direction_
 
         if self.jump_flag_ then
             self.jump_flag_ = false
@@ -208,11 +192,56 @@ function newnightmanboss_browner:update(dt)
         end
 
         if self.on_ground_ then
+            if self.double_jump_flag_  then
+                if self.double_jump_counter_ > 0 then
+                    self.double_jump_flag_ = false
+                    self.speed_.y  = self.jump_speed_ * 2
+                    self.on_ground_ = false
+                    self.jumping_ = true 
+
+                    self.double_jump_counter_ = 0
+                    self.rounds_ = 0
+                    self.freeze_time_ticks_ = 0
+                else
+                    self.double_jump_counter_ = self.double_jump_counter_ + 1
+                    self.speed_.y  = self.jump_speed_ * 4
+                    self.on_ground_ = false
+                    self.jumping_ = true 
+                end
+            end
+        end
+
+        if self.on_ground_ then
             self.walking_ = true
         else
             self.jumping_ = true            
         end
 
+        local self_position = self.sprite_:convertToWorldSpace(cc.p(self.sprite_:getPositionX(), self.sprite_:getPositionY()))
+        local bounds_left = cc.bounds_:left()
+        local bounds_right = cc.bounds_:right()
+
+        if self.dash_direction_  == 1 then
+            if self_position.x <= bounds_left + 16 then
+                self.dash_direction_ = -1
+                self.state_ = self.state_initial_shoot_prepare_
+                self.walking_ = false
+                self.speed_.x = 0
+            end
+        else
+            if self_position.x >= bounds_right - 64 then
+                self.dash_direction_ = 1
+                self.state_ = self.state_initial_shoot_prepare_
+                self.walking_ = false
+                self.speed_.x = 0
+            end
+        end
+
+        if self.dash_direction_ == -1 then
+            self.sprite_:setFlippedX(false)
+        else
+            self.sprite_:setFlippedX(true)
+        end
         
     elseif self.state_ == self.state_dash_end_ then
         self.speed_.x = 0
@@ -248,6 +277,24 @@ function newnightmanboss_browner:update(dt)
     elseif self.state_ == self.state_dash_end_idle_ then
         return self
     end
+
+    if self.double_jump_flag_  then
+        if self.jumping_ then
+            self.freeze_time_ticks_ = self.freeze_time_ticks_ + 1
+
+            if self.double_jump_counter_ > 0 then
+
+                if self.freeze_time_ticks_ < 80 then
+                    if self.speed_.y <= 0 then
+                        self.speed_.y = 0
+                        self.speed_.x = 0
+                    end
+
+                end
+            end
+        end
+    end
+
 end
 
 

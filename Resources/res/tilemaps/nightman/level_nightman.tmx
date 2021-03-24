@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="384" height="96" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="10">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="384" height="96" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="13">
  <tileset firstgid="1" name="level_nightman_bank.png" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="4648" columns="56">
   <image source="level_nightman_bank.png" width="1008" height="1496"/>
  </tileset>
@@ -110,7 +110,7 @@
   <object id="1" x="2301.02" y="864.182" width="33.0344" height="19"/>
  </objectgroup>
  <objectgroup id="3" name="logic">
-  <object id="132" name="checkpoint" type="first" x="116" y="768" width="16" height="16"/>
+  <object id="132" name="checkpoint" type="dummy" x="116" y="768" width="16" height="16"/>
   <object id="133" name="scroll" type="left" x="1148" y="768" width="16" height="16"/>
   <object id="134" name="teleporter" x="116" y="852" width="16" height="16"/>
   <object id="135" name="scroll" type="right" x="100" y="768" width="16" height="16"/>
@@ -139,7 +139,12 @@
   <object id="38" name="hole" x="1336" y="415.25" width="16" height="40"/>
   <object id="39" name="hole" x="1148" y="647.333" width="16.182" height="40"/>
   <object id="40" name="hole" x="1653" y="180" width="12" height="40"/>
-  <object id="9" name="checkpoint" type="last" x="5462" y="1000" width="16" height="16"/>
+  <object id="9" name="checkpoint" type="first" x="5462" y="1000" width="16" height="16"/>
+  <object id="12" name="teleporter" x="5462" y="1083" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="7" name="subboss">
+  <object id="10" name="newnightboss" type="subboss" x="5824" y="1050" width="16" height="16"/>
+  <object id="11" name="teleporter" type="teleporter" x="5824" y="1066" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="4" name="enemies">
   <object id="136" name="backpacker" type="night" x="293.737" y="770.066" width="16" height="16"/>
@@ -162,7 +167,6 @@
   <object id="154" name="batcombat" type="night" x="4792.65" y="957.413" width="16" height="16"/>
   <object id="155" name="batcombat" type="night" x="5066.65" y="958.747" width="16" height="16"/>
   <object id="156" name="batcombat" type="night" x="5247.98" y="956.747" width="16" height="16"/>
-  <object id="157" name="batcombat" type="night" x="5434.65" y="960.08" width="16" height="16"/>
   <object id="158" name="robot_worm" type="night" x="523.484" y="804.87" width="16" height="16"/>
   <object id="159" name="robot_worm" type="night" x="641.109" y="804.898" width="16" height="16"/>
   <object id="160" name="robot_worm" type="night" x="1170.65" y="534.205" width="16" height="16"/>
@@ -195,8 +199,6 @@
   <object id="191" name="wall_spider" type="night" x="5004.98" y="1027.41" width="16" height="16"/>
   <object id="192" name="wall_spider" type="night" x="5093.32" y="1060.41" width="16" height="16"/>
   <object id="193" name="wall_spider" type="night" x="5255.65" y="1018.08" width="16" height="16"/>
-  <object id="194" name="wall_spider" type="night" x="5345.65" y="1013.08" width="16" height="16"/>
-  <object id="195" name="wall_spider" type="night" x="5422.65" y="1052.08" width="16" height="16"/>
   <object id="196" name="wall_skull" type="night" x="1105.65" y="536.122" width="16" height="16"/>
   <object id="197" name="wall_skull" type="night" x="1572.65" y="104.08" width="16" height="16"/>
   <object id="198" name="wall_skull" type="night" x="1572.65" y="61.5801" width="16" height="16"/>
@@ -279,7 +281,7 @@
   <object id="4" name="door" type="general" x="5591" y="1050" width="16" height="16"/>
   <object id="5" name="door" type="general" x="5846" y="1050" width="16" height="16"/>
  </objectgroup>
- <objectgroup id="6" name="boss" visible="0">
+ <objectgroup id="6" name="boss">
   <object id="6" name="boss" type="night" x="6064" y="864" width="16" height="16"/>
   <object id="7" name="teleporter" x="6061" y="1096" width="16" height="16"/>
  </objectgroup>

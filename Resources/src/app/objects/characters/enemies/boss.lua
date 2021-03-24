@@ -226,8 +226,7 @@ end
 
 function boss:stun(damage)
     if not self.current_browner_.stunned_ and self.vulnerable_ then
-        cc.audio.play_sfx("sounds/sfx_hit.mp3", false)
-
+        
         self.health_ = self.health_ - damage
 
         self.current_browner_.stunned_ = true
@@ -247,6 +246,8 @@ function boss:stun(damage)
         local sequence = nil
 
         if self.current_browner_.simple_stun_ == nil then
+            cc.audio.play_sfx("sounds/sfx_hit.mp3", false)
+
             local delay = cc.DelayTime:create(self.current_browner_:get_action_duration("hurt"))
 
             local blink = cc.Blink:create(self.current_browner_:get_action_duration("hurt"), 8)
@@ -264,7 +265,14 @@ function boss:stun(damage)
             end)
 
              sequence = cc.Sequence:create(delay, callback, blink, blink, blink_callback, nil)
+
+             sequence:setTag(cc.tags.actions.visibility)
+             self:stopAllActionsByTag(cc.tags.actions.visibility)
+             self:runAction(sequence)
+
         else
+            cc.audio.play_sfx("sounds/sfx_enemyhit.mp3", false)
+
             local blink = cc.Blink:create(0.2, 4)
 
             local blink_callback = cc.CallFunc:create(function()
@@ -280,11 +288,12 @@ function boss:stun(damage)
             end)
 
              sequence = cc.Sequence:create(blink, blink_callback, callback, nil)
+             sequence:setTag(cc.tags.actions.visibility)
+             self.sprite_:stopAllActionsByTag(cc.tags.actions.visibility)
+             self.sprite_:runAction(sequence)
+     
         end
 
-        sequence:setTag(cc.tags.actions.visibility)
-        self.sprite_:stopAllActionsByTag(cc.tags.actions.visibility)
-        self.sprite_:runAction(sequence)
     end
 end
 
@@ -327,6 +336,13 @@ function boss:solve_collisions()
             end
 
         elseif collision_tag == cc.tags.weapon.player then
+
+            if collision.power_ >= 3 and self.health_ <= 0 then
+                collision.disposed_ = false
+            else
+                collision.disposed_ = true
+            end
+
             self:stun(collision.power_)
         end
     end
@@ -513,7 +529,7 @@ function boss:check_health()
 end
 
 function boss:trigger_actions()
-    if not self.current_browner_.stunned_ then
+    if not self.current_browner_.stunned_ or self.current_browner_.simple_stun_ ~= nil then
         if self.current_browner_.on_ground_ then
             if self.current_browner_.walking_ then
                 if self.current_browner_.attacking_ then
@@ -668,6 +684,7 @@ function boss:forced_step(dt)
                     self.health_ = self.current_browner_.default_health_
                     self.player_.can_move_ = true
                     self.battle_status_ = cc.battle_status_.fighting_
+                    cc.pause(false)
                 end)
 
                 local sequence = cc.Sequence:create(callback, delay, fill_bar, nil)

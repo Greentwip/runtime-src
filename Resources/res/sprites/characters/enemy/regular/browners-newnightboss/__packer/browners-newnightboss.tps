@@ -184,7 +184,6 @@
             <key type="filename">newnightboss/jump/newnightboss_jump_0.png</key>
             <key type="filename">newnightboss/jump/newnightboss_jump_1.png</key>
             <key type="filename">newnightboss/jump/newnightboss_jump_2.png</key>
-            <key type="filename">newnightboss/jump/newnightboss_jump_3.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

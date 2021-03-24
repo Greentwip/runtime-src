@@ -49,21 +49,6 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>jump/newnightboss_jump_3</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{0,-5}</string>
-                <key>spriteSize</key>
-                <string>{64,67}</string>
-                <key>spriteSourceSize</key>
-                <string>{68,77}</string>
-                <key>textureRect</key>
-                <string>{{147,288},{64,67}}</string>
-                <key>textureRotated</key>
-                <true/>
-            </dict>
             <key>stand/newnightboss_stand_0</key>
             <dict>
                 <key>aliases</key>
@@ -348,7 +333,7 @@
             <key>size</key>
             <string>{216,402}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:6e713c0a1f83314e0303075d8c1408d3:c666c058c9347588e79f9aa1bf591c85:b80b1e6dfdba0708122601d031b821e4$</string>
+            <string>$TexturePacker:SmartUpdate:3f92dedc878f7507b57793a97dde1221:86654c9b07ac4a163b044450d93064a5:b80b1e6dfdba0708122601d031b821e4$</string>
             <key>textureFileName</key>
             <string>browners-newnightboss.pvr.ccz</string>
         </dict>
