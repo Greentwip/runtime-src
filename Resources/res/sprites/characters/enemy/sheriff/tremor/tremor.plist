@@ -184,6 +184,81 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
+            <key>tremor_tail_c_0</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{47,59}</string>
+                <key>spriteSourceSize</key>
+                <string>{47,59}</string>
+                <key>textureRect</key>
+                <string>{{226,140},{47,59}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>tremor_tail_c_1</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-1,-10}</string>
+                <key>spriteSize</key>
+                <string>{25,39}</string>
+                <key>spriteSourceSize</key>
+                <string>{47,59}</string>
+                <key>textureRect</key>
+                <string>{{247,201},{25,39}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>tremor_tail_c_2</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-1,-15}</string>
+                <key>spriteSize</key>
+                <string>{19,29}</string>
+                <key>spriteSourceSize</key>
+                <string>{47,59}</string>
+                <key>textureRect</key>
+                <string>{{226,201},{19,29}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>tremor_tail_c_3</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-22,28}</string>
+                <key>spriteSize</key>
+                <string>{3,3}</string>
+                <key>spriteSourceSize</key>
+                <string>{47,59}</string>
+                <key>textureRect</key>
+                <string>{{124,227},{3,3}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>tremor_tail_idle_0</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-22,28}</string>
+                <key>spriteSize</key>
+                <string>{3,3}</string>
+                <key>spriteSourceSize</key>
+                <string>{47,59}</string>
+                <key>textureRect</key>
+                <string>{{124,227},{3,3}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
         </dict>
         <key>metadata</key>
         <dict>
@@ -198,7 +273,7 @@
             <key>size</key>
             <string>{384,236}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:05952ae44595fb1a1242ffd92ef058be:5a01b6f171997d4f8e416f96b1339e4c:24bfb9133cb71fc1622a0f8705d809d7$</string>
+            <string>$TexturePacker:SmartUpdate:66a78a371555b921f26d8686cbe71205:1af839f8d9282c7ff529fa95e14960ad:24bfb9133cb71fc1622a0f8705d809d7$</string>
             <key>textureFileName</key>
             <string>tremor.pvr.ccz</string>
         </dict>

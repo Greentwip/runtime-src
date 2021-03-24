@@ -32,7 +32,7 @@ function stage_select:onLoad()
                              :addTo(self)
 
     self.cursor_ = sprite:create("sprites/gameplay/level/ui/selector/selector", cc.p(0, 1))
-                         :setPosition(cc.p(104, 144))
+                         :setPosition(cc.p(104, 138))
                          :addTo(self, 128)
 
     self.cursor_:set_animation("square_small")
@@ -53,8 +53,8 @@ function stage_select:onLoad()
     self.text_:setPosition(cc.p(display.center.x, display.top - self.text_:getBoundingBox().height * 0.5))
 
     local sprite_path = "sprites/gameplay/screens/stage_select"
-    self.cody_sprite_   = sprite:create(sprite_path .. "/spr_stage_select_cody", cc.p(0, 1))
-                                :setPosition(cc.p(104, 144))
+    self.swing_sprite_   = sprite:create(sprite_path .. "/spr_stage_select_swing", cc.p(0, 1))
+                                :setPosition(cc.p(104, 138))
                                 :addTo(self)
 
 
@@ -73,13 +73,13 @@ end
 function stage_select:setup_mugs()
     self.mugs_ = {}
 
-    local x_offset = 24
-    local y_offset = 208
+    local x_offset = 27
+    local y_offset = 214
 
     for i = 1, #cc.levels_ do
         local key = cc.levels_[i]
         if i == 5 then
-            x_offset = x_offset + 80;
+            x_offset = x_offset + 76;
         end
 
         local foe_name = key.mug_
@@ -105,59 +105,13 @@ function stage_select:setup_mugs()
             end
         end
 
-        if x_offset >= 184 then
-            x_offset = 24
-            y_offset = y_offset - 64
+        if x_offset >= 170 then
+            x_offset = 27
+            y_offset = y_offset - 76
         else
-            x_offset = x_offset + 80
+            x_offset = x_offset + 77
         end
     end
-end
-
-function stage_select:set_cody_sprite()
-
-    local cody_sprite = 1
-
-    if self.cursor_.x_position == 'middle' and self.cursor_.y_position == "middle" then
-
-        cody_sprite = 1
-
-    elseif self.cursor_.x_position == 'left' and self.cursor_.y_position == 'top' then
-
-        cody_sprite = 2
-
-    elseif self.cursor_.x_position == 'middle' and self.cursor_.y_position == 'top' then
-
-        cody_sprite = 3
-
-    elseif self.cursor_.x_position == 'right' and self.cursor_.y_position == 'top' then
-
-        cody_sprite = 4
-
-    elseif self.cursor_.x_position == 'right' and self.cursor_.y_position == 'middle' then
-
-        cody_sprite = 5
-
-    elseif self.cursor_.x_position == 'right' and self.cursor_.y_position == 'bottom' then
-
-        cody_sprite = 6
-
-    elseif self.cursor_.x_position == 'middle' and self.cursor_.y_position == 'bottom' then
-
-        cody_sprite = 7
-
-    elseif self.cursor_.x_position == "left" and self.cursor_.y_position == "bottom" then
-
-        cody_sprite = 8
-
-    else
-
-        cody_sprite = 9
-
-    end
-
-    self.cody_sprite_:set_image_index(cody_sprite)
-
 end
 
 function stage_select:move_left()
@@ -172,13 +126,13 @@ function stage_select:move_left()
     if move then
         if self.cursor_.x_position == "middle" then
             self.cursor_.x_position = 'left';
-            self.cursor_:setPositionX(self.cursor_:getPositionX()-80)
+            self.cursor_:setPositionX(self.cursor_:getPositionX()-77)
         elseif self.cursor_.x_position == "left" then
             self.cursor_.x_position = 'right';
-            self.cursor_:setPositionX(self.cursor_:getPositionX()+160)
+            self.cursor_:setPositionX(self.cursor_:getPositionX()+154)
         elseif self.cursor_.x_position == "right" then
             self.cursor_.x_position = 'middle';
-            self.cursor_:setPositionX(self.cursor_:getPositionX()-80)
+            self.cursor_:setPositionX(self.cursor_:getPositionX()-77)
         end
     end
 
@@ -199,13 +153,13 @@ function stage_select:move_right()
     if move then
         if self.cursor_.x_position == "middle" then
             self.cursor_.x_position = 'right';
-            self.cursor_:setPositionX(self.cursor_:getPositionX()+80)
+            self.cursor_:setPositionX(self.cursor_:getPositionX()+77)
         elseif self.cursor_.x_position == "left" then
             self.cursor_.x_position = 'middle';
-            self.cursor_:setPositionX(self.cursor_:getPositionX()+80)
+            self.cursor_:setPositionX(self.cursor_:getPositionX()+77)
         elseif self.cursor_.x_position == "right" then
             self.cursor_.x_position = 'left';
-            self.cursor_:setPositionX(self.cursor_:getPositionX()-160)
+            self.cursor_:setPositionX(self.cursor_:getPositionX()-154)
         end
     end
 
@@ -228,13 +182,13 @@ function stage_select:move_up()
     if move then
         if self.cursor_.y_position == "middle" then
             self.cursor_.y_position = "top"
-            self.cursor_:setPositionY(self.cursor_:getPositionY() + 64)
+            self.cursor_:setPositionY(self.cursor_:getPositionY() + 76)
         elseif self.cursor_.y_position == "top" then
             self.cursor_.y_position = "bottom"
-            self.cursor_:setPositionY(self.cursor_:getPositionY() - 128)
+            self.cursor_:setPositionY(self.cursor_:getPositionY() - 152)
         elseif self.cursor_.y_position == "bottom" then
             self.cursor_.y_position = "middle"
-            self.cursor_:setPositionY(self.cursor_:getPositionY() + 64)
+            self.cursor_:setPositionY(self.cursor_:getPositionY() + 76)
         end
     end
 
@@ -256,13 +210,13 @@ function stage_select:move_down()
     if move then
         if self.cursor_.y_position == "middle" then
             self.cursor_.y_position = "bottom"
-            self.cursor_:setPositionY(self.cursor_:getPositionY() - 64)
+            self.cursor_:setPositionY(self.cursor_:getPositionY() - 76)
         elseif self.cursor_.y_position == "bottom" then
             self.cursor_.y_position = "top"
-            self.cursor_:setPositionY(self.cursor_:getPositionY() + 128)
+            self.cursor_:setPositionY(self.cursor_:getPositionY() + 152)
         elseif self.cursor_.y_position == "top" then
             self.cursor_.y_position = "middle"
-            self.cursor_:setPositionY(self.cursor_:getPositionY() - 64)
+            self.cursor_:setPositionY(self.cursor_:getPositionY() - 76)
         end
     end
 
@@ -313,23 +267,15 @@ function stage_select:step(dt)
             self:getApp()
             :enterScene("screens.save", "FADE", 0.5)
         elseif cc.key_pressed(cc.key_code_.up) then
-            switch_sprite = true
             self:move_up()
         elseif cc.key_pressed(cc.key_code_.down) then
-            switch_sprite = true
             self:move_down()
         elseif cc.key_pressed(cc.key_code_.left) then
-            switch_sprite = true
             self:move_left()
         elseif cc.key_pressed(cc.key_code_.right) then
-            switch_sprite = true
             self:move_right()
         end
 
-    end
-
-    if switch_sprite then
-        self:set_cody_sprite()
     end
 
     self:post_step(dt)

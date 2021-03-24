@@ -8,7 +8,7 @@ CC_USE_FRAMEWORK = true
 CC_SHOW_FPS = false
 
 -- draw physics debug
-CC_DRAW_PHYSICS = false
+CC_DRAW_PHYSICS = true
 
 -- disable create unexpected global variable
 CC_DISABLE_GLOBAL = false

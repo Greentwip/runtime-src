@@ -221,6 +221,11 @@
             <key type="filename">tail/tremor_tail_a_3.png</key>
             <key type="filename">tail/tremor_tail_b_0.png</key>
             <key type="filename">tail/tremor_tail_b_1.png</key>
+            <key type="filename">tail/tremor_tail_c_0.png</key>
+            <key type="filename">tail/tremor_tail_c_1.png</key>
+            <key type="filename">tail/tremor_tail_c_2.png</key>
+            <key type="filename">tail/tremor_tail_c_3.png</key>
+            <key type="filename">tail/tremor_tail_idle_0.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

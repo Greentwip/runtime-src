@@ -236,7 +236,7 @@ function enemy:fire(args)
                                      args.parameters.package_,
                                      args.parameters.cname_)
                               :init_weapon(self:get_sprite_normal().x, self.weapon_tag_)
-                              :addTo(self:getParent())
+                              :addTo(self:getParent(), 1024)
 
 
     self:getParent().bullets_[bullet] = bullet
