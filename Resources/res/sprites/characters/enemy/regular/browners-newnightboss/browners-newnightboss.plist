@@ -15,9 +15,9 @@
                 <key>spriteSourceSize</key>
                 <string>{68,77}</string>
                 <key>textureRect</key>
-                <string>{{150,147},{64,69}}</string>
+                <string>{{74,128},{64,69}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>jump/newnightboss_jump_1</key>
             <dict>
@@ -30,7 +30,7 @@
                 <key>spriteSourceSize</key>
                 <string>{68,77}</string>
                 <key>textureRect</key>
-                <string>{{147,288},{64,67}}</string>
+                <string>{{145,128},{64,67}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -45,7 +45,7 @@
                 <key>spriteSourceSize</key>
                 <string>{68,77}</string>
                 <key>textureRect</key>
-                <string>{{2,142},{64,73}}</string>
+                <string>{{73,194},{64,73}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -54,13 +54,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{0,0}</string>
+                <string>{0,-1}</string>
                 <key>spriteSize</key>
                 <string>{63,69}</string>
                 <key>spriteSourceSize</key>
                 <string>{65,71}</string>
                 <key>textureRect</key>
-                <string>{{2,337},{63,69}}</string>
+                <string>{{75,63},{63,69}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -69,28 +69,28 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{0,0}</string>
+                <string>{0,-1}</string>
                 <key>spriteSize</key>
                 <string>{64,69}</string>
                 <key>spriteSourceSize</key>
                 <string>{76,71}</string>
                 <key>textureRect</key>
-                <string>{{150,147},{64,69}}</string>
+                <string>{{2,189},{64,69}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>standshoot/newnightboss_standshoot_1</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-1,0}</string>
+                <string>{-1,-2}</string>
                 <key>spriteSize</key>
-                <string>{74,69}</string>
+                <string>{74,67}</string>
                 <key>spriteSourceSize</key>
                 <string>{76,71}</string>
                 <key>textureRect</key>
-                <string>{{79,2},{74,69}}</string>
+                <string>{{70,260},{74,67}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -99,13 +99,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{0,0}</string>
+                <string>{0,-1}</string>
                 <key>spriteSize</key>
                 <string>{74,69}</string>
                 <key>spriteSourceSize</key>
                 <string>{76,71}</string>
                 <key>textureRect</key>
-                <string>{{2,71},{74,69}}</string>
+                <string>{{152,330},{74,69}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -114,13 +114,13 @@
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
-                <string>{-1,0}</string>
+                <string>{-1,-2}</string>
                 <key>spriteSize</key>
-                <string>{74,69}</string>
+                <string>{74,67}</string>
                 <key>spriteSourceSize</key>
                 <string>{76,71}</string>
                 <key>textureRect</key>
-                <string>{{79,2},{74,69}}</string>
+                <string>{{70,260},{74,67}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -135,7 +135,7 @@
                 <key>spriteSourceSize</key>
                 <string>{75,69}</string>
                 <key>textureRect</key>
-                <string>{{73,337},{63,69}}</string>
+                <string>{{146,63},{63,69}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -150,7 +150,7 @@
                 <key>spriteSourceSize</key>
                 <string>{75,69}</string>
                 <key>textureRect</key>
-                <string>{{78,73},{73,67}}</string>
+                <string>{{146,261},{73,67}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -165,7 +165,7 @@
                 <key>spriteSourceSize</key>
                 <string>{75,69}</string>
                 <key>textureRect</key>
-                <string>{{2,2},{75,67}}</string>
+                <string>{{2,329},{75,67}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -180,7 +180,7 @@
                 <key>spriteSourceSize</key>
                 <string>{75,69}</string>
                 <key>textureRect</key>
-                <string>{{78,73},{73,67}}</string>
+                <string>{{146,261},{73,67}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -195,9 +195,9 @@
                 <key>spriteSourceSize</key>
                 <string>{68,71}</string>
                 <key>textureRect</key>
-                <string>{{150,147},{64,69}}</string>
+                <string>{{74,128},{64,69}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>walk/newnightboss_walk_1</key>
             <dict>
@@ -210,9 +210,9 @@
                 <key>spriteSourceSize</key>
                 <string>{68,71}</string>
                 <key>textureRect</key>
-                <string>{{2,208},{66,71}}</string>
+                <string>{{2,255},{66,71}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>walk/newnightboss_walk_2</key>
             <dict>
@@ -225,7 +225,7 @@
                 <key>spriteSourceSize</key>
                 <string>{68,71}</string>
                 <key>textureRect</key>
-                <string>{{77,142},{68,71}}</string>
+                <string>{{79,330},{68,71}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -240,9 +240,9 @@
                 <key>spriteSourceSize</key>
                 <string>{68,71}</string>
                 <key>textureRect</key>
-                <string>{{153,74},{60,71}}</string>
+                <string>{{2,62},{60,71}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>walk/newnightboss_walk_4</key>
             <dict>
@@ -255,7 +255,7 @@
                 <key>spriteSourceSize</key>
                 <string>{68,71}</string>
                 <key>textureRect</key>
-                <string>{{75,212},{58,71}}</string>
+                <string>{{2,2},{58,71}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -270,7 +270,7 @@
                 <key>spriteSourceSize</key>
                 <string>{67,70}</string>
                 <key>textureRect</key>
-                <string>{{75,272},{63,70}}</string>
+                <string>{{2,124},{63,70}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -285,7 +285,7 @@
                 <key>spriteSourceSize</key>
                 <string>{67,70}</string>
                 <key>textureRect</key>
-                <string>{{2,276},{59,68}}</string>
+                <string>{{75,2},{59,68}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -300,9 +300,9 @@
                 <key>spriteSourceSize</key>
                 <string>{67,70}</string>
                 <key>textureRect</key>
-                <string>{{155,2},{59,70}}</string>
+                <string>{{145,2},{59,70}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
             <key>walkshoot/newnightboss_walkshoot_3</key>
             <dict>
@@ -315,9 +315,9 @@
                 <key>spriteSourceSize</key>
                 <string>{67,70}</string>
                 <key>textureRect</key>
-                <string>{{148,218},{65,68}}</string>
+                <string>{{148,194},{65,68}}</string>
                 <key>textureRotated</key>
-                <false/>
+                <true/>
             </dict>
         </dict>
         <key>metadata</key>
@@ -331,9 +331,9 @@
             <key>realTextureFileName</key>
             <string>browners-newnightboss.pvr.ccz</string>
             <key>size</key>
-            <string>{216,402}</string>
+            <string>{228,401}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:3f92dedc878f7507b57793a97dde1221:86654c9b07ac4a163b044450d93064a5:b80b1e6dfdba0708122601d031b821e4$</string>
+            <string>$TexturePacker:SmartUpdate:d98bd04e31220666a104e89bcb2fce01:741b465cc80213410747b2e050cf8c59:b80b1e6dfdba0708122601d031b821e4$</string>
             <key>textureFileName</key>
             <string>browners-newnightboss.pvr.ccz</string>
         </dict>

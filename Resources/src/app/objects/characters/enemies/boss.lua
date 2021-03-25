@@ -225,7 +225,7 @@ end
 
 
 function boss:stun(damage)
-    if not self.current_browner_.stunned_ and self.vulnerable_ then
+    if not self.current_browner_.stunned_ and self.vulnerable_ or self.current_browner_.simple_stun_ ~= nil  then
         
         self.health_ = self.health_ - damage
 
@@ -300,8 +300,10 @@ end
 function boss:solve_collisions()
 
     if self.spawning_ then 
-        self.current_browner_.speed_.y = -256
-        self.kinematic_body_.ignore_block_collisions_ = true
+        if not self.current_browner_.skip_intro_ then
+            self.current_browner_.speed_.y = -256
+            self.kinematic_body_.ignore_block_collisions_ = true
+        end
     else
         if not self.spawn_flag_ then
             self.spawn_flag_ = true
@@ -504,7 +506,6 @@ function boss:check_health()
             cc.audio.play_sfx("sounds/sfx_death.mp3", false)
     
             self:finish(true)
-    
 
             local explosion_a = cc.CallFunc:create(function()
                 self:explode(-16)
@@ -521,6 +522,23 @@ function boss:check_health()
             self:runAction(sequence)
 
         else
+            cc.audio.play_sfx("sounds/sfx_death.mp3", false)
+
+            
+            local explosion_a = cc.CallFunc:create(function()
+                self:explode(-16)
+            end)
+
+            local delay = cc.DelayTime:create(0.20)
+
+            local explosion_b = cc.CallFunc:create(function()
+                self:explode(-12)
+            end)
+
+            local sequence = cc.Sequence:create(explosion_a, delay, explosion_b, nil)
+
+            self:runAction(sequence)
+
             self:getPhysicsBody():getShapes()[1]:setTag(cc.tags.weapon.none)
             self.sprite_:setVisible(false)
         end

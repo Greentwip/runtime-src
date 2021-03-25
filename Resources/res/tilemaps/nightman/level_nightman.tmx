@@ -143,8 +143,8 @@
   <object id="12" name="teleporter" x="5462" y="1083" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="7" name="subboss">
-  <object id="10" name="newnightboss" type="subboss" x="5824" y="1050" width="16" height="16"/>
-  <object id="11" name="teleporter" type="teleporter" x="5824" y="1066" width="16" height="16"/>
+  <object id="10" name="newnightboss" type="subboss" x="5808" y="1050" width="16" height="16"/>
+  <object id="11" name="teleporter" type="teleporter" x="5808" y="1066" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="4" name="enemies">
   <object id="136" name="backpacker" type="night" x="293.737" y="770.066" width="16" height="16"/>

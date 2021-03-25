@@ -8,7 +8,7 @@ local newnightmanboss_browner = class("newnightmanboss_browner-enemy", browner)
 function newnightmanboss_browner:ctor(sprite, args)
     self.skip_intro_ = true
     self.simple_stun_ = true
-    self.default_health_ = 75 
+    self.default_health_ = 150
     self.super:ctor(sprite, args)
 
     -- constraints
@@ -57,6 +57,7 @@ function newnightmanboss_browner:reset_flags()
     self.rounds_ = 0
 
     self.double_jump_counter_ = 0
+    self.jump_air_counter_ = 0
 
     self.freeze_time_ticks_ = 0
 
@@ -122,6 +123,9 @@ function newnightmanboss_browner:update(dt)
     elseif self.state_ == self.state_initial_shoot_prepare_ then
         self.speed_.x = 0
         self.walking_ = false
+
+        self.jump_air_counter_ = 0
+        self.double_jump_counter_ = 0
 
         self.rounds_ = self.rounds_ + 1
 
@@ -193,13 +197,12 @@ function newnightmanboss_browner:update(dt)
 
         if self.on_ground_ then
             if self.double_jump_flag_  then
-                if self.double_jump_counter_ > 0 then
+                if self.double_jump_counter_ == 1 then
                     self.double_jump_flag_ = false
                     self.speed_.y  = self.jump_speed_ * 2
                     self.on_ground_ = false
                     self.jumping_ = true 
 
-                    self.double_jump_counter_ = 0
                     self.rounds_ = 0
                     self.freeze_time_ticks_ = 0
                 else
@@ -294,7 +297,17 @@ function newnightmanboss_browner:update(dt)
             end
         end
     end
-
+    
+    if self.jumping_ and not self.double_jump_flag_  then
+        self.jump_air_counter_ = self.jump_air_counter_ + 1
+        if self.jump_air_counter_ < 120 and self.double_jump_counter_ == 0 then
+            if self.speed_.y <= 0 then
+                self.speed_.y = 0
+                self.speed_.x = 0
+            end
+        end
+    end
+    
 end
 
 
