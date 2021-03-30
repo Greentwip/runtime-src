@@ -205,7 +205,7 @@ function newnightmanboss_browner:update(dt)
 
                     self.rounds_ = 0
                     self.freeze_time_ticks_ = 0
-                else
+                elseif self.double_jump_counter_ == 0 then
                     self.double_jump_counter_ = self.double_jump_counter_ + 1
                     self.speed_.y  = self.jump_speed_ * 4
                     self.on_ground_ = false
