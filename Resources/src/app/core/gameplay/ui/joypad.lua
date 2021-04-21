@@ -41,7 +41,7 @@ function joypad:ctor(layout)
         local controllerListener = cc.EventListenerController:create()
         controllerListener:registerScriptHandler(onControllerKeyPressed, cc.Handler.EVENT_CONTROLLER_KEYDOWN)
         controllerListener:registerScriptHandler(onControllerKeyReleased, cc.Handler.EVENT_CONTROLLER_KEYUP)
-        self:getScene():getEventDispatcher():addEventListenerWithSceneGraphPriority(controllerListener, self:getScene())
+        layout:getScene():getEventDispatcher():addEventListenerWithSceneGraphPriority(controllerListener, layout:getScene())
     else
         local tex_path = "sprites/core/joystick"
 

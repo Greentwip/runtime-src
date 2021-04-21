@@ -77,15 +77,15 @@ function pause_menu:ctor(settings)
                             :addTo(self)
 
     local fist = pause_interruptor:create("extreme_fist")
-                            :setPosition(cc.p(head:getPositionX() - 16, head:getPositionY() - 16))
+                            :setPosition(cc.p(head:getPositionX() - 18, head:getPositionY() - 18))
                             :addTo(self)
 
     local chest = pause_interruptor:create("extreme_chest")
-                             :setPosition(cc.p(fist:getPositionX() + 16, fist:getPositionY()))
+                             :setPosition(cc.p(fist:getPositionX() + 18, fist:getPositionY()))
                              :addTo(self)
 
     local boot  = pause_interruptor:create("extreme_boot")
-                             :setPosition(cc.p(chest:getPositionX() + 16, chest:getPositionY()))
+                             :setPosition(cc.p(chest:getPositionX() + 18, chest:getPositionY()))
                              :addTo(self)
 
 
@@ -208,63 +208,61 @@ function pause_menu:setup_browners()
     for i = 2, #pause_browners do -- because teleport browner is the first one
         local browner = pause_browners[i]
 
-        if browner.acquired_ == false then
-            goto continue
+        if browner.acquired_ ~= false then
+
+            local browner_location = cc.p(160, y_offset)
+
+            --if browner.id_ % 2 == 0 then
+                --browner_location.x = 12
+            --end
+    
+            local new_interruptor = pause_interruptor:create(browner.pause_item_ .. "_" .. "weapon")
+            :setPosition(browner_location)
+            :addTo(self)
+    
+            local interruptor_label = label:create(browner.pause_item_,
+                "fonts/megaman_2.ttf",
+                8,
+                cc.TEXT_ALIGNMENT_LEFT,
+                cc.VERTICAL_TEXT_ALIGNMENT_TOP)
+            :addTo(new_interruptor)
+    
+            interruptor_label:setPosition(cc.p(new_interruptor.sprite_:getContentSize().width + 1, 0))
+    
+            new_interruptor.browner_id_ = browner.id_
+            new_interruptor.pause_item_ = browner.pause_item_
+    
+            new_interruptor.energy_bar_ = energy_bar:create(true)
+                                                    :setPosition(cc.p(new_interruptor.sprite_:getContentSize().width,
+                                                        -new_interruptor.sprite_:getContentSize().height))
+                                                    :setRotation(-90)
+                                                    :setScaleY(0.75)
+                                                    :addTo(new_interruptor)
+    
+            if self.player_.browners_[new_interruptor.browner_id_] ~= nil then
+                new_interruptor.energy_bar_:set_meter(self.player_.browners_[new_interruptor.browner_id_].energy_)
+            end
+    
+            if browner.acquired_ == true then
+                new_interruptor:setVisible(true)
+            else
+                new_interruptor:setVisible(false)
+            end
+    
+            self.items_[#self.items_ + 1] = new_interruptor
+            self.browners_[new_interruptor.browner_id_] = new_interruptor
+    
+            --if browner_location.x == 80 then
+                --y_offset  = y_offset - 24
+            --end
+    
+            y_offset  = y_offset - 24
+    
+            if new_interruptor.browner_id_ == self.player_.current_browner_.browner_id_ then
+                self.default_browner_ = new_interruptor
+            end
+
         end
-
-        local browner_location = cc.p(160, y_offset)
-
-        --if browner.id_ % 2 == 0 then
-            --browner_location.x = 12
-        --end
-
-        local new_interruptor = pause_interruptor:create(browner.pause_item_ .. "_" .. "weapon")
-        :setPosition(browner_location)
-        :addTo(self)
-
-        local interruptor_label = label:create(browner.pause_item_,
-            "fonts/megaman_2.ttf",
-            8,
-            cc.TEXT_ALIGNMENT_LEFT,
-            cc.VERTICAL_TEXT_ALIGNMENT_TOP)
-        :addTo(new_interruptor)
-
-        interruptor_label:setPosition(cc.p(new_interruptor.sprite_:getContentSize().width + 1, 0))
-
-        new_interruptor.browner_id_ = browner.id_
-        new_interruptor.pause_item_ = browner.pause_item_
-
-        new_interruptor.energy_bar_ = energy_bar:create(true)
-                                                :setPosition(cc.p(new_interruptor.sprite_:getContentSize().width,
-                                                    -new_interruptor.sprite_:getContentSize().height))
-                                                :setRotation(-90)
-                                                :setScaleY(0.75)
-                                                :addTo(new_interruptor)
-
-        if self.player_.browners_[new_interruptor.browner_id_] ~= nil then
-            new_interruptor.energy_bar_:set_meter(self.player_.browners_[new_interruptor.browner_id_].energy_)
-        end
-
-        if browner.acquired_ == true then
-            new_interruptor:setVisible(true)
-        else
-            new_interruptor:setVisible(false)
-        end
-
-        self.items_[#self.items_ + 1] = new_interruptor
-        self.browners_[new_interruptor.browner_id_] = new_interruptor
-
-        --if browner_location.x == 80 then
-            --y_offset  = y_offset - 24
-        --end
-
-        y_offset  = y_offset - 24
-
-        if new_interruptor.browner_id_ == self.player_.current_browner_.browner_id_ then
-            self.default_browner_ = new_interruptor
-        end
-
-        ::continue::
     end
 end
 

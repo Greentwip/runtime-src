@@ -287,7 +287,7 @@
     <Page Include="Cocos2dEngine\OpenGLESPage.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="WindowsMobile, Version=10.0.18362.0" />
+    <SDKReference Include="WindowsMobile, Version=10.0.19041.0" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png" />

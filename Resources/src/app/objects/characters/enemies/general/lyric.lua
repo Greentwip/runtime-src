@@ -54,7 +54,7 @@ function mob:jump()
             move_y = -1
         end
 
-        local move = cc.MoveBy:create(0.05, cc.p(move_x, move_y))
+        local move = cc.MoveBy:create(0.025, cc.p(move_x, move_y))
         local callback = cc.CallFunc:create(function() self.moving_ = false end)
 
         local sequence = cc.Sequence:create(move, callback)
