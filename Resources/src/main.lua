@@ -25,6 +25,7 @@ encode = function() end
 }
 
 cc.audio = {
+current_track = "",
 play_bgm = function() end,
 play_sfx = function() end,
 set_bgm_volume = function() end,
@@ -149,6 +150,7 @@ end
 
 
 function cc.audio.play_bgm(path, loop)
+    cc.audio.current_track = path
     local id = ccexp.AudioEngine:play2d(path, loop, cc.bgm_volume_)
     cc.current_bgm_id_ = id
     return id

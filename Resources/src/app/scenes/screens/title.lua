@@ -83,9 +83,9 @@ function title:onLoad()
     self.options_text_:setPosition(cc.p((256 * 0.5) - (options_text_width * 0.5),
                                    (224 * 0.5) + (options_text_height * 0.5) ))
 
-    cc.audio.play_bgm("sounds/bgm_title.mp3", true)
-
-
+    if cc.audio.current_track ~= "sounds/bgm_title.mp3" then
+        cc.audio.play_bgm("sounds/bgm_title.mp3", true)
+    end
 
     self.selected_option_ = self.start_text_
 

@@ -154,8 +154,6 @@ function options:step(dt)
         if cc.key_pressed(cc.key_code_.b) then
             self.triggered_ = true
 
-            ccexp.AudioEngine:stopAll()
-
             self:getApp()
             :enterScene("screens.title", "FADE", 0.5)
         end

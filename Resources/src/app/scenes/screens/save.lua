@@ -55,6 +55,10 @@ function save:onLoad()
 
     self.triggered_ = false
 
+    if cc.audio.current_track ~= "sounds/bgm_title.mp3" then
+        cc.audio.play_bgm("sounds/bgm_title.mp3", true)
+    end
+
 end
 
 function save:read_slot(slot)
@@ -619,8 +623,6 @@ function save:step(dt)
             else
                 self.triggered_ = true
 
-                ccexp.AudioEngine:stopAll()
-    
                 self:getApp()
                 :enterScene("screens.title", "FADE", 0.5)    
             end
