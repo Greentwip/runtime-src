@@ -10,7 +10,9 @@ end
 
 function checkpoint:prepare(raw_element)
     if raw_element.type == "first" then
-    self.type_ = cc.tags.logic.check_point.first_
+        self.type_ = cc.tags.logic.check_point.first_
+    elseif raw_element.type == "boss" then
+        self.type_ = cc.tags.logic.check_point.last_
     end
     return self
 end

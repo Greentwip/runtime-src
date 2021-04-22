@@ -146,7 +146,6 @@ function options:step(dt)
                 end
             end
         end
-    
     end
 
     if not self.triggered_ then

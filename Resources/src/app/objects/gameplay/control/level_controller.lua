@@ -112,9 +112,22 @@ function level_controller:start()
 
     if self.check_point_ ~= nil then
 
-        for k, v in pairs(self.doors_) do
-            v:reopen()
+        if self.check_point_.type_ == cc.tags.logic.check_point.last_ then
+            local rightmost_door_x = 0
+            local rightmost_door = nil
+            for k, v in pairs(self.doors_) do
+                if v:getPositionX() > rightmost_door_x then
+                    rightmost_door = v
+                end
+            end
+
+            rightmost_door:reopen()
+        else
+            for k, v in pairs(self.doors_) do
+                v:reopen()
+            end
         end
+        
 
         self.player_.spawning_ = true
 

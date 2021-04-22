@@ -231,14 +231,15 @@ function MyApp:setup_tags()
     cc.tags.logic = {}
     cc.tags.logic.check_point = {}
     cc.tags.logic.check_point.first_ = 16
+    cc.tags.logic.check_point.last_ = 17
 
     cc.tags.actions = {}
-    cc.tags.actions.animation   = 17
-    cc.tags.actions.color       = 18
+    cc.tags.actions.animation   = 18
+    cc.tags.actions.color       = 19
 
-    cc.tags.free_scroll       = 19
+    cc.tags.free_scroll       = 20
 
-    cc.tags.actions.visibility  = 20
+    cc.tags.actions.visibility  = 21
 
 
 
