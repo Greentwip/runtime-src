@@ -327,7 +327,7 @@ end
 function save:load_slot(slot)
     local json = self:read_slot(slot)
 
-    cc.unlockables_.items_.helmet_.acquired_ = json["helmet"]
+    cc.unlockables_.items_.helmet_.acquired_ = true
     cc.unlockables_.items_.head_.acquired_ = json["head"]
     cc.unlockables_.items_.chest_.acquired_ = json["chest"]
     cc.unlockables_.items_.fist_.acquired_ = json["fist"]
@@ -368,7 +368,7 @@ end
 function save:save_slot(slot)
 
     local settings = {
-        helmet = false,
+        helmet = true,
         head = false,
         chest = false,
         fist = false,

@@ -324,7 +324,7 @@ function MyApp:setup_player()
 
     cc.unlockables_.items_ = {}
 
-    cc.unlockables_.items_.helmet_ = {id_ = 2, acquired_ = false, name_ = "helmet" }
+    cc.unlockables_.items_.helmet_ = {id_ = 2, acquired_ = true, name_ = "helmet" }
     cc.unlockables_.items_.head_   = {id_ = 3, acquired_ = false, name_ = "head" }
     cc.unlockables_.items_.chest_  = {id_ = 4, acquired_ = false, name_ = "chest" }
     cc.unlockables_.items_.fist_   = {id_ = 5, acquired_ = false, name_ = "fist" }
