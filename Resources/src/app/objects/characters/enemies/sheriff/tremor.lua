@@ -123,8 +123,11 @@ function tremor:onDefeated()
 
     local item_array = {}
 
-    item_array[1] = "head"
-
+    if cc.unlockables_.items_.head_.acquired_ then
+        item_array[1] = "health_big"
+    else
+        item_array[1] = "head"
+    end
 
     if item_array[1] ~= nil then
         local item_good = item:create()
@@ -132,6 +135,8 @@ function tremor:onDefeated()
                               :setPosition(cc.p(self:getPositionX(), self:getPositionY()))
 
         item_good:swap(item_array[1], true)
+
+        item_good:set_name("head")
 
         self:getParent():schedule_component(item_good)
     end

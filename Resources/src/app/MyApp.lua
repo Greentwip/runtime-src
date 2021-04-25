@@ -397,6 +397,8 @@ function MyApp:setup_items()
 
     cc.item_                 = {}
 
+    cc.item_.collectibles_ = {}
+
     cc.item_.life_            = {id_ = 1,  string_ = "life"   }
 
     cc.item_.helmet_          = {id_ = 2,  string_ = "helmet" }
@@ -417,6 +419,13 @@ function MyApp:setup_items()
 
 
     local on_item_acquired = function(player, item)
+
+        if item.get_collectible() then
+            cc.item_.collectibles_[#cc.item_.collectibles_ + 1] = item:get_name()
+            local slot = cc.game.get_default_slot()
+            slot["collectible_items"] = cc.item_.collectibles_
+            cc.game.save_default_slot(slot)
+        end
 
         if item.id_ == cc.item_.life_.id_ then
 

@@ -361,6 +361,8 @@ function save:load_slot(slot)
 
     cc.game_options_.helmet_activated_ = json["helmet_activated"] or false
 
+    cc.item_.collectibles_ = json["collectible_items"]
+
 end
 
 function save:save_slot(slot)
@@ -371,6 +373,8 @@ function save:save_slot(slot)
         chest = false,
         fist = false,
         boot = false,
+
+        collectible_items = {},
 
         e = 0,
         m = 0,

@@ -2,6 +2,8 @@
 
 local browner                = import("app.objects.characters.enemies.browners.base.browner")
 local linear_missile_bullet     = import("app.objects.weapons.browners.military.linear_missile_bullet")
+local item    = import("app.objects.gameplay.level.goods.item")
+
 
 local newnightmanboss_browner = class("newnightmanboss_browner-enemy", browner)
 
@@ -341,6 +343,32 @@ function newnightmanboss_browner:fire()
         self:getParent():getParent().bullets_[bullet] = bullet
 
 end
+
+
+function newnightmanboss_browner:onDefeated()
+
+    local item_array = {}
+
+    if cc.unlockables_.items_.fist_.acquired_ then
+        item_array[1] = "health_big"
+    else
+        item_array[1] = "fist"
+    end
+
+    if item_array[1] ~= nil then
+        local item_good = item:create()
+                              :setup("gameplay", "level", "goods", "item")
+                              :setPosition(cc.p(self:getPositionX(), self:getPositionY()))
+
+        item_good:swap(item_array[1], true)
+
+        item_good:set_name("head")
+
+        self:getParent():getParent():schedule_component(item_good)
+    end
+
+end
+
 
 return newnightmanboss_browner
 

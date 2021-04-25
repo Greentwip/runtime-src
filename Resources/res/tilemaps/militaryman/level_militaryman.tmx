@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="384" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="19">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="384" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="21">
  <tileset firstgid="1" name="level_militaryman_bank" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="3752" columns="67">
   <image source="level_militaryman_bank.png" width="1208" height="1008"/>
  </tileset>
@@ -273,6 +273,18 @@
   </object>
  </objectgroup>
  <objectgroup id="7" name="items">
+  <object id="19" name="military_m_tank" type="m_tank" x="5513" y="869" width="10.6667" height="10.6667">
+   <properties>
+    <property name="direction" value="left"/>
+    <property name="radius" value="32"/>
+   </properties>
+  </object>
+  <object id="20" name="military_e_tank" type="e_tank" x="3089" y="396" width="10.6667" height="10.6667">
+   <properties>
+    <property name="direction" value="left"/>
+    <property name="radius" value="32"/>
+   </properties>
+  </object>
   <object id="16" name="boot" type="boot" x="4619" y="870" width="10.6667" height="10.6667">
    <properties>
     <property name="direction" value="left"/>

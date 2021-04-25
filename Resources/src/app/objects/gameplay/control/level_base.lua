@@ -267,14 +267,32 @@ function level_base:load(tmx_map, map_path, load_arguments)
             local creation_args = {}
             creation_args.real_position_    = self:calculate_tmx_position(group_array[i], map)
 
-            local item_good = item:create()
-                                  :setup("gameplay", "level", "goods", "item")
-                                  :setPosition(creation_args.real_position_)
-                                  :addTo(self, 2048)
+            local item_name = group_array[i].name
 
-            item_good:swap(group_array[i].type, true)
+            local found = false
 
-            scene_components[#scene_components + 1] = item_good
+            for _, v in pairs(cc.item_.permanents_) do
+                if v == item_name then
+                    found = true
+                    break
+                end
+            end
+
+            if not found then
+                local item_good = item:create()
+                                    :setup("gameplay", "level", "goods", "item")
+                                    :setPosition(creation_args.real_position_)
+                                    :addTo(self, 2048)
+
+                item_good:swap(group_array[i].type, true)
+
+                item_good:set_name(group_array[i].name)
+                item_good:set_collectible(true)
+
+                
+
+                scene_components[#scene_components + 1] = item_good
+            end
         end
     end
 

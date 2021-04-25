@@ -541,6 +541,10 @@ function boss:check_health()
 
             self:getPhysicsBody():getShapes()[1]:setTag(cc.tags.weapon.none)
             self.sprite_:setVisible(false)
+
+            if self.current_browner_.onDefeated then
+                self.current_browner_:onDefeated()
+            end
         end
     end
 

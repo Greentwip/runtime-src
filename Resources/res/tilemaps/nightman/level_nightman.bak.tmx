@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="384" height="96" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="10">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="384" height="96" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="11">
  <tileset firstgid="1" name="level_nightman_bank.png" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="4648" columns="56">
   <image source="level_nightman_bank.png" width="1008" height="1496"/>
  </tileset>
@@ -145,6 +145,7 @@
   <object id="39" name="hole" x="1148" y="647.333" width="16.182" height="40"/>
   <object id="40" name="hole" x="1653" y="180" width="12" height="40"/>
   <object id="9" name="checkpoint" type="last" x="5462" y="1000" width="16" height="16"/>
+  <object id="10" name="checkpoint" type="last" x="3425" y="1220" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="4" name="enemies">
   <object id="136" name="backpacker" type="night" x="293.737" y="770.066" width="16" height="16"/>

@@ -29,4 +29,4 @@ CC_DESIGN_RESOLUTION = {
 
 --CC_START_LEVEL = "screens.opening"
 CC_START_LEVEL = "screens.testwrapper"
-CC_DEBUG_MUG = "sheriffman"
+CC_DEBUG_MUG = "nightman"

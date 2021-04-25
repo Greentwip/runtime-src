@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="384" height="96" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="13">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="384" height="96" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="20">
  <tileset firstgid="1" name="level_nightman_bank.png" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="4648" columns="56">
   <image source="level_nightman_bank.png" width="1008" height="1496"/>
  </tileset>
@@ -110,9 +110,7 @@
   <object id="1" x="2301.02" y="864.182" width="33.0344" height="19"/>
  </objectgroup>
  <objectgroup id="3" name="logic">
-  <object id="132" name="checkpoint" type="dummy" x="116" y="768" width="16" height="16"/>
   <object id="133" name="scroll" type="left" x="1148" y="768" width="16" height="16"/>
-  <object id="134" name="teleporter" x="116" y="852" width="16" height="16"/>
   <object id="135" name="scroll" type="right" x="100" y="768" width="16" height="16"/>
   <object id="1" name="ladder" x="1148.04" y="550" width="16" height="258.821"/>
   <object id="2" name="ladder" x="1336" y="368" width="16" height="139.667"/>
@@ -139,12 +137,17 @@
   <object id="38" name="hole" x="1336" y="415.25" width="16" height="40"/>
   <object id="39" name="hole" x="1148" y="647.333" width="16.182" height="40"/>
   <object id="40" name="hole" x="1653" y="180" width="12" height="40"/>
-  <object id="9" name="checkpoint" type="first" x="5462" y="1000" width="16" height="16"/>
+  <object id="19" name="teleporter" x="5721" y="1096" width="16" height="16"/>
   <object id="12" name="teleporter" x="5462" y="1083" width="16" height="16"/>
+  <object id="134" name="teleporter" x="116" y="852" width="16" height="16"/>
+  <object id="17" name="checkpoint" type="last" x="5721" y="1000" width="16" height="16"/>
+  <object id="13" name="checkpoint" type="second" x="3425" y="1220" width="16" height="16"/>
+  <object id="132" name="checkpoint" type="first" x="116" y="768" width="16" height="16"/>
+  <object id="18" name="teleporter" x="3424" y="1284" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="7" name="subboss">
-  <object id="10" name="newnightboss" type="subboss" x="5808" y="1050" width="16" height="16"/>
-  <object id="11" name="teleporter" type="teleporter" x="5808" y="1066" width="16" height="16"/>
+  <object id="14" name="newnightboss" type="subboss" x="3253" y="1092" width="16" height="16"/>
+  <object id="15" name="teleporter" type="teleporter" x="3253" y="1108" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="4" name="enemies">
   <object id="136" name="backpacker" type="night" x="293.737" y="770.066" width="16" height="16"/>

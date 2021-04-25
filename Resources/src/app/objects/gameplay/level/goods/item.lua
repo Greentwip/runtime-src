@@ -27,11 +27,33 @@ function item:animate(cname)
 
     self.sprite_:load_actions_set(actions, false)
 
+    self.id_ = nil
+
+    self.name_ = nil
+
+    self.collectible_ = false
+
     self:swap("life", true)
 end
 
-function item:swap(animation, permanent)
+function item:set_name(name)
+    self.name_ = name
+end
 
+function item:get_name()
+    return self.name_
+end
+
+function item:set_collectible(collectible)
+    self.collectible_ = collectible
+end
+
+function item:get_collectible()
+    return self.collectible_
+end
+
+function item:swap(animation, permanent)
+     
     for _, item in pairs(cc.item_) do
         if animation == item.string_ then
             self.id_ = item.id_
