@@ -124,6 +124,9 @@ OpenGLESPage::OpenGLESPage(OpenGLES* openGLES) :
 #endif
 #endif
 
+    Background = ref new SolidColorBrush(Windows::UI::Colors::Black);
+
+
     CreateInput();
 }
 
@@ -227,8 +230,9 @@ void OpenGLESPage::OnGamepadRemoved(Object^, Windows::Gaming::Input::Gamepad^ ar
 std::pair<bool, Windows::Gaming::Input::GamepadButtons> 
 OpenGLESPage::gamepadReading(GamepadWithButtonState gamepad, 
                                 Windows::Gaming::Input::GamepadButtons button) {
+    auto currentReading = gamepad.gamepad->GetCurrentReading();
     return std::pair<bool, Windows::Gaming::Input::GamepadButtons>
-        (((gamepad.gamepad->GetCurrentReading().Buttons & button) == button), button);
+        (((currentReading.Buttons & button) == button), button);
 }
 
 void OpenGLESPage::submitReading(GamepadWithButtonState gamepad,
@@ -255,6 +259,65 @@ void OpenGLESPage::submitReading(GamepadWithButtonState gamepad,
 
     }
 }
+
+double OpenGLESPage::axisReading(GamepadWithButtonState gamepad, Windows::Gaming::Input::GamepadButtons button, int axis) {
+
+    auto currentReading = gamepad.gamepad->GetCurrentReading();
+
+    switch (button) {
+    case Windows::Gaming::Input::GamepadButtons::LeftThumbstick:
+        if (axis == -1) {
+            return currentReading.LeftThumbstickX;
+        }
+        else {
+            return currentReading.LeftThumbstickY;
+        }
+        
+        break;
+
+    case Windows::Gaming::Input::GamepadButtons::RightThumbstick:
+        if (axis == -1) {
+            return currentReading.RightThumbstickX;
+        }
+        else {
+            return currentReading.RightThumbstickY;
+        }
+        break;
+
+    default:
+        return 0.0;
+    }
+}
+
+void OpenGLESPage::setAxisReading(GamepadWithButtonState gamepad, std::pair<cocos2d::Controller::Key, double> reading) {
+
+    auto iter = cocos2d::ControllerImpl::findController(gamepad.id);
+    if (iter == Controller::s_allController.end())
+    {
+        CCLOG("onAxisEvent:connect new controller.");
+        cocos2d::ControllerImpl::onConnected(gamepad.id);
+        iter = cocos2d::ControllerImpl::findController(gamepad.id);
+    }
+
+    (*iter)->_allKeyPrevStatus[(int)reading.first] = (*iter)->_allKeyStatus[(int)reading.first];
+    (*iter)->_allKeyStatus[(int)reading.first].value = reading.second;
+    (*iter)->_allKeyStatus[(int)reading.first].isAnalog = true;
+
+}
+
+void OpenGLESPage::submitAxisReading(GamepadWithButtonState gamepad, Windows::Gaming::Input::GamepadButtons axis) {
+    auto iter = cocos2d::ControllerImpl::findController(gamepad.id);
+    if (iter == Controller::s_allController.end())
+    {
+        CCLOG("onAxisEvent:connect new controller.");
+        cocos2d::ControllerImpl::onConnected(gamepad.id);
+        iter = cocos2d::ControllerImpl::findController(gamepad.id);
+    }
+
+    (*iter)->onAxisEvent((int)axis, 0.0, true);
+}
+
+
 
 OpenGLESPage::~OpenGLESPage()
 {
@@ -453,11 +516,22 @@ void OpenGLESPage::StartRenderLoop()
                     buttonDownThisUpdate = gamepadReading(gamepadWithButtonState, Windows::Gaming::Input::GamepadButtons::RightShoulder);
                     submitReading(gamepadWithButtonState, buttonDownThisUpdate);
 
-                    buttonDownThisUpdate = gamepadReading(gamepadWithButtonState, Windows::Gaming::Input::GamepadButtons::LeftThumbstick);
-                    submitReading(gamepadWithButtonState, buttonDownThisUpdate);
+                    double leftThumbstickXAxisReading = axisReading(gamepadWithButtonState, Windows::Gaming::Input::GamepadButtons::LeftThumbstick, -1);
+                    double leftThumbstickYAxisReading = axisReading(gamepadWithButtonState, Windows::Gaming::Input::GamepadButtons::LeftThumbstick, 1);
 
-                    buttonDownThisUpdate = gamepadReading(gamepadWithButtonState, Windows::Gaming::Input::GamepadButtons::RightThumbstick);
-                    submitReading(gamepadWithButtonState, buttonDownThisUpdate);
+                    setAxisReading(gamepadWithButtonState, { cocos2d::Controller::Key::JOYSTICK_LEFT_X, leftThumbstickXAxisReading });
+                    setAxisReading(gamepadWithButtonState, { cocos2d::Controller::Key::JOYSTICK_LEFT_Y, leftThumbstickYAxisReading });
+
+                    submitAxisReading(gamepadWithButtonState, Windows::Gaming::Input::GamepadButtons::LeftThumbstick);
+
+                    double rightThumbstickXAxisReading = axisReading(gamepadWithButtonState, Windows::Gaming::Input::GamepadButtons::RightThumbstick, -1);
+                    double rightThumbstickYAxisReading = axisReading(gamepadWithButtonState, Windows::Gaming::Input::GamepadButtons::RightThumbstick, 1);
+
+                    setAxisReading(gamepadWithButtonState, { cocos2d::Controller::Key::JOYSTICK_RIGHT_X, rightThumbstickXAxisReading });
+                    setAxisReading(gamepadWithButtonState, { cocos2d::Controller::Key::JOYSTICK_RIGHT_Y, rightThumbstickYAxisReading });
+
+                    submitAxisReading(gamepadWithButtonState, Windows::Gaming::Input::GamepadButtons::RightThumbstick);
+
 
             }
 

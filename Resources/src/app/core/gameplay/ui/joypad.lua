@@ -4,6 +4,8 @@
 
 local joypad = class("joypad", cc.Node)
 
+require("cocos.controller.ControllerConstants")
+
 function joypad:ctor(layout)
     local platform = device.platform
 
@@ -23,7 +25,7 @@ function joypad:ctor(layout)
         listener:registerScriptHandler(onKeyReleased, cc.Handler.EVENT_KEYBOARD_RELEASED)
         layout:getScene():getEventDispatcher():addEventListenerWithSceneGraphPriority(listener, layout:getScene())
     elseif platform == "winrt" then
-        print("winrt")
+        --print("winrt")
 
         local director = cc.Director:getInstance()
         local view = director:getOpenGLView()
@@ -37,10 +39,52 @@ function joypad:ctor(layout)
         local function onControllerKeyReleased(controller, keycode)
             self:onControllerPressed(controller, keycode, false)
         end
+        
+        local function onAxis(controller, keycode, event)
+            
+            --print("On Axis")
+            --print("Keycode " .. tostring(keycode))
+            --print(controller:getKeyStatus(keycode).value)
+
+
+            --[[
+            if keycode == 214 or keycode == 213 then
+                print("Left X")
+                print(controller:getKeyStatus(keycode).value)
+            end
+
+            if keycode == 211 or keycode == 212 then
+                print("Left Y")
+                print(controller:getKeyStatus(keycode).value)
+            end
+            ]]
+
+            --print("Left X")
+            --print(controller:getKeyStatus(cc.ControllerKey.JOYSTICK_LEFT_X).value)
+
+            --print("Left Y")
+            --print(controller:getKeyStatus(cc.ControllerKey.JOYSTICK_LEFT_Y).value)
+
+            --if keycode == cc.ControllerKey.JOYSTICK_LEFT_X or keycode == cc.ControllerKey.JOYSTICK_LEFT_Y then
+                self:onAxis(controller:getKeyStatus(cc.ControllerKey.JOYSTICK_LEFT_X).value,
+                            controller:getKeyStatus(cc.ControllerKey.JOYSTICK_LEFT_Y).value)
+            --end
+        end
+
+        self.dead_zone_ = 0.25
+
+
+        self.joy_keys_ = {}
+
+        self.joy_keys_[#self.joy_keys_ + 1] = cc.key_code_.right
+        self.joy_keys_[#self.joy_keys_ + 1] = cc.key_code_.left
+        self.joy_keys_[#self.joy_keys_ + 1] = cc.key_code_.up
+        self.joy_keys_[#self.joy_keys_ + 1] = cc.key_code_.down
 
         local controllerListener = cc.EventListenerController:create()
         controllerListener:registerScriptHandler(onControllerKeyPressed, cc.Handler.EVENT_CONTROLLER_KEYDOWN)
         controllerListener:registerScriptHandler(onControllerKeyReleased, cc.Handler.EVENT_CONTROLLER_KEYUP)
+        controllerListener:registerScriptHandler(onAxis, cc.Handler.EVENT_CONTROLLER_AXIS)
         layout:getScene():getEventDispatcher():addEventListenerWithSceneGraphPriority(controllerListener, layout:getScene())
     else
         local tex_path = "sprites/core/joystick"
@@ -202,6 +246,105 @@ function joypad:onTouchEnded(touch, event)
 
 end
 
+function joypad:onAxis(axis_x, axis_y)
+
+    local circle_distance = cc.pGetDistance(cc.p(axis_x, axis_y), cc.p(0, 0))
+
+    if circle_distance >= self.dead_zone_ then
+        self.can_move_ = true
+    else
+        
+        if self.can_move_ then
+            self.in_horizontal_range_ = false
+            self.in_vertical_range_ = false
+
+            for i = 1, #self.joy_keys_ do
+                cc.keys_[self.joy_keys_[i]].status_    = cc.KEY_STATUS.UP
+                if cc.keys_[self.joy_keys_[i]].pressed_ then
+                    cc.keys_[self.joy_keys_[i]].pressed_ = false
+                    cc.keys_[self.joy_keys_[i]].released_ = true
+                end
+            end
+        end
+
+        self.can_move_ = false
+    end
+
+
+    local delta_x = axis_x
+    local delta_y = axis_y
+
+    local angle = math.atan2(delta_y, delta_x) * 180 / math.pi
+    
+    --print("circle_distance")
+    --print(circle_distance)
+
+    if self.can_move_ then
+
+        if angle >= -60 and angle <= 60 then
+            if not self.in_horizontal_range_ then
+                cc.keys_[cc.key_code_.right].status_  = cc.KEY_STATUS.DOWN
+                cc.keys_[cc.key_code_.right].pressed_ = true
+                self.in_horizontal_range_ = true
+                self.horizontal_range_key_ = cc.key_code_.right
+            end
+        else
+            cc.keys_[cc.key_code_.right].status_ = cc.KEY_STATUS.UP
+            cc.keys_[cc.key_code_.right].released_ = true
+            if self.horizontal_range_key_ == cc.key_code_.right then
+                self.in_horizontal_range_ = false
+            end
+        end
+
+        if math.abs(angle) >= 120 and math.abs(angle) <= 180 then
+            if not self.in_horizontal_range_ then
+                cc.keys_[cc.key_code_.left].status_  = cc.KEY_STATUS.DOWN
+                cc.keys_[cc.key_code_.left].pressed_ = true
+                self.in_horizontal_range_ = true
+                self.horizontal_range_key_ = cc.key_code_.left
+            end
+        else
+            cc.keys_[cc.key_code_.left].status_ = cc.KEY_STATUS.UP
+            cc.keys_[cc.key_code_.left].released_ = true
+            if self.horizontal_range_key_ == cc.key_code_.left then
+                self.in_horizontal_range_ = false
+            end
+        end
+
+        if angle >= 30 and angle <= 150 then
+            if not self.in_vertical_range_ then
+                cc.keys_[cc.key_code_.up].status_  = cc.KEY_STATUS.DOWN
+                cc.keys_[cc.key_code_.up].pressed_ = true
+                self.in_vertical_range_ = true
+                self.vertical_range_key_ = cc.key_code_.up
+            end
+        else
+            cc.keys_[cc.key_code_.up].status_ = cc.KEY_STATUS.UP
+            cc.keys_[cc.key_code_.up].released_ = true
+            if self.vertical_range_key_ == cc.key_code_.up then
+                self.in_vertical_range_ = false
+            end
+        end
+
+        if angle <= -30 and angle >= -150 then
+            if not self.in_vertical_range_ then
+                cc.keys_[cc.key_code_.down].status_  = cc.KEY_STATUS.DOWN
+                cc.keys_[cc.key_code_.down].pressed_ = true
+                self.in_vertical_range_ = true
+                self.vertical_range_key_ = cc.key_code_.down
+            end
+        else
+            cc.keys_[cc.key_code_.down].status_ = cc.KEY_STATUS.UP
+            cc.keys_[cc.key_code_.down].released_ = true
+            if self.vertical_range_key_ == cc.key_code_.down then
+                self.in_vertical_range_ = false
+            end
+        end
+
+
+    end
+end
+
 function joypad:onJoystick(event)
 
     if event.name == "began" then
@@ -209,7 +352,6 @@ function joypad:onJoystick(event)
     end
 
     if event.name == "moved" then
-        local translated_key
 
         local delta_x = self.circle_:getPositionX() - self.ring_:getPositionX()
         local delta_y = self.circle_:getPositionY() - self.ring_:getPositionY()
@@ -304,7 +446,7 @@ end
 
 function joypad:onButton(event)
 
-    print("Touch")
+    --print("Touch")
     
     local translated_key
 

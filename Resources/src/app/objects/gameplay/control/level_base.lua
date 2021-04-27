@@ -271,7 +271,7 @@ function level_base:load(tmx_map, map_path, load_arguments)
 
             local found = false
 
-            for _, v in pairs(cc.item_.permanents_) do
+            for _, v in pairs(cc.item_.collectibles_) do
                 if v == item_name then
                     found = true
                     break

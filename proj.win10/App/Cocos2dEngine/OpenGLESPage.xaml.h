@@ -89,6 +89,12 @@ namespace CocosAppWinRT
 
         void submitReading(GamepadWithButtonState gamepad,
             std::pair<bool, Windows::Gaming::Input::GamepadButtons> reading);
+
+        double axisReading(GamepadWithButtonState gamepad, Windows::Gaming::Input::GamepadButtons button, int axis);
+
+        void setAxisReading(GamepadWithButtonState gamepad, std::pair<cocos2d::Controller::Key, double> reading);
+        void submitAxisReading(GamepadWithButtonState gamepad, Windows::Gaming::Input::GamepadButtons axis);
+
         //////////////////////////////
 
         OpenGLES* mOpenGLES;
