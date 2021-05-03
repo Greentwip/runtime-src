@@ -254,8 +254,6 @@ function display.wrapScene(scene, transition, time, more)
         local t = display.SCENE_TRANSITIONS[key]
         time = time or 0.2
         more = more or t[2]
-        print("More")
-        print(more)
         if type(t) == "table" then
             if t.create then
                 scene = t:create(time, scene)

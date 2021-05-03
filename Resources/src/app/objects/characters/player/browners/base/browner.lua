@@ -166,6 +166,39 @@ end
 
 function browner:slide()
 
+    if self:getParent():left_slide_condition() and self.on_ground_ and not self.sliding_ and not self.stunned_ and not self.attacking_ then
+        if not (self.walking_ and not self.sprite_:isFlippedX()) then
+            self.sliding_ = true
+            self.slide_timer_ = 32
+
+            if self:getParent().kinematic_body_:get_shape_index() ~= 2 then
+
+                self:getParent().kinematic_body_:swap_shape(2) --shall need to force position recomputation here
+                self.contacts_[cc.kinematic_contact_.left] = false
+                self.contacts_[cc.kinematic_contact_.right] = false
+            end
+
+            self.sprite_:setFlippedX(true)
+        end
+    end
+
+    if self:getParent():right_slide_condition() and self.on_ground_ and not self.sliding_ and not self.stunned_ and not self.attacking_ then
+        if not (self.walking_ and self.sprite_:isFlippedX()) then
+            self.sliding_ = true
+            self.slide_timer_ = 32
+
+            if self:getParent().kinematic_body_:get_shape_index() ~= 2 then
+
+                self:getParent().kinematic_body_:swap_shape(2) --shall need to force position recomputation here
+                self.contacts_[cc.kinematic_contact_.left] = false
+                self.contacts_[cc.kinematic_contact_.right] = false
+            end
+
+            self.sprite_:setFlippedX(false)
+        end
+    end
+
+
     if self:getParent():slide_condition() and self.on_ground_ and not self.sliding_ and not self.stunned_ and not self.attacking_ then
         self.sliding_ = true
         self.slide_timer_ = 32

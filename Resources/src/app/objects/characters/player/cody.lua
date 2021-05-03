@@ -143,10 +143,25 @@ function cody:init_browners()
 end
 
 function cody:spawn()
+
+    cc.keys_[cc.key_code_.a].status_    = cc.KEY_STATUS.UP
+    if cc.keys_[cc.key_code_.a].pressed_ then
+        cc.keys_[cc.key_code_.a].pressed_ = false
+        cc.keys_[cc.key_code_.a].released_ = true
+    end
+
+
+    cc.keys_[cc.key_code_.b].status_    = cc.KEY_STATUS.UP
+    if cc.keys_[cc.key_code_.b].pressed_ then
+        cc.keys_[cc.key_code_.b].pressed_ = false
+        cc.keys_[cc.key_code_.b].released_ = true
+    end
+
     self:switch_browner(cc.browners_.teleport_.id_)
 
     for _, v in pairs(self.browners_) do
         v:deactivate()
+        v.attacking_ = false
         v.charging_ = false
         v.charge_power_ = "low"
         v.stunned_ = false
@@ -202,6 +217,7 @@ function cody:switch_browner(id)
             self.energy_bar_:setVisible(true)
         end
     end
+    self.vulnerable_ = true
 
     self:trigger_actions()
 end
@@ -484,6 +500,14 @@ function cody:slide_condition()
             and cc.key_down(cc.key_code_.down)
 end
 
+function cody:left_slide_condition()
+    return cc.key_pressed(cc.key_code_.lb)
+end
+
+function cody:right_slide_condition()
+    return cc.key_pressed(cc.key_code_.rb)
+end
+
 function cody:attack_condition()
     local condition = cc.key_pressed(cc.key_code_.b)
     return condition
@@ -744,6 +768,8 @@ function cody:exit(args)
 
     local delay = cc.DelayTime:create(4)
     local callback = cc.CallFunc:create(function()
+
+        cc.is_level_clear_ = true
 
         local level = "levels.level_weapon"
         local physics = true

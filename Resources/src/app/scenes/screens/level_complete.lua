@@ -14,6 +14,15 @@ function level_complete:onLoad() -- weird bug when using onLoad
     self.yes_button_ = root:getChildByName("yes_button")
     self.no_button_ = root:getChildByName("no_button")
 
+    root:getChildByName("game_over_background"):setVisible(false)
+    root:getChildByName("level_clear_background"):setVisible(false)
+
+    if cc.is_level_clear_ then
+        root:getChildByName("level_clear_background"):setVisible(true)
+    else
+        root:getChildByName("game_over_background"):setVisible(true)
+    end
+
     self.current_option_ = self.yes_button_
 
     self.inactive_color_ = cc.c3b(127, 127, 127)
@@ -103,16 +112,25 @@ function level_complete:step(dt)
     end
 
 
-    if not self.triggered_ then
+    if not self.triggered_ and self.ready_ then
         if cc.key_pressed(cc.key_code_.a) then
             self.triggered_ = true
             cc.audio.play_sfx("sounds/sfx_selected.mp3")
 
             if self.current_option_ == self.yes_button_ then
-                cc.player_.lives_ = 3
-                self:getApp():enterScene("levels.level", "FADE", 1, {physics = true})
+                if cc.is_level_clear_ then
+                    self:getApp():enterScene("screens.stage_select", "FADE", 0.5)
+                else
+                    cc.player_.lives_ = 3
+                    self:getApp():enterScene("levels.level", "FADE", 1, {physics = true})
+                end
+
             else
-                self:getApp():enterScene("screens.stage_select", "FADE", 0.5)
+                if cc.is_level_clear_ then
+                    self:getApp():enterScene("screens.title", "FADE", 0.5)
+                else
+                    self:getApp():enterScene("screens.stage_select", "FADE", 0.5)
+                end
             end
 
         end
@@ -124,6 +142,8 @@ function level_complete:step(dt)
     return self
 end
 
+function level_complete:prepare(args)
 
+end
 
 return level_complete

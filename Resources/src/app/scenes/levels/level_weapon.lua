@@ -9,6 +9,7 @@ local level  = class("level_weapon", level_base)
 function level:prepare(args)
     self.level_bgm_ = "sounds/screens/boss_intro/bgm_get_weapon.mp3"
     self.tmx_map_   = "tilemaps/weapon/level_weapon.tmx"
+    self.map_path_  = "tilemaps" .. "/" .. "weapon"
 
     self.load_arguments_ = {}
     self.load_arguments_.sender_ = self

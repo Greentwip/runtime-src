@@ -80,17 +80,6 @@
             <FileData Type="Normal" Path="sprites/gameplay/screens/gameover/background.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="window_2" ActionTag="712268554" Tag="104" IconVisible="False" LeftMargin="39.0000" RightMargin="39.0000" TopMargin="41.0000" BottomMargin="73.0000" ctype="SpriteObjectData">
-            <Size X="178.0000" Y="110.0000" />
-            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="128.0000" Y="128.0000" />
-            <Scale ScaleX="1.0000" ScaleY="1.0000" />
-            <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.5000" Y="0.5714" />
-            <PreSize X="0.6953" Y="0.4911" />
-            <FileData Type="Normal" Path="sprites/gameplay/screens/gameover/window.png" Plist="" />
-            <BlendFunc Src="1" Dst="771" />
-          </AbstractNodeData>
           <AbstractNodeData Name="fly_primary_window" ActionTag="456892477" Tag="107" IconVisible="True" LeftMargin="128.0000" RightMargin="128.0000" TopMargin="188.0000" BottomMargin="36.0000" ctype="SingleNodeObjectData">
             <Size X="0.0000" Y="0.0000" />
             <Children>
@@ -123,40 +112,6 @@
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition X="0.5000" Y="0.1607" />
-            <PreSize X="0.0000" Y="0.0000" />
-          </AbstractNodeData>
-          <AbstractNodeData Name="fly_secondary_window" ActionTag="2055334927" Tag="10" IconVisible="True" LeftMargin="128.0000" RightMargin="128.0000" TopMargin="300.0000" BottomMargin="-76.0000" ctype="SingleNodeObjectData">
-            <Size X="0.0000" Y="0.0000" />
-            <Children>
-              <AbstractNodeData Name="floating_window" ActionTag="-1110905251" Tag="11" IconVisible="False" LeftMargin="-52.5000" RightMargin="-52.5000" TopMargin="-14.0000" BottomMargin="-14.0000" ctype="SpriteObjectData">
-                <Size X="105.0000" Y="28.0000" />
-                <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-                <Position />
-                <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                <CColor A="255" R="255" G="255" B="255" />
-                <PrePosition />
-                <PreSize X="0.0000" Y="0.0000" />
-                <FileData Type="Normal" Path="sprites/gameplay/screens/gameover/floating_window.png" Plist="" />
-                <BlendFunc Src="1" Dst="771" />
-              </AbstractNodeData>
-              <AbstractNodeData Name="label" ActionTag="-1952149136" Tag="12" IconVisible="False" LeftMargin="-43.5000" RightMargin="-43.5000" TopMargin="-5.0000" BottomMargin="-5.0000" FontSize="10" LabelText="CONTINUE?" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="TextObjectData">
-                <Size X="87.0000" Y="10.0000" />
-                <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-                <Position />
-                <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                <CColor A="255" R="255" G="255" B="255" />
-                <PrePosition />
-                <PreSize X="0.0000" Y="0.0000" />
-                <FontResource Type="Normal" Path="megaman_2.ttf" Plist="" />
-                <OutlineColor A="255" R="255" G="0" B="0" />
-                <ShadowColor A="255" R="110" G="110" B="110" />
-              </AbstractNodeData>
-            </Children>
-            <AnchorPoint />
-            <Position X="128.0000" Y="-76.0000" />
-            <Scale ScaleX="1.0000" ScaleY="1.0000" />
-            <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.5000" Y="-0.3393" />
             <PreSize X="0.0000" Y="0.0000" />
           </AbstractNodeData>
           <AbstractNodeData Name="yes_button" ActionTag="1864395903" VisibleForFrame="False" Tag="13" IconVisible="True" LeftMargin="78.0000" RightMargin="178.0000" TopMargin="192.0000" BottomMargin="32.0000" ctype="SingleNodeObjectData">
@@ -225,6 +180,62 @@
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition X="0.6953" Y="0.1429" />
+            <PreSize X="0.0000" Y="0.0000" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="game_over_background" ActionTag="863818223" Tag="16" IconVisible="False" LeftMargin="39.0000" RightMargin="39.0000" TopMargin="44.0000" BottomMargin="76.0000" ctype="SpriteObjectData">
+            <Size X="178.0000" Y="104.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="128.0000" Y="128.0000" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.5000" Y="0.5714" />
+            <PreSize X="0.6953" Y="0.4643" />
+            <FileData Type="Normal" Path="sprites/gameplay/screens/gameover/game_over_background.png" Plist="" />
+            <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="level_clear_background" ActionTag="-603581630" Tag="17" IconVisible="False" LeftMargin="39.0000" RightMargin="39.0000" TopMargin="44.0000" BottomMargin="76.0000" ctype="SpriteObjectData">
+            <Size X="178.0000" Y="104.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="128.0000" Y="128.0000" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.5000" Y="0.5714" />
+            <PreSize X="0.6953" Y="0.4643" />
+            <FileData Type="Normal" Path="sprites/gameplay/screens/gameover/level_clear_background.png" Plist="" />
+            <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="fly_secondary_window" ActionTag="2055334927" Tag="10" IconVisible="True" LeftMargin="128.0000" RightMargin="128.0000" TopMargin="300.0000" BottomMargin="-76.0000" ctype="SingleNodeObjectData">
+            <Size X="0.0000" Y="0.0000" />
+            <Children>
+              <AbstractNodeData Name="floating_window" ActionTag="-1110905251" Tag="11" IconVisible="False" LeftMargin="-52.5000" RightMargin="-52.5000" TopMargin="-14.0000" BottomMargin="-14.0000" ctype="SpriteObjectData">
+                <Size X="105.0000" Y="28.0000" />
+                <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+                <Position />
+                <Scale ScaleX="1.0000" ScaleY="1.0000" />
+                <CColor A="255" R="255" G="255" B="255" />
+                <PrePosition />
+                <PreSize X="0.0000" Y="0.0000" />
+                <FileData Type="Normal" Path="sprites/gameplay/screens/gameover/floating_window.png" Plist="" />
+                <BlendFunc Src="1" Dst="771" />
+              </AbstractNodeData>
+              <AbstractNodeData Name="label" ActionTag="-1952149136" Tag="12" IconVisible="False" LeftMargin="-43.5000" RightMargin="-43.5000" TopMargin="-5.0000" BottomMargin="-5.0000" FontSize="10" LabelText="CONTINUE?" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="TextObjectData">
+                <Size X="87.0000" Y="10.0000" />
+                <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+                <Position />
+                <Scale ScaleX="1.0000" ScaleY="1.0000" />
+                <CColor A="255" R="255" G="255" B="255" />
+                <PrePosition />
+                <PreSize X="0.0000" Y="0.0000" />
+                <FontResource Type="Normal" Path="megaman_2.ttf" Plist="" />
+                <OutlineColor A="255" R="255" G="0" B="0" />
+                <ShadowColor A="255" R="110" G="110" B="110" />
+              </AbstractNodeData>
+            </Children>
+            <AnchorPoint />
+            <Position X="128.0000" Y="-76.0000" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.5000" Y="-0.3393" />
             <PreSize X="0.0000" Y="0.0000" />
           </AbstractNodeData>
         </Children>

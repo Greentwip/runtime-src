@@ -47,6 +47,7 @@ function boss:init_variables()
     self.health_            = 0
     self.alive_             = false         -- level starts up player
     self.spawn_flag_        = false
+    self.defeated_          = false
 end
 
 function boss:init_browners(args)
@@ -72,13 +73,6 @@ function boss:init_browners(args)
 
     self.demo_browner_id_ = boss_browner.browner_id_
 
-    print("Demo browner id")
-    print(tostring(boss_browner.browner_id_))
-
-    print("Is sub boss")
-    print(tostring(self.is_sub_boss_))
-
-
     for _, v in pairs(self.browners_) do
         v:setPosition(cc.p(0, 0))
         v:run_action("stand")
@@ -88,7 +82,6 @@ function boss:init_browners(args)
     -- teleport browner has no stand action 
 
     self.current_browner_ = boss_browner
-
 
     if not self.current_browner_.skip_intro_ then
         self.browners_[cc.browners_.teleport_.id_] = teleport_browner:create(self.sprite_)
@@ -107,7 +100,7 @@ function boss:init_browners(args)
         
     end
 
-    self.current_browner_:run_action("stand")
+    self.current_browner_:run_action("stand") 
 end
 
 function boss:reset()
@@ -669,7 +662,11 @@ function boss:forced_step(dt)
 
     if cc.bounds_:is_rect_inside(bbox) then
 
-        cc.is_boss_area_ = true
+        if self.defeated_ then
+            cc.is_boss_area_ = false
+        else
+            cc.is_boss_area_ = true
+        end
 
         if self.battle_status_ == cc.battle_status_.startup_ then
 
@@ -758,6 +755,7 @@ function boss:forced_step(dt)
                 self.health_bar_:removeSelf()
                 self.health_bar_ = nil
             end
+            self.defeated_ = true
             self.battle_status_ = cc.battle_status_.waiting_
         end
         if self.spawning_ and self.alive_ then

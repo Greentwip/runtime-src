@@ -11,6 +11,8 @@ function mob:onCreate()
     self.moving_    = false
     self.orientation_set_ = false
 
+    self.initial_speed_ = 0
+
     self.status_        = cc.enemy_.status_.preparing_ -- it is not ok for enemies to be in checkpoints
 
 end
@@ -30,6 +32,13 @@ function mob:onRespawn()
     self.moving_    = false
     self.orientation_set_ = false
     self.current_speed_.x = 0
+
+    if self.player_:getPositionX() >= self:getPositionX() then
+        self.initial_speed_ = self.walk_speed_
+    else
+        self.initial_speed_ = -self.walk_speed_
+    end
+
 end
 
 function mob:flip(x_normal)
@@ -47,6 +56,11 @@ function mob:flip(x_normal)
 end
 
 function mob:onscreen()
+
+    if cc.game_status_ == cc.GAME_STATUS.PAUSED then
+        self.moving_ = false
+    end
+
     local bbox = self.sprite_:getBoundingBox()
     local real_position = self:convertToWorldSpace(cc.p(bbox.x, bbox.y))
 
@@ -108,17 +122,7 @@ function mob:offscreen()
 end
 
 function mob:walk()
-   
-
-    if not self.moving_ then
-        self.moving_ = true
-        if self.player_:getPositionX() >= self:getPositionX() then
-            self.current_speed_.x = self.walk_speed_
-        else
-            self.current_speed_.x = -self.walk_speed_
-        end
-    end
-
+    self.current_speed_.x = self.initial_speed_
 end
 
 function mob:jump()

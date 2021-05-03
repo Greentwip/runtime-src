@@ -50,7 +50,9 @@ end
 
 function barrel:attack()
     if cc.pGetDistance(cc.p(self:getPositionX(), self:getPositionY()),
-        cc.p(self.player_:getPositionX(), self.player_:getPositionY())) < 64 and self.still_  then
+        cc.p(self.player_:getPositionX(), self.player_:getPositionY())) < 64 and self.still_ 
+        and cc.pGetDistance(cc.p(0, self:getPositionY()),
+        cc.p(0, self.player_:getPositionY())) < 8 then
         self.still_ = false
         self.walking_ = false
 

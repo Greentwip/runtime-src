@@ -183,6 +183,8 @@ end
 
 function MyApp:setup_application()
 
+    cc.joypad_ = {}
+    
     cc.texture_formats_ = {}
     cc.texture_formats_.pvr_ = 0
     cc.texture_formats_.png_ = 1
@@ -262,6 +264,8 @@ function MyApp:setup_keyboard()
     cc.key_code_.down   = 5
     cc.key_code_.left   = 6
     cc.key_code_.right  = 7
+    cc.key_code_.lb  = 8
+    cc.key_code_.rb  = 9
 
 
     cc.keys_ = {}
@@ -269,7 +273,12 @@ function MyApp:setup_keyboard()
     local key_list = {cc.key_code_.a,
                       cc.key_code_.b,
                       cc.key_code_.start,
-                      cc.key_code_.up, cc.key_code_.down, cc.key_code_.left, cc.key_code_.right}
+                      cc.key_code_.up, 
+                      cc.key_code_.down, 
+                      cc.key_code_.left, 
+                      cc.key_code_.right,
+                      cc.key_code_.lb,
+                      cc.key_code_.rb}
 
     for i = 1, #key_list do
         local key = {}
@@ -420,7 +429,7 @@ function MyApp:setup_items()
 
     local on_item_acquired = function(player, item)
 
-        if item.get_collectible() then
+        if item:get_collectible() then
             cc.item_.collectibles_[#cc.item_.collectibles_ + 1] = item:get_name()
             local slot = cc.game.get_default_slot()
             slot["collectible_items"] = cc.item_.collectibles_
@@ -534,6 +543,7 @@ function MyApp:setup_levels()
     level_mugs[11] = "militarymantest"
     level_mugs[12] = "nightmantest"
     level_mugs[13] = "vinemantest"
+    
 
     for i = 1, #level_mugs do
         local level_map = {}
@@ -547,6 +557,8 @@ function MyApp:setup_levels()
     cc.demo_ = {}
     cc.demo_.level_      = 1
     cc.demo_.get_weapon_ = 2
+
+    cc.is_level_clear_ = false
 
 end
 
@@ -567,7 +579,8 @@ function MyApp:setup_browners()
         helmet_     = {id_ = 12, acquired_ = false, pause_item_ = "helmet"},
         extreme_    = {id_ = 13, acquired_ = false, pause_item_ = "ex"},
         boss_       = {id_ = 14, acquired_ = nil, pause_item_ = nil },
-        newnightmanboss_   = {id_ = 15,  acquired_ = false,  pause_item_ = nil}
+        sub_boss_   = {id_ = 15, acquired_ = nil, pause_item_ = nil },
+        newnightmanboss_ = {id_ = 16,  acquired_ = false,  pause_item_ = nil}
     }
 
     for _, v in pairs(cc.browners_) do

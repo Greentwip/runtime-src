@@ -6,7 +6,7 @@ function special:onCreate(args)
     self.player_contact_ = false
     self.movement_is_non_blockable_ = true
 
-    self.time_to_fall_ = 0.7
+    self.time_to_fall_ = 1.4
     self.falling_ = false
     self.start_position_ = args.real_position_
     self:setPosition(self.start_position_)

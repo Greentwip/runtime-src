@@ -118,6 +118,7 @@ function level_controller:start()
             for k, v in pairs(self.doors_) do
                 if v:getPositionX() > rightmost_door_x then
                     rightmost_door = v
+                    rightmost_door_x = rightmost_door:getPositionX()
                 end
             end
 
@@ -277,6 +278,8 @@ function level_controller:step(dt)
         if cc.player_.lives_ <= 0 then
             if not self.quitting_ then
                 self.quitting_ = true
+                cc.is_level_clear_ = false
+
                 local delay = cc.DelayTime:create(2)
                 local callback = cc.CallFunc:create(function()
                     self:getParent():setVisible(false)
@@ -349,7 +352,7 @@ function level_controller:step(dt)
 
                             self.pause_menu_ = pause_menu:create(pause_settings)
                                                          :setPosition(cc.p((-cc.bounds_:width() * 0.5), cc.bounds_:height() * 0.5))
-                                                         :addTo(cc.bounds_, 100)
+                                                         :addTo(cc.bounds_, 4096)
 
 
                         end

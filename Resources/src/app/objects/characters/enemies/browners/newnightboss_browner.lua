@@ -1,6 +1,6 @@
 -- Copyright 2014-2015 Greentwip. All Rights Reserved.
 
-local browner                = import("app.objects.characters.enemies.browners.base.browner")
+local browner                = import("app.objects.characters.enemies.browners.base.subboss_browner")
 local linear_missile_bullet     = import("app.objects.weapons.browners.military.linear_missile_bullet")
 local item    = import("app.objects.gameplay.level.goods.item")
 
@@ -10,7 +10,7 @@ local newnightmanboss_browner = class("newnightmanboss_browner-enemy", browner)
 function newnightmanboss_browner:ctor(sprite, args)
     self.skip_intro_ = true
     self.simple_stun_ = true
-    self.default_health_ = 150
+    self.default_health_ = 1
     self.super:ctor(sprite, args)
 
     -- constraints
@@ -347,6 +347,8 @@ end
 
 function newnightmanboss_browner:onDefeated()
 
+    cc.is_boss_area_ = false
+    
     local item_array = {}
 
     if cc.unlockables_.items_.fist_.acquired_ then

@@ -139,7 +139,6 @@ function level_base:load(tmx_map, map_path, load_arguments)
                         :create(self:calculate_tmx_position(group_array[i], map), block_size)
                         :prepare(group_array[i])
                         :addTo(self)
-
         built_logical[#built_logical + 1] = logical
     end
 
@@ -153,7 +152,7 @@ function level_base:load(tmx_map, map_path, load_arguments)
 
     cc.bounds_ = bounds:create()
                        :setPosition(cc.p(first_check_point:getPositionX(), first_check_point:getPositionY()))
-                       :addTo(self, 1024)
+                       :addTo(self, 4096)
 
     --------------------------------
     -- player
@@ -311,6 +310,7 @@ function level_base:load(tmx_map, map_path, load_arguments)
             if group_array[i].name == "boss" then
                 creation_args.player_ = player
                 creation_args.type_ = group_array[i].type
+                creation_args.is_sub_boss_ = false
 
                 local boss = import("app.objects.characters.enemies.boss")
                             :create(creation_args)
@@ -352,24 +352,25 @@ function level_base:load(tmx_map, map_path, load_arguments)
             if group_array[i].type == "subboss" then
                 creation_args.player_ = player
                 creation_args.type_ = group_array[i].name
+                creation_args.is_sub_boss_ = true
 
                 print("subboss name")
                 print(group_array[i].name)
 
-                local boss = import("app.objects.characters.enemies.boss")
+                local subboss = import("app.objects.characters.enemies.subboss")
                             :create(creation_args)
                             :setup("characters", "enemy", "regular", "browners" .. "-" .. group_array[i].name)
                             :addTo(self, 768)
 
-                creation_args.anchored_position_ = self:offset_position(self:calculate_tmx_position(group_array[i], map), boss, group_array[i])
+                creation_args.anchored_position_ = self:offset_position(self:calculate_tmx_position(group_array[i], map), subboss, group_array[i])
 
-                if boss.onAfterAnimate then
-                    boss:onAfterAnimate(creation_args)
+                if subboss.onAfterAnimate then
+                    subboss:onAfterAnimate(creation_args)
                 end
 
-                scene_components[#scene_components + 1] = boss
+                scene_components[#scene_components + 1] = subboss
 
-                cc.subboss_ = boss
+                cc.subboss_ = subboss
             elseif group_array[i].type == "teleporter" then
                 local block_size = cc.size(group_array[i].width, group_array[i].height)
 

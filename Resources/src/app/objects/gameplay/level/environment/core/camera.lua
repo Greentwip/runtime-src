@@ -281,6 +281,8 @@ function camera:step(dt)
                     camera_self.boss_door_shift_ = false
                     camera_self.target_door_ = nil
                     camera_self.boss_door_working_ = false
+
+                    camera_self.player_.in_door_ = nil
                     if cc.game_status_ == cc.GAME_STATUS.PAUSED then
                         if not cc.is_boss_area_ then 
                             cc.pause(false)

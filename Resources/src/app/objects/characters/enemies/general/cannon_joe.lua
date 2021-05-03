@@ -8,6 +8,7 @@ function mob:onCreate()
     self.default_health_ = 9
     self.power_ = 4
     self.attacking_ = false
+    self.was_paused_ = false
     self.weapon_ = import("app.objects.weapons.enemies.general.directional_bullet")
     self.weapon_parameters_ = {
         category_ = "gameplay",
@@ -33,6 +34,7 @@ end
 
 function mob:onRespawn()
     self.attacking_ = false
+    self.was_paused_ = false
     self.is_flipping_ = false
     self.status_ = cc.enemy_.status_.fighting_
     
@@ -75,6 +77,27 @@ function mob:flip(x_normal)
 end
 
 function mob:attack()
+
+    if cc.game_status_ == cc.GAME_STATUS.RUNNING then
+        if self.was_paused_ then
+            self.was_paused_ = false
+            if self.attacking_ then
+                local delay = cc.DelayTime:create(0.5)
+                local cooldown = cc.CallFunc:create(function()
+                    if cc.game_status_ == cc.GAME_STATUS.RUNNING then
+                        self.attacking_ = false
+                    end
+                end)
+    
+                local sequence = cc.Sequence:create(delay, cooldown, nil)
+    
+                self:stopAllActions()
+                self:runAction(sequence)
+            end
+        end
+    else
+        self.was_paused_ = true
+    end
 
     if self.status_ == cc.enemy_.status_.fighting_ and not self.is_flipping_ and not self.attacking_ then
 
@@ -120,7 +143,9 @@ function mob:attack()
             end)
             
             local cooldown = cc.CallFunc:create(function()
-                self.attacking_ = false
+                if cc.game_status_ == cc.GAME_STATUS.RUNNING then
+                    self.attacking_ = false
+                end
             end)
 
             local sequence = cc.Sequence:create(delay, callback, delay, cooldown, nil)

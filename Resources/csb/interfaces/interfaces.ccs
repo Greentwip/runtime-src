@@ -14,8 +14,10 @@
                 <Image Name="button_right_inactive.png" />
                 <Project Name="data.csd" Type="Scene" />
                 <Image Name="floating_window.png" />
+                <Image Name="game_over_background.png" />
                 <Image Name="gameover_screen.jpg" />
                 <Image Name="gameover_screen_2.jpg" />
+                <Image Name="level_clear_background.png" />
                 <Image Name="text_window.png" />
                 <Image Name="window.png" />
                 <Image Name="window_game_over.png" />
