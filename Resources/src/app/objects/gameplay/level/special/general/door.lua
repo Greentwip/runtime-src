@@ -4,6 +4,7 @@ local special   = import("app.core.physics.static_character").create("door")
 
 function special:onCreate(args)
     self.lock_time_ = 1.0
+    self.is_boss_door_ = false
 end
 
 function special:onAfterAnimate(args)
@@ -31,6 +32,12 @@ end
 
 function special:lock(callback)
 
+    if self.is_boss_door_ then -- we reset dPad inputs
+        for i = 1, #cc.joypad_.joy_keys_ do
+            cc.keys_[cc.joypad_.joy_keys_[i]].status_    = cc.KEY_STATUS.UP
+        end
+    end
+
     local delay = cc.DelayTime:create(self.lock_time_ * 0.5)
 
     local lock = cc.CallFunc:create(function()
@@ -51,6 +58,11 @@ function special:lock(callback)
 end
 
 function special:unlock(callback)
+
+    if self.is_boss_door_ then
+        cc.joypad_.take_inputs_ = false -- boss will take care of restoring inputs
+    end
+
     local delay = cc.DelayTime:create(self.lock_time_ * 0.5)
 
     local lock = cc.CallFunc:create(function()

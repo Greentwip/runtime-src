@@ -200,6 +200,9 @@ function level_base:load(tmx_map, map_path, load_arguments)
 
     self.doors_ = {}
 
+    self.horizontal_doors_ = {}
+
+
     -- add special group
     local special = map:getObjectGroup("special")
 
@@ -231,6 +234,12 @@ function level_base:load(tmx_map, map_path, load_arguments)
             if group_array[i].name == "door" then
                 self.doors_[#self.doors_ + 1] = special_element
             end
+
+            if group_array[i].name == "horizontal_door" then
+                self.horizontal_doors_[#self.horizontal_doors_ + 1] = special_element
+            end
+
+            
         end
     end
 
@@ -390,6 +399,7 @@ function level_base:load(tmx_map, map_path, load_arguments)
 
     self.level_controller_.check_point_ = first_check_point
     self.level_controller_.doors_ = self.doors_
+    self.level_controller_.horizontal_doors_ = self.horizontal_doors_
     self.level_controller_:setup()
 
     self.bullets_       = {}

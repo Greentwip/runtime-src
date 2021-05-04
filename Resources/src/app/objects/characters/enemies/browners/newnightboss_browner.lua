@@ -347,6 +347,10 @@ end
 
 function newnightmanboss_browner:onDefeated()
 
+    print("On defeated")
+
+    self:stopAllActions()
+
     cc.is_boss_area_ = false
     
     local item_array = {}
@@ -360,11 +364,13 @@ function newnightmanboss_browner:onDefeated()
     if item_array[1] ~= nil then
         local item_good = item:create()
                               :setup("gameplay", "level", "goods", "item")
-                              :setPosition(cc.p(self:getPositionX(), self:getPositionY()))
+                              :setPosition(cc.p(self:getParent():getPositionX(), self:getParent():getPositionY()))
 
         item_good:swap(item_array[1], true)
 
-        item_good:set_name("head")
+        if item_array[1] == "fist" then
+            item_good:set_name("fist")
+        end
 
         self:getParent():getParent():schedule_component(item_good)
     end

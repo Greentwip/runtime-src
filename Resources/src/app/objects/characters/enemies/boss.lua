@@ -692,7 +692,7 @@ function boss:forced_step(dt)
                 cc.audio.play_bgm("sounds/bgm_boss_vineman.mp3", true)
 
                 --self.player_.can_move_ = false
-                cc.joypad_.take_inputs_ = false
+
                 self:spawn()
                 self.battle_status_ = cc.battle_status_.waiting_
             end
@@ -720,6 +720,14 @@ function boss:forced_step(dt)
                         self.current_browner_.is_intro_ = false
                         self.player_.can_move_ = true
                         cc.joypad_.take_inputs_ = true
+                    
+                        for i = 1, #cc.delayed_keys_ do
+                            if cc.delayed_keys_[i].status_ == cc.KEY_STATUS.UP then
+                                cc.keys_[i].status_ = cc.KEY_STATUS.UP
+                            end
+                        end
+                    
+
                         self.battle_status_ = cc.battle_status_.fighting_
                     end)
 
@@ -742,6 +750,14 @@ function boss:forced_step(dt)
                     self.health_ = self.current_browner_.default_health_
                     self.player_.can_move_ = true
                     cc.joypad_.take_inputs_ = true
+
+                    for i = 1, #cc.delayed_keys_ do
+                        if cc.delayed_keys_[i].status_ == cc.KEY_STATUS.UP then
+                            cc.keys_[i].status_ = cc.KEY_STATUS.UP
+                        end
+                    end
+                
+
                     self.battle_status_ = cc.battle_status_.fighting_
                     cc.pause(false)
                 end)

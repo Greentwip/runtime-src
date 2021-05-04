@@ -24,6 +24,14 @@ function joypad:ctor(layout)
             self:onKeypad(keycode, false)
         end
 
+        self.joy_keys_ = {}
+
+        self.joy_keys_[#self.joy_keys_ + 1] = cc.key_code_.right
+        self.joy_keys_[#self.joy_keys_ + 1] = cc.key_code_.left
+        self.joy_keys_[#self.joy_keys_ + 1] = cc.key_code_.up
+        self.joy_keys_[#self.joy_keys_ + 1] = cc.key_code_.down
+
+
         local listener = cc.EventListenerKeyboard:create()
         listener:registerScriptHandler(onKeyPressed, cc.Handler.EVENT_KEYBOARD_PRESSED)
         listener:registerScriptHandler(onKeyReleased, cc.Handler.EVENT_KEYBOARD_RELEASED)
@@ -197,9 +205,6 @@ function joypad:onControllerPressed(controller, keycode, keydown)
     print("Controller Key pressed")
     print(keycode)
 
-    if not self.take_inputs_ then
-        return
-    end
 
     local key = keycode
 
@@ -222,6 +227,22 @@ function joypad:onControllerPressed(controller, keycode, keydown)
         translated_key = cc.key_code_.lb
     elseif key == 2048 then
         translated_key = cc.key_code_.rb
+    end
+
+    if translated_key ~= nil then
+        if keydown then
+            cc.delayed_keys_[translated_key].status_  = cc.KEY_STATUS.DOWN
+            cc.delayed_keys_[translated_key].pressed_ = true
+        else
+            cc.delayed_keys_[translated_key].status_ = cc.KEY_STATUS.UP
+            cc.delayed_keys_[translated_key].released_ = true
+        end
+
+    end        
+
+
+    if not self.take_inputs_ then
+        return
     end
 
     if translated_key ~= nil then
@@ -277,6 +298,7 @@ function joypad:onAxis(axis_x, axis_y)
     if not self.take_inputs_ then
         return
     end
+
     local circle_distance = cc.pGetDistance(cc.p(axis_x, axis_y), cc.p(0, 0))
 
     if circle_distance >= self.dead_zone_ then
@@ -506,9 +528,6 @@ end
 
 
 function joypad:onKeypad(keycode, keydown)
-    if not self.take_inputs_ then
-        return
-    end
 
     local key = cc.KeyCodeKey[keycode + 1]
     local translated_key
@@ -529,6 +548,25 @@ function joypad:onKeypad(keycode, keydown)
         translated_key = cc.key_code_.b
     end
 
+    
+
+    if translated_key ~= nil then
+        if keydown then
+            cc.delayed_keys_[translated_key].status_  = cc.KEY_STATUS.DOWN
+            cc.delayed_keys_[translated_key].pressed_ = true
+        else
+            cc.delayed_keys_[translated_key].status_ = cc.KEY_STATUS.UP
+            cc.delayed_keys_[translated_key].released_ = true
+        end
+
+    end
+
+
+    if not self.take_inputs_ then
+        return
+    end
+
+
     if translated_key ~= nil then
         if keydown then
             cc.keys_[translated_key].status_  = cc.KEY_STATUS.DOWN
@@ -543,6 +581,10 @@ function joypad:onKeypad(keycode, keydown)
 end
 
 function joypad:step(dt)
+    if not self.take_inputs_ then
+        return
+    end
+
     for i = 1, #cc.keys_ do
         if cc.keys_[i].pressed_ then
             cc.keys_[i].pressed_ = false
@@ -552,6 +594,17 @@ function joypad:step(dt)
             cc.keys_[i].released_ = false
         end
     end
+
+    for i = 1, #cc.delayed_keys_ do
+        if cc.delayed_keys_[i].pressed_ then
+            cc.delayed_keys_[i].pressed_ = false
+        end
+
+        if cc.delayed_keys_[i].released_ then
+            cc.delayed_keys_[i].released_ = false
+        end
+    end
+
 
     return self
 end

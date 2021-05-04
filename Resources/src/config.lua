@@ -27,6 +27,6 @@ CC_DESIGN_RESOLUTION = {
     end
 }
 
---CC_START_LEVEL = "screens.opening"
-CC_START_LEVEL = "screens.testwrapper"
+CC_START_LEVEL = "screens.opening"
+--CC_START_LEVEL = "screens.testwrapper"
 CC_DEBUG_MUG = "nightman"

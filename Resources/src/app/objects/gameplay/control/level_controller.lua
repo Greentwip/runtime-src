@@ -26,6 +26,7 @@ function level_controller:ctor(player, camera, scene_components, bgm, arguments)
     self.reinit_                = true
     self.check_point_           = nil
     self.doors_                 = {}
+    self.horizontal_doors_                 = {}
     self.level_bgm_             = bgm
 
     self.is_startup_            = true
@@ -112,6 +113,10 @@ function level_controller:start()
 
     if self.check_point_ ~= nil then
 
+        for k, v in pairs(self.horizontal_doors_) do
+            v:reclose()
+        end
+
         if self.check_point_.type_ == cc.tags.logic.check_point.last_ then
             local rightmost_door_x = 0
             local rightmost_door = nil
@@ -122,8 +127,23 @@ function level_controller:start()
                 end
             end
 
+            rightmost_door.is_boss_door_ = true
+
             rightmost_door:reopen()
         else
+            local rightmost_door_x = 0
+            local rightmost_door = nil
+            for k, v in pairs(self.doors_) do
+                if v:getPositionX() > rightmost_door_x then
+                    rightmost_door = v
+                    rightmost_door_x = rightmost_door:getPositionX()
+                end
+            end
+
+            if rightmost_door ~= nil then
+                rightmost_door.is_boss_door_ = true
+            end
+            
             for k, v in pairs(self.doors_) do
                 v:reopen()
             end

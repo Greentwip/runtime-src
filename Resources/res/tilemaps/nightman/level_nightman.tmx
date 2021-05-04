@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="384" height="96" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="28">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="384" height="96" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="29">
  <tileset firstgid="1" name="level_nightman_bank.png" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="4648" columns="56">
   <image source="level_nightman_bank.png" width="1008" height="1496"/>
  </tileset>
@@ -79,7 +79,6 @@
   <object id="96" x="1462.25" y="440.396" width="15.5" height="231.167"/>
   <object id="97" x="1518.83" y="-7.99967" width="53.4167" height="190.25"/>
   <object id="98" x="1520.17" y="182.25" width="126" height="28.8125"/>
-  <object id="99" x="3659.04" y="1336.09" width="15.2553" height="16.2955"/>
   <object id="100" x="2948" y="1108" width="427.257" height="20"/>
   <object id="101" x="2642" y="1096" width="306" height="32"/>
   <object id="102" x="2556" y="1112" width="86" height="12"/>
@@ -125,9 +124,9 @@
   <object id="14" name="scroll" type="left" x="1336" y="550" width="16" height="16"/>
   <object id="15" name="hole" x="1960" y="632" width="72" height="40"/>
   <object id="16" name="scroll" type="right" x="2140" y="768" width="16" height="16"/>
-  <object id="18" name="scroll" type="left" x="2673.69" y="763.969" width="16" height="16"/>
+  <object id="18" name="scroll" type="left" x="2672" y="760" width="16" height="16"/>
   <object id="20" name="scroll" type="left" x="3425" y="1010.5" width="16" height="16"/>
-  <object id="21" name="scroll" type="right" x="3409" y="1220" width="16" height="16"/>
+  <object id="21" name="scroll" type="right" x="3408" y="1220" width="16" height="16"/>
   <object id="22" name="scroll" type="left" x="4505" y="1224" width="16" height="16"/>
   <object id="23" name="scroll" type="right" x="4473" y="996" width="16" height="16"/>
   <object id="24" name="scroll" type="left" x="5478" y="1000" width="16" height="16"/>
@@ -142,8 +141,8 @@
   <object id="25" name="teleporter" x="2552" y="839" width="16" height="16"/>
   <object id="12" name="teleporter" x="5462" y="1083" width="16" height="16"/>
   <object id="134" name="teleporter" x="116" y="852" width="16" height="16"/>
-  <object id="17" name="checkpoint" type="boss" x="5719" y="1000" width="16" height="16"/>
-  <object id="13" name="checkpoint" type="third" x="3425" y="1220" width="16" height="16"/>
+  <object id="17" name="checkpoint" type="boss" x="5718" y="1000" width="16" height="16"/>
+  <object id="13" name="checkpoint" type="third" x="3424" y="1220" width="16" height="16"/>
   <object id="24" name="checkpoint" type="second" x="2552" y="777" width="16" height="16"/>
   <object id="132" name="checkpoint" type="first" x="116" y="768" width="16" height="16"/>
   <object id="26" name="scroll" type="right" x="2536" y="777" width="16" height="16"/>
@@ -155,18 +154,16 @@
  <objectgroup id="4" name="enemies">
   <object id="136" name="backpacker" type="night" x="293.737" y="770.066" width="16" height="16"/>
   <object id="138" name="backpacker" type="night" x="1239.78" y="534.246" width="16" height="16"/>
-  <object id="139" name="backpacker" type="night" x="1613.47" y="166.264" width="16" height="16"/>
+  <object id="139" name="backpacker" type="night" x="1592" y="166" width="16" height="16"/>
   <object id="140" name="backpacker" type="night" x="1809.71" y="364.077" width="16" height="16"/>
   <object id="141" name="backpacker" type="night" x="3495.49" y="1051.06" width="16" height="16"/>
   <object id="142" name="batcombat" type="night" x="393.688" y="772.069" width="16" height="16"/>
-  <object id="143" name="batcombat" type="night" x="466.904" y="870.08" width="16" height="16"/>
-  <object id="144" name="batcombat" type="night" x="616.654" y="740.83" width="16" height="16"/>
-  <object id="145" name="batcombat" type="night" x="1049.9" y="561.08" width="16" height="16"/>
+  <object id="144" name="batcombat" type="night" x="639" y="740" width="16" height="16"/>
   <object id="146" name="batcombat" type="night" x="1824.32" y="277.747" width="16" height="16"/>
   <object id="147" name="batcombat" type="night" x="1904.65" y="286.747" width="16" height="16"/>
   <object id="148" name="batcombat" type="night" x="1860.65" y="792.08" width="16" height="16"/>
   <object id="149" name="batcombat" type="night" x="2142.98" y="747.08" width="16" height="16"/>
-  <object id="150" name="batcombat" type="night" x="2368.35" y="744.413" width="16" height="16"/>
+  <object id="150" name="batcombat" type="night" x="2480" y="671" width="16" height="16"/>
   <object id="152" name="batcombat" type="night" x="2728.65" y="732.08" width="16" height="16"/>
   <object id="153" name="batcombat" type="night" x="2583.65" y="912.83" width="16" height="16"/>
   <object id="154" name="batcombat" type="night" x="4792.65" y="957.413" width="16" height="16"/>
@@ -179,7 +176,7 @@
   <object id="163" name="robot_worm" type="night" x="1502.92" y="321.171" width="16" height="16"/>
   <object id="164" name="robot_worm" type="night" x="1521.77" y="320.955" width="16" height="16"/>
   <object id="165" name="robot_worm" type="night" x="1619.83" y="320.989" width="16" height="16"/>
-  <object id="166" name="golem_jumper" type="night" x="546.279" y="804.83" width="16" height="16"/>
+  <object id="166" name="golem_jumper" type="night" x="586" y="805" width="16" height="16"/>
   <object id="167" name="golem_jumper" type="night" x="2164" y="852" width="16" height="16"/>
   <object id="168" name="golem_jumper" type="night" x="3534.95" y="1282" width="16" height="16"/>
   <object id="169" name="backpacker" type="night" x="4416" y="1054" width="16" height="16"/>
@@ -225,6 +222,7 @@
   <object id="218" name="falling_skull" type="night" x="4480.65" y="1132.08" width="16" height="16"/>
   <object id="219" name="falling_skull" type="night" x="4534.65" y="1132.08" width="16" height="16"/>
   <object id="8" name="flash_brain" type="night" x="1094" y="837" width="16" height="16"/>
+  <object id="28" name="batcombat" type="night" x="2414" y="670" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="5" name="special">
   <object id="3" name="falling_block" type="night" x="2221" y="869" width="17" height="19"/>

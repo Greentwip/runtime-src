@@ -289,6 +289,19 @@ function MyApp:setup_keyboard()
         cc.keys_[i] = key
     end
 
+
+    cc.delayed_keys_ = {}
+
+    for i = 1, #key_list do
+        local key = {}
+        key.status_ = cc.KEY_STATUS.UP
+        key.pressed_ = false
+        key.released_ = false
+
+        cc.delayed_keys_[i] = key
+    end
+
+
 end
 
 function MyApp:setup_camera()

@@ -55,6 +55,9 @@ function static_character.create(class_name)
     -- must implement function character:animate in children if children has animations.
 
     function character:articulate(physics_path, cname)
+        print("Path and cname")
+        print(physics_path)
+        print(cname)
 
         local armature = armature:create(physics_path)
 

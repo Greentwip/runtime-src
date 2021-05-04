@@ -136,10 +136,14 @@ function tremor:onDefeated()
 
         item_good:swap(item_array[1], true)
 
-        item_good:set_name("head")
+        if item_array[1] == "head" then
+            item_good:set_name("head")
+        end
 
         self:getParent():schedule_component(item_good)
     end
+
+    cc.level_controller_.horizontal_doors_[1]:unlock()
 
 end
 

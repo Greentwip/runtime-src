@@ -75,7 +75,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     register_all_packages();
 
     LuaStack* stack = engine->getLuaStack();
-    stack->setXXTEAKeyAndSign("2dxLua", strlen("2dxLua"), "XXTEA", strlen("XXTEA"));
+    stack->setXXTEAKeyAndSign("GREENQJMRK", strlen("GREENQJMRK"), "GREENRAMX", strlen("GREENRAMX"));
 
     //register custom function
     //LuaStack* stack = engine->getLuaStack();
@@ -85,10 +85,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     FileUtils::getInstance()->addSearchPath("src/64bit");
 #endif
 
-    FileUtils::getInstance()->addSearchPath("src");
+    FileUtils::getInstance()->addSearchPath("src_et");
     FileUtils::getInstance()->addSearchPath("res");
 
-    if (engine->executeScriptFile("main.lua"))
+    if (engine->executeString("require('main')"))
     {
         return false;
     }

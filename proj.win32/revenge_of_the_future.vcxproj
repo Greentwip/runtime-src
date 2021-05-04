@@ -129,8 +129,9 @@
     <CustomBuildStep>
       <Command>if not exist "$(LocalDebuggerWorkingDirectory)" mkdir "$(LocalDebuggerWorkingDirectory)"
 xcopy /Y /Q "$(Configuration).win32\*.dll" "$(LocalDebuggerWorkingDirectory)"
+
 xcopy "$(ProjectDir)..\Resources\res" "$(LocalDebuggerWorkingDirectory)\res" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\Resources\src" "$(LocalDebuggerWorkingDirectory)\src" /D /E /I /F /Y</Command>
+cocos luacompile -s "$(ProjectDir)..\Resources\src" -d "$(LocalDebuggerWorkingDirectory)\src_et" -e -k GREENQJMRK -b GREENRAMX --disable-compile</Command>
       <Outputs>$(TargetName).cab</Outputs>
       <Inputs>$(TargetFileName)</Inputs>
     </CustomBuildStep>
