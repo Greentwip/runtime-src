@@ -12,7 +12,7 @@ function opening:onLoad()
                      end)
 
     local sequence = cc.Sequence:create(initiate, nil)
-    self:runAction(sequence)
+    --self:runAction(sequence)
 
     -- self variables
     self.triggered_ = false
@@ -52,14 +52,18 @@ function opening:opening_intro_a()
 end
 
 function opening:step(dt)
---    if not self.triggered_ then
---        if cc.key_pressed(cc.key_code_.start) then
---            self.triggered_ = true
---            cc.audio.play_sfx("sounds/sfx_selected.mp3")
---            self:getApp():enterScene("gameplay.stage_select", "FADE", 1)
---        end
---    end
---   self:getApp():enterScene("screens.testwrapper", "FADE", 1)
+    if cc.key_pressed(cc.key_code_.start) then
+        local initiate = cc.CallFunc:create(function()
+                            self:opening_intro_a()
+                        end)
+
+        local sequence = cc.Sequence:create(initiate, nil)
+        self:runAction(sequence)
+
+        -- self variables
+        self.triggered_ = false
+
+    end
 
     self:post_step(dt)
 

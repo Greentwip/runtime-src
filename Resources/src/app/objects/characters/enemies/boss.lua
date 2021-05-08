@@ -465,6 +465,9 @@ function boss:finish(full_callback)
     self.exit_arguments_.is_level_complete_ = not full_callback -- means skip music, therefore boss already defeated.
 
     self.player_.can_move_ = false
+    self.player_.current_browner_:deactivate()
+    self.player_.current_browner_:activate()
+    self.player_.current_browner_:init_variables()
     self.player_.on_end_battle_ = true
 
     for _, v in pairs(cc.browners_) do
@@ -692,7 +695,7 @@ function boss:forced_step(dt)
                 cc.audio.play_bgm("sounds/bgm_boss_vineman.mp3", true)
 
                 --self.player_.can_move_ = false
-
+                cc.joypad_.take_inputs_ = false
                 self:spawn()
                 self.battle_status_ = cc.battle_status_.waiting_
             end
