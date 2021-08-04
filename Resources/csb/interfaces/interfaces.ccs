@@ -6,6 +6,22 @@
         <Folder Name="sprites">
           <Folder Name="gameplay">
             <Folder Name="screens">
+              <Folder Name="about">
+                <Image Name="background.png" />
+                <Image Name="button_left_active.png" />
+                <Image Name="button_left_inactive.png" />
+                <Image Name="button_right_active.png" />
+                <Image Name="button_right_inactive.png" />
+                <Project Name="data - Copy.csd" Type="Scene" />
+                <Project Name="data.csd" Type="Scene" />
+              </Folder>
+              <Folder Name="credits">
+                <Image Name="background.png" />
+                <Project Name="data.csd" Type="Scene" />
+                <Image Name="sides.png" />
+                <Image Name="sides-transparent.png" />
+                <Image Name="top.png" />
+              </Folder>
               <Folder Name="gameover">
                 <Image Name="background.png" />
                 <Image Name="button_left_active.png" />
@@ -62,6 +78,17 @@
                 <Image Name="background.png" />
                 <Project Name="data.csd" Type="Scene" />
                 <Image Name="file.png" />
+              </Folder>
+              <Folder Name="projects">
+                <Project Name="data.csd" Type="Scene" />
+                <Image Name="pygame_logo pixel.png" />
+                <Image Name="sides-transparent.png" />
+                <Image Name="solarus-logo-black-on-transparent1 pixel .png" />
+                <Image Name="top.png" />
+              </Folder>
+              <Folder Name="license">
+                <Project Name="data.csd" Type="Scene" />
+                <Image Name="microsoft_logo.png" />
               </Folder>
             </Folder>
           </Folder>

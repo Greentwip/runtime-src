@@ -85,7 +85,11 @@ bool AppDelegate::applicationDidFinishLaunching()
     FileUtils::getInstance()->addSearchPath("src/64bit");
 #endif
 
+#if defined(WINRT)
+    FileUtils::getInstance()->addSearchPath("src");
+#else
     FileUtils::getInstance()->addSearchPath("src_et");
+#endif
     FileUtils::getInstance()->addSearchPath("res");
 
     if (engine->executeString("require('main')"))

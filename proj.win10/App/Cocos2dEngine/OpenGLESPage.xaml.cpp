@@ -45,7 +45,7 @@ using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Platform::Collections;
 
-#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP) || _MSC_VER >= 1900
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
 using namespace Windows::Phone::UI::Input;
 #endif
 
@@ -100,7 +100,7 @@ OpenGLESPage::OpenGLESPage(OpenGLES* openGLES) :
     this->Loaded +=
         ref new Windows::UI::Xaml::RoutedEventHandler(this, &OpenGLESPage::OnPageLoaded);
 
-#if _MSC_VER >= 1900
+#if WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP && _MSC_VER >= 1900
     if (Windows::Foundation::Metadata::ApiInformation::IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
     {
         Windows::UI::ViewManagement::StatusBar::GetForCurrentView()->HideAsync();
@@ -300,7 +300,7 @@ void OpenGLESPage::setAxisReading(GamepadWithButtonState gamepad, std::pair<coco
     }
 
     (*iter)->_allKeyPrevStatus[(int)reading.first] = (*iter)->_allKeyStatus[(int)reading.first];
-    (*iter)->_allKeyStatus[(int)reading.first].value = reading.second;
+    (*iter)->_allKeyStatus[(int)reading.first].value = static_cast<float>(reading.second);
     (*iter)->_allKeyStatus[(int)reading.first].isAnalog = true;
 
 }
@@ -359,8 +359,8 @@ void OpenGLESPage::CreateRenderSurface()
         // the swapchain panel size. This scaling is often free on mobile hardware.
         //
         // One way to configure the SwapChainPanel is to specify precisely which resolution it should render at.
-        // Size customRenderSurfaceSize = Size(800, 600);
-        // mRenderSurface = mOpenGLES->CreateSurface(swapChainPanel, &customRenderSurfaceSize, nullptr);
+        //Windows::Foundation::Size customRenderSurfaceSize = Windows::Foundation::Size(400, 224);
+        //mRenderSurface = mOpenGLES->CreateSurface(swapChainPanel, &customRenderSurfaceSize, nullptr);
         //
         // Another way is to tell the SwapChainPanel to render at a certain scale factor compared to its size.
         // e.g. if the SwapChainPanel is 1920x1280 then setting a factor of 0.5f will make the app render at 960x640
@@ -706,7 +706,7 @@ void OpenGLESPage::OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Wi
     }
 }
 
-#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP) || _MSC_VER >= 1900
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
 /*
 We set args->Handled = true to prevent the app from quitting when the back button is pressed.
 This is because this back button event happens on the XAML UI thread and not the cocos2d-x UI thread.

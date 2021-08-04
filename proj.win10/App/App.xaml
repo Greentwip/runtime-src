@@ -7,7 +7,7 @@
 
     <Application.Resources>
 
-      <x:String x:Key="AppName">HelloCpp</x:String>
+      <x:String x:Key="AppName">Nino's Future</x:String>
 
     </Application.Resources>
 </Application>

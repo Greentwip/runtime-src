@@ -146,6 +146,9 @@ void OpenGLES::Initialize()
         }
     }
 
+    eglSwapInterval(mEglDisplay, EGL_MIN_SWAP_INTERVAL);
+
+
     EGLint numConfigs = 0;
     if ((eglChooseConfig(mEglDisplay, configAttributes, &mEglConfig, 1, &numConfigs) == EGL_FALSE) || (numConfigs == 0))
     {
